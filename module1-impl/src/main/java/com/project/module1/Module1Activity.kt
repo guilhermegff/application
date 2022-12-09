@@ -1,4 +1,4 @@
-package com.project.application.features
+package com.project.module1
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,12 +7,12 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class Module1Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: MainViewModel by viewModels()
+        val viewModel: Module1ViewModel by viewModels()
         setContent {
-            MainScreen(viewModel)
+            Module1Screen(viewModel)
         }
     }
 }

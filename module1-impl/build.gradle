@@ -4,23 +4,17 @@ plugins {
 }
 
 android {
+    namespace 'com.project.module1'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.project.application"
+        applicationId "com.project.module1"
         minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
     }
 
     buildFeatures {
@@ -30,6 +24,12 @@ android {
         kotlinCompilerExtensionVersion '1.2.0-rc02'
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -37,10 +37,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    namespace 'com.project.application'
 }
 
 dependencies {
+
     def composeBom = platform('androidx.compose:compose-bom:2022.10.00')
     implementation composeBom
     androidTestImplementation composeBom
