@@ -12,7 +12,7 @@ class Module1Activity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val viewModel: Module1ViewModel by viewModels()
         setContent {
-            Module1Screen(viewModel)
+            Module1Screen { viewModel.getDetail() }
         }
     }
 }
