@@ -1,12 +1,13 @@
-package com.project.application
+package com.project.application.core
 
+import com.project.application.infrastructure.MainRepository
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
 class MainAction @Inject constructor(
     private val executor: Executor,
     private val mainRepository: MainRepository,
-) : BaseAction <UserDetail>{
+) : BaseAction<UserDetail> {
     override suspend operator fun invoke() = executor {
         mainRepository.getUserDetail()
     }

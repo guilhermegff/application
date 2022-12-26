@@ -1,5 +1,8 @@
-package com.project.application
+package com.project.application.di
 
+import com.project.application.core.MainAction
+import com.project.application.infrastructure.MainRepository
+import com.project.application.infrastructure.MainService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

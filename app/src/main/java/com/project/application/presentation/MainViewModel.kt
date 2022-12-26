@@ -1,7 +1,8 @@
-package com.project.application
+package com.project.application.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.application.core.MainAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,6 +20,11 @@ class MainViewModel @Inject constructor(
 
     fun getDetail() {
         viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isLoading = true,
+                )
+            }
             runCatching {
                 mainAction.invoke()
             }.onSuccess { userDetail ->
@@ -39,7 +45,7 @@ class MainViewModel @Inject constructor(
     }
 
     data class ViewState(
-        val isLoading: Boolean = true,
+        val isLoading: Boolean = false,
         val isError: Boolean = false,
     )
 }

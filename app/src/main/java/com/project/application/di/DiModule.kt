@@ -1,5 +1,7 @@
-package com.project.application
+package com.project.application.di
 
+import com.project.application.infrastructure.MainRepository
+import com.project.application.infrastructure.MainRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
