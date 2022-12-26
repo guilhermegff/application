@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface MainService {
 
-    @GET("users/5690")
+    @GET("users/5318")
     suspend fun user() : UserDetail
 }
