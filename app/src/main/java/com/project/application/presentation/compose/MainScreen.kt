@@ -1,4 +1,4 @@
-package com.project.application
+package com.project.application.presentation.compose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -15,16 +15,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.project.application.presentation.MainViewModel
-import com.project.application.presentation.compose.LoadingScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun MainScreen(
     viewState: MainViewModel.ViewState,
+    onBackClick: () -> Unit,
     action: () -> Unit,
 ) {
     when {
         viewState.isLoading -> LoadingScreen()
+        viewState.isError -> ErrorScreen(onBackClick)
         else -> ScreenContent(action)
     }
 }
@@ -61,6 +62,10 @@ private fun ScreenContent(
 
 @Composable
 @Preview
-internal fun PreviewScreen() {
-    MainScreen(viewState = MainViewModel.ViewState()) {}
+private fun PreviewScreen() {
+    MainScreen(
+        viewState = MainViewModel.ViewState(),
+        onBackClick = {},
+        action = {},
+    )
 }

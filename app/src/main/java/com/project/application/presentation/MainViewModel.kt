@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     isLoading = true,
+                    isError = false,
                 )
             }
             runCatching {

@@ -5,7 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.collectAsState
-import com.project.application.MainScreen
+import com.project.application.presentation.compose.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,8 +16,11 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val viewState = viewModel.state.collectAsState().value
-            MainScreen(viewState) {
-                viewModel.getDetail() }
+            MainScreen(
+                viewState = viewState,
+                onBackClick = { super.onBackPressed() },
+                action = { viewModel.getDetail() },
+            )
         }
     }
 }
