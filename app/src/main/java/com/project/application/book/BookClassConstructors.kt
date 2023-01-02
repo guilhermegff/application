@@ -25,7 +25,6 @@ class MyButton : View {
     }
 }
 
-
 /*
 * It is also possible to have one of the class constructors to
 * delegate to another constructor from the same class
