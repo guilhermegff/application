@@ -1,7 +1,7 @@
 package com.project.application.di
 
-import com.project.application.infrastructure.MainRepository
-import com.project.application.infrastructure.MainRepositoryImpl
+import com.project.application.infrastructure.UserRepository
+import com.project.application.infrastructure.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import java.util.concurrent.Executor
 abstract class DiModule() {
 
     @Binds
-    abstract fun provideRepo(mainRepositoryImpl: MainRepositoryImpl) : MainRepository
+    abstract fun provideRepo(userDetailRepositoryImpl: UserRepositoryImpl) : UserRepository
 
     @Binds
     abstract fun provideExecutor(executorImpl: ExecutorImpl) : Executor
