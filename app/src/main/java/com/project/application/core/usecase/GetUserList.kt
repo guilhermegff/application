@@ -12,6 +12,6 @@ class GetUserList @Inject constructor(
     private val userUiMapper: UserUiMapper,
 )  {
     suspend operator fun invoke() = executor {
-        userUiMapper.transform((userRepository.getUserDetailList()))
+        userUiMapper.transform((userRepository.getUserList()))
     }
 }

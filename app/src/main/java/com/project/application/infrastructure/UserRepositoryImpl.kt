@@ -6,11 +6,11 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userService: UserService,
 ): UserRepository {
-    override suspend fun getUserDetail(id: String): User {
+    override suspend fun getUser(id: String): User {
         return userService.user(id)
     }
 
-    override suspend fun getUserDetailList(): List<User> {
+    override suspend fun getUserList(): List<User> {
         return userService.users()
     }
 }

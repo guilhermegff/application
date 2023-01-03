@@ -1,6 +1,6 @@
 package com.project.application.di
 
-import com.project.application.core.usecase.GetUserDetail
+import com.project.application.core.usecase.GetUser
 import com.project.application.infrastructure.UserRepository
 import com.project.application.infrastructure.UserService
 import com.project.application.presentation.mapper.UserUiMapper
@@ -61,7 +61,7 @@ object MainModule {
     @Provides
     fun provideAction(
         userRepository: UserRepository,
-    ) = GetUserDetail(
+    ) = GetUser(
         provideExecutor(),
         userRepository,
         providerUserDetailUiMapper()

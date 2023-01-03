@@ -6,12 +6,12 @@ import com.project.application.presentation.mapper.UserUiMapper
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-class GetUserDetail @Inject constructor(
+class GetUser @Inject constructor(
     private val executor: Executor,
     private val userRepository: UserRepository,
     private val userUiMapper: UserUiMapper,
 )  {
     suspend operator fun invoke(id: String) = executor {
-        userUiMapper.transform((userRepository.getUserDetail(id)))
+        userUiMapper.transform((userRepository.getUser(id)))
     }
 }

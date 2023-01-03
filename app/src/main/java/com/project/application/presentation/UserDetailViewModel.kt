@@ -2,7 +2,7 @@ package com.project.application.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.application.core.usecase.GetUserDetail
+import com.project.application.core.usecase.GetUser
 import com.project.application.core.usecase.GetUserList
 import com.project.application.presentation.model.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class UserDetailViewModel @Inject constructor(
-    private val getUserDetail: GetUserDetail,
+    private val getUser: GetUser,
     private val getUserList: GetUserList,
 ) : ViewModel() {
 
@@ -34,7 +34,7 @@ internal class UserDetailViewModel @Inject constructor(
             }
             runCatching {
                 getUserList.invoke()
-                getUserDetail.invoke(id)
+                getUser.invoke(id)
             }.onSuccess { userDetail ->
                 _state.update {
                     it.copy(
