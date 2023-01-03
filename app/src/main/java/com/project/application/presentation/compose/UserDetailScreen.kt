@@ -46,7 +46,7 @@ private fun ScreenContent(
                     .padding(top = Dp(30f))
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "id: ${viewState.userDetailUiModel.id}",
+                text = "id: ${viewState.userUiModel.id}",
                 color = Color.Black,
             )
             Text(
@@ -54,7 +54,7 @@ private fun ScreenContent(
                     .padding(top = Dp(30f))
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "name: ${viewState.userDetailUiModel.name}",
+                text = "name: ${viewState.userUiModel.name}",
                 color = Color.Black,
             )
             Text(
@@ -62,7 +62,7 @@ private fun ScreenContent(
                     .padding(top = Dp(30f))
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "email: ${viewState.userDetailUiModel.email}",
+                text = "email: ${viewState.userUiModel.email}",
                 color = Color.Black,
             )
             Text(
@@ -70,7 +70,7 @@ private fun ScreenContent(
                     .padding(top = Dp(30f))
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "gender: ${viewState.userDetailUiModel.gender}",
+                text = "gender: ${viewState.userUiModel.gender}",
                 color = Color.Black,
             )
             Text(
@@ -78,7 +78,7 @@ private fun ScreenContent(
                     .padding(top = Dp(30f))
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "status: ${viewState.userDetailUiModel.status}",
+                text = "status: ${viewState.userUiModel.status}",
                 color = Color.Black,
             )
         }

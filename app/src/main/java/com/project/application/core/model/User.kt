@@ -1,8 +1,8 @@
-package com.project.application.core
+package com.project.application.core.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserDetail(
+data class User(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")

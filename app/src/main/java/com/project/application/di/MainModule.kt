@@ -1,9 +1,9 @@
 package com.project.application.di
 
-import com.project.application.core.GetUserDetail
-import com.project.application.infrastructure.MainRepository
-import com.project.application.infrastructure.MainService
-import com.project.application.presentation.UserDetailUiMapper
+import com.project.application.core.usecase.GetUser
+import com.project.application.infrastructure.UserRepository
+import com.project.application.infrastructure.UserService
+import com.project.application.presentation.mapper.UserUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,8 +46,8 @@ object MainModule {
     }
 
     @Provides
-    fun provideApiClient(retrofit: Retrofit): MainService {
-        return retrofit.create(MainService::class.java)
+    fun provideApiClient(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
     }
 
     @Provides
@@ -56,14 +56,14 @@ object MainModule {
 
     @Provides
     fun providerUserDetailUiMapper() =
-        UserDetailUiMapper()
+        UserUiMapper()
 
     @Provides
     fun provideAction(
-        mainRepository: MainRepository,
-    ) = GetUserDetail(
+        userRepository: UserRepository,
+    ) = GetUser(
         provideExecutor(),
-        mainRepository,
+        userRepository,
         providerUserDetailUiMapper()
     )
 }
