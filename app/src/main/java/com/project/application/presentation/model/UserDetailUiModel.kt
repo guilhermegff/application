@@ -1,4 +1,4 @@
-package com.project.application.presentation
+package com.project.application.presentation.model
 
 data class UserDetailUiModel(
     val id: String = "",

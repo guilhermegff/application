@@ -1,7 +1,8 @@
-package com.project.application.core
+package com.project.application.core.usecase
 
+import com.project.application.core.invoke
 import com.project.application.infrastructure.MainRepository
-import com.project.application.presentation.UserDetailUiMapper
+import com.project.application.presentation.mapper.UserDetailUiMapper
 import java.util.concurrent.Executor
 import javax.inject.Inject
 

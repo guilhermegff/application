@@ -1,6 +1,7 @@
-package com.project.application.presentation
+package com.project.application.presentation.mapper
 
-import com.project.application.core.UserDetail
+import com.project.application.core.model.UserDetail
+import com.project.application.presentation.model.UserDetailUiModel
 import javax.inject.Inject
 
 class UserDetailUiMapper @Inject constructor() {

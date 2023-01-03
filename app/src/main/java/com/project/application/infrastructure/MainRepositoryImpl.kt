@@ -1,6 +1,6 @@
 package com.project.application.infrastructure
 
-import com.project.application.core.UserDetail
+import com.project.application.core.model.UserDetail
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(

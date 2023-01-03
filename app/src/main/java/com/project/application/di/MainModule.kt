@@ -1,9 +1,9 @@
 package com.project.application.di
 
-import com.project.application.core.GetUserDetail
+import com.project.application.core.usecase.GetUserDetail
 import com.project.application.infrastructure.MainRepository
 import com.project.application.infrastructure.MainService
-import com.project.application.presentation.UserDetailUiMapper
+import com.project.application.presentation.mapper.UserDetailUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

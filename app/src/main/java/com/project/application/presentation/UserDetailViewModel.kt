@@ -2,7 +2,8 @@ package com.project.application.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.application.core.GetUserDetail
+import com.project.application.core.usecase.GetUserDetail
+import com.project.application.presentation.model.UserDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
