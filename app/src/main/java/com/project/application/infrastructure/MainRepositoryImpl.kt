@@ -6,7 +6,7 @@ import javax.inject.Inject
 class MainRepositoryImpl @Inject constructor(
     private val mainService: MainService,
 ): MainRepository {
-    override suspend fun getUserDetail(): UserDetail {
-        return mainService.user()
+    override suspend fun getUserDetail(id: String): UserDetail {
+        return mainService.user(id)
     }
 }

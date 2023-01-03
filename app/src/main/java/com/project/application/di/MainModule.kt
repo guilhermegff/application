@@ -1,8 +1,9 @@
 package com.project.application.di
 
-import com.project.application.core.MainAction
+import com.project.application.core.GetUserDetail
 import com.project.application.infrastructure.MainRepository
 import com.project.application.infrastructure.MainService
+import com.project.application.presentation.UserDetailUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ object MainModule {
 
     @Singleton
     @Provides
-    fun provideOkHttp(): OkHttpClient{
+    fun provideOkHttp(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(provideLoggingInterceptor())
             .build()
@@ -51,8 +52,18 @@ object MainModule {
 
     @Provides
     fun provideExecutor() =
-         ExecutorImpl()
+        ExecutorImpl()
 
     @Provides
-    fun provideAction(mainRepository: MainRepository) = MainAction(provideExecutor(), mainRepository)
+    fun providerUserDetailUiMapper() =
+        UserDetailUiMapper()
+
+    @Provides
+    fun provideAction(
+        mainRepository: MainRepository,
+    ) = GetUserDetail(
+        provideExecutor(),
+        mainRepository,
+        providerUserDetailUiMapper()
+    )
 }
