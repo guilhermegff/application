@@ -6,12 +6,12 @@ class BookClassInterfaces
 /*
 * Interfaces can have declarations of abstract properties
 * */
-private interface User {
+internal interface User {
     val nickName: String
 }
 
-//High or First? order fun
-private fun getUserFrom(accountId: Int) : String = "user"
+//High level fun
+internal fun getUserFrom(accountId: Int) : String = "user"
 
 /*
 * Class property implements abstract interface property and is declared on primary constructor,
