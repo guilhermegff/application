@@ -1,4 +1,4 @@
-package com.project.application.presentation.compose
+package com.project.application.presentation.userDetail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -12,9 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.project.application.presentation.UserDetailViewModel
+import com.project.application.presentation.compose.ErrorScreen
+import com.project.application.presentation.compose.LoadingScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun UserDetailScreen(
     viewState: UserDetailViewModel.ViewState,
