@@ -1,8 +1,7 @@
-package com.project.application.presentation
+package com.project.application.presentation.userList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.application.core.usecase.GetUser
 import com.project.application.core.usecase.GetUserList
 import com.project.application.presentation.model.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,8 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class UserDetailViewModel @Inject constructor(
-    private val getUser: GetUser,
+class UserListViewModel @Inject constructor(
     private val getUserList: GetUserList,
 ) : ViewModel() {
 
@@ -22,10 +20,10 @@ internal class UserDetailViewModel @Inject constructor(
     val state = _state
 
     init {
-        getDetail("4685")
+        getUserList()
     }
 
-    private fun getDetail(id: String) {
+    private fun getUserList() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -34,12 +32,11 @@ internal class UserDetailViewModel @Inject constructor(
             }
             runCatching {
                 getUserList.invoke()
-                getUser.invoke(id)
-            }.onSuccess { userDetail ->
+            }.onSuccess { userList ->
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        userUiModel = userDetail,
+                        userListUiModel = userList,
                     )
                 }
             }.onFailure {
@@ -56,6 +53,6 @@ internal class UserDetailViewModel @Inject constructor(
     data class ViewState(
         val isLoading: Boolean = false,
         val isError: Boolean = false,
-        val userUiModel: UserUiModel = UserUiModel()
+        val userListUiModel: List<UserUiModel> = emptyList()
     )
 }
