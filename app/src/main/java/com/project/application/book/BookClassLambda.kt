@@ -17,6 +17,10 @@ fun findOldest() {
     list.maxByOrNull { c -> c.age }
     list.maxByOrNull { it.age }
     list.maxByOrNull(Container::age)
+    list.filter { it.age > 3 }
+    list.all { it.age > 3 }
+    val b = listOf("a", "ab", "b")
+    b.groupBy(String::first)
 }
 
 /*
