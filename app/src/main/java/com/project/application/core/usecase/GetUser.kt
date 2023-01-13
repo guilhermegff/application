@@ -10,7 +10,7 @@ class GetUser @Inject constructor(
     private val executor: Executor,
     private val userRepository: UserRepository,
     private val userUiMapper: UserUiMapper,
-)  {
+) {
     suspend operator fun invoke(id: String) = executor {
         userUiMapper.transform((userRepository.getUser(id)))
     }
