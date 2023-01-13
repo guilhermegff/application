@@ -20,10 +20,10 @@ class UserListViewModel @Inject constructor(
     val state = _state
 
     init {
-        getUserList()
+        initializeScreenData()
     }
 
-    private fun getUserList() {
+    private fun initializeScreenData() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -31,11 +31,12 @@ class UserListViewModel @Inject constructor(
                 )
             }
             runCatching {
-                getUserList.invoke()
+                getUserList()
             }.onSuccess { userList ->
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isError = false,
                         userListUiModel = userList,
                     )
                 }
@@ -48,6 +49,10 @@ class UserListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun errorAction() {
+        if(state.value.isError) initializeScreenData()
     }
 
     data class ViewState(

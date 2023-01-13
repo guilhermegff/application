@@ -21,10 +21,11 @@ import com.project.application.presentation.model.UserUiModel
 @Composable
 fun UserListScreen(
     viewState: UserListViewModel.ViewState,
+    action: () -> Unit,
 ) {
     when {
         viewState.isLoading -> LoadingScreen()
-        viewState.isError -> ErrorScreen {}
+        viewState.isError -> ErrorScreen(action)
         else -> ScreenContent(viewState)
     }
 }
@@ -87,6 +88,6 @@ private fun PreviewScreen() {
                 UserUiModel(name = "C", status = "3"),
                 UserUiModel(name = "D", status = "4"),
             )
-        )
-    )
+        ),
+    ) {}
 }

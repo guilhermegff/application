@@ -19,7 +19,7 @@ internal class MainActivity : AppCompatActivity() {
             val viewState = viewModel.state.collectAsState().value
             UserListScreen(
                 viewState = viewState,
-            )
+            ) { viewModel.errorAction() }
         }
     }
 }
