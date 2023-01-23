@@ -39,7 +39,8 @@ object MainModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://gorest.co.in/public/v2/")
+            //.baseUrl("https://gorest.co.in/public/v2/")
+            .baseUrl("http://10.0.2.2:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
