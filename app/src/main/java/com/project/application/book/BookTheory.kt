@@ -77,16 +77,29 @@ class BookTheory {
 * Infix call
 * mapOf(1 to "one")
 * The "to" word is not a built-in feature from Kotlin but a call to a special kind of method called "Infix Call".
-* On a Infix Call the name o the method is inserted right after the name of the target object and the parameter, with no
+* On a Infix Call the name of the method is inserted right after the name of the target object and the parameter, with no
 * extra separators
 * 1.to("one")
 * 1 to "one"
 * Both calls are equivalent.
-* Infix Call can be used with usual method as well with extension functions that have one required parameter.
+* Infix Call can be used with usual methods as well with extension functions that have one required parameter.
 * To allow a function to be called like this it is necessary to mark it with the "Infix" modifier.
 * infix fun Any.to(other: Any) = Pair(this, other)
 * We can initialize two variables directly with the content of a pair.
 * val(number, name) = 1 to "one"
 * This feature is called "Destructuring Declaration".
+*
+* Kotlin Interfaces can contain Property Declarations, Abstract Methods as well as non abstract methods implementations.
+* Methods on interfaces require only a definition of a body to be default with no need for special reserved word.
+*
+* Nested classes are not internal as a standard: they do not have an implicit reference to its external class.
+*
+* Kotlin classes, methods and properties are final. The word "open" makes them open to being overriden.
+* Overriden functions and properties are still open by default, they can be made closed to changes with the word "final".
+*
+* Kotlin nested classes do not have a reference to the outer class by default. To have the reference you need to
+* use the "inner" word.
+* .
+*
 *
 * */

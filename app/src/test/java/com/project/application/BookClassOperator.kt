@@ -1,5 +1,9 @@
 package com.project.application
 
+import com.project.application.book.Button1
+import com.project.application.book.ClassSealed
+import com.project.application.book.SealedD
+import com.project.application.book.SealedE
 import org.junit.Test
 import java.beans.PropertyChangeListener
 import java.math.BigDecimal
@@ -141,5 +145,45 @@ class BookClassOperator : BookClassOperatorFixture {
             }
         )
         component.weight = 3
+    }
+
+    @Test
+    fun multipleInterfaces() {
+        val button = Button1()
+        button.setFocus(true)
+        button.showOff()
+    }
+
+    @Test
+    fun sealedClassTry() {
+        val a = ClassSealed.SealedA()
+        val b = ClassSealed.SealedB
+        val c = ClassSealed.SealedC(1)
+        val d = SealedD()
+        val e = SealedE(1)
+        fun trySealed(a: ClassSealed) {
+            when(a) {
+                is ClassSealed.SealedA -> {
+                    println("A")
+                }
+                is ClassSealed.SealedB -> {
+                    println("B")
+                }
+                is ClassSealed.SealedC -> {
+                    println("C")
+                }
+                is SealedD -> {
+                    println("D")
+                }
+                is SealedE -> {
+                    println("E")
+                }
+            }
+        }
+        trySealed(a)
+        trySealed(b)
+        trySealed(c)
+        trySealed(d)
+        trySealed(e)
     }
 }
