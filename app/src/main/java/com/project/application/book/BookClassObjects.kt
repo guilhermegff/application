@@ -133,6 +133,7 @@ fun useExtExample() {
 
 /*
 * The object reserved word is also used to declare anonymous objects
+* Every time the code is called a new instance of the object is created, it is not a singleton.
 * */
 fun useAnonObject() {
     var a = 0

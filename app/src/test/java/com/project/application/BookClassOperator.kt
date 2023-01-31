@@ -1,9 +1,6 @@
 package com.project.application
 
-import com.project.application.book.Button1
-import com.project.application.book.ClassSealed
-import com.project.application.book.SealedD
-import com.project.application.book.SealedE
+import com.project.application.book.*
 import org.junit.Test
 import java.beans.PropertyChangeListener
 import java.math.BigDecimal
@@ -185,5 +182,36 @@ class BookClassOperator : BookClassOperatorFixture {
         trySealed(c)
         trySealed(d)
         trySealed(e)
+    }
+
+    @Test
+    fun logBackingField() {
+        val a = Profile("Book")
+        a.address
+        a.address = "Address"
+        a.address = "New Address"
+        a.address
+    }
+
+    @Test
+    fun tryEquals() {
+        val a = Profile("Book")
+        val b = Profile("Book")
+        println(a == b)
+        println(a.equals(b))
+        println(a === b)
+        println(a == a)
+        println(a.equals(a))
+        println(a === a)
+        println(a.hashCode() == b.hashCode())
+        val c = hashSetOf<Profile>()
+        c.add(a)
+        println(c.contains(a))
+        println(c.contains(b))
+    }
+
+    @Test
+    fun tryObjects() {
+        val a = LengthCounter()
     }
 }
