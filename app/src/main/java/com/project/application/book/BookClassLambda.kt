@@ -1,11 +1,31 @@
 package com.project.application.book
 
+import kotlin.math.sin
+
 //Class to practice with code from the book "Kotlin In Action"
 class BookClassLambda
 
 data class Container(val name: String, val age: Int)
 
+class ExampleClass(val v: Int) {
+    fun oneFun(a: Int) {
+
+    }
+}
+
+val action = { a: Int ->
+    singleFun(a)
+}
+
+val nextAction = ::singleFun
+
+fun singleFun(a: Int){
+
+}
+
 val list = listOf<Container>(Container("A", 1), Container("B", 2))
+
+val list2 = listOf<ExampleClass>(ExampleClass(1))
 
 /*
 * If the lambda delegates to a property or a function
@@ -17,10 +37,17 @@ fun findOldest() {
     list.maxByOrNull { c -> c.age }
     list.maxByOrNull { it.age }
     list.maxByOrNull(Container::age)
+    nextAction(1)
+    val exampleClass = ExampleClass(1)
+    val a = ExampleClass::oneFun
+    a(exampleClass, 1)
+    val c = exampleClass::oneFun
+    c(1)
     list.filter { it.age > 3 }
     list.all { it.age > 3 }
     val b = listOf("a", "ab", "b")
     b.groupBy(String::first)
+    list.asSequence().map { it }.filter { it.age > 1 }.toList()
 }
 
 /*
