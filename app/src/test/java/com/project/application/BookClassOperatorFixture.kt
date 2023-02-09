@@ -29,7 +29,7 @@ interface BookClassOperatorFixture {
         override fun compareTo(other: PersonC): Int {
             return compareValuesBy(
                 this, other,
-                PersonC::lastName, PersonC::firstName
+                PersonC::firstName, PersonC::lastName
             )
         }
     }
@@ -114,8 +114,7 @@ interface BookClassOperatorFixture {
     class MoreComponent(
         val name: String, age: Int, salary: Int,
     ) : PropertyChangeAware() {
-        private val observer = {
-            prop: KProperty<*>, oldValue: Int, newValue: Int ->
+        private val observer = { prop: KProperty<*>, oldValue: Int, newValue: Int ->
             changeSupport.firePropertyChange(prop.name, oldValue, newValue)
         }
         var age: Int by Delegates.observable(age, observer)
@@ -167,5 +166,132 @@ operator fun BookClassOperatorFixture.Rectangle.contains(p: BookClassOperatorFix
 fun printEntries(map: Map<String, String>) {
     for ((key, value) in map) {
         println("$key -> $value")
+    }
+}
+
+inline fun inlinedFun(action: (int: Int) -> Int): Int {
+    var a = 0
+    (a..10).forEach label@{
+        if (it == 2) {
+            a = action.invoke(it)
+            return@label
+        }
+    }
+    return a
+}
+
+interface Animal {
+    fun animalFun() {
+        println("Animal Fun")
+    }
+}
+
+class Cat : Animal {
+    fun catFun() {
+        println("Cat Fun")
+    }
+}
+
+class Dog : Animal {
+    fun dogFun() {
+        println("Dog Fun")
+    }
+}
+
+class Herd<out T : Animal>(
+    private val list: List<T> = ArrayList()
+) : List<T> by list {
+}
+
+class Recipe<T : Food>(
+    val ingredients: Collection<T> = ArrayList()
+) {
+    fun addIngredient(ingredient: T) {
+        (ingredients as ArrayList).add(ingredient)
+    }
+}
+
+fun startRecipe(recipe: Recipe<Food>) {
+    recipe.ingredients.forEach {
+        it.food()
+    }
+}
+
+fun Animal.getIndex(): Int = if (isA<Dog>(this)) 0 else 1
+
+fun enumerateCats(action: (Cat) -> Number) {
+    println(action.invoke(Cat()))
+}
+
+fun tryEnumerate() {
+    enumerateCats(Animal::getIndex)
+}
+
+/*fun feedAll(animal: List<Animal>) {
+    animal.forEach {
+        it.animalFun()
+    }
+}*/
+
+fun feedAll(animals: Herd<Animal>) {
+    animals.forEach {
+        it.animalFun()
+    }
+}
+
+/*fun feedEachCat(cats: List<Cat>) {
+    cats.forEach {
+        it.catFun()
+        feedAll(cats)
+    }
+}*/
+
+fun feedEachCat(cats: Herd<Cat>) {
+    cats.forEach {
+        it.catFun()
+        feedAll(cats)
+    }
+}
+
+fun <T : Animal> List<T>.feed() {
+    forEach {
+        it.animalFun()
+    }
+
+    forEach(fun(it: T) {
+        it.animalFun()
+    })
+}
+
+inline fun <reified T : Animal> isA(value: Animal) = value is T
+
+/*fun List<Cat>.feedCat() {
+    feedAll(this)
+}*/
+
+interface Food {
+    fun giveFood(): Food
+    fun food() {
+        println("Food")
+    }
+}
+
+class Rice : Food {
+    override fun giveFood(): Food {
+        return Rice()
+    }
+
+    fun rice() {
+        println("Rice")
+    }
+}
+
+class Bean : Food {
+    override fun giveFood(): Food {
+        return Bean()
+    }
+
+    fun bean() {
+        println("Bean")
     }
 }

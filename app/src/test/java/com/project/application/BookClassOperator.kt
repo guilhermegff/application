@@ -69,8 +69,7 @@ class BookClassOperator : BookClassOperatorFixture {
         val p1 = BookClassOperatorFixture.PersonC("Alice", "Smith")
         val p2 = BookClassOperatorFixture.PersonC("Bob", "Johnson")
         println(p1 < p2)
-        assert(!(p1 < p2))
-
+        assert(p1 < p2)
     }
 
     @Test
@@ -133,14 +132,12 @@ class BookClassOperator : BookClassOperatorFixture {
     @Test
     fun propertyDelegate() {
         val component = BookClassOperatorFixture.Component("big", 2)
-        component.addPropertyChangeListener(
-            PropertyChangeListener { event ->
-                println(
-                    "Property ${event.propertyName} changed " +
-                            "from ${event.oldValue} to ${event.newValue}"
-                )
-            }
-        )
+        component.addPropertyChangeListener { event ->
+            println(
+                "Property ${event.propertyName} changed " +
+                        "from ${event.oldValue} to ${event.newValue}"
+            )
+        }
         component.weight = 3
     }
 
@@ -213,5 +210,39 @@ class BookClassOperator : BookClassOperatorFixture {
     @Test
     fun tryObjects() {
         val a = LengthCounter()
+    }
+
+    @Test
+    fun testInline() {
+        val a = inlinedFun(fun (int: Int) : Int {
+            return int + 1
+        })
+        val b = inlinedFun{
+            it + 1
+        }
+        println(a)
+        println(b)
+    }
+
+    @Test
+    fun testGeneric() {
+        val list = arrayListOf(Cat(), Dog())
+        list.feed()
+        println(isA<Animal>(list[0]))
+        println(isA<Dog>(list[1]))
+        val herd = Herd(listOf(Cat(), Dog()))
+        herd.feed()
+        println(isA<Animal>(herd[0]))
+        println(isA<Dog>(herd[1]))
+    }
+
+    @Test
+    fun tryIt() {
+        tryEnumerate()
+    }
+
+    @Test
+    fun testRecipe() {
+        startRecipe(Recipe(listOf(Rice())))
     }
 }
