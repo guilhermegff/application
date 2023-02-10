@@ -6,39 +6,99 @@ class BookTheory {
 
 //region Chapter 2
 /*
-* Initial Concepts - Functions, Variables and Classes
-*
-* Smart Cast is a type verification and a cast on a single operation
-*
-* Kotlin has lots of wrappers around standard Java libraries functions
-*
 * In Kotlin, "if" is an expression with a return value. In Java, all control structures are instructions.
 * An instruction is always a high level element inside it's containing block and does not have a value
 *
+* Just like "if", "when" is an expression that returns a value.
+* The argument for a "when" expression can by any type of object.
+* If no argument is specified then the branch condition will be any boolean expression.
+* On "when", only the corresponding branch will be executed. Different values can be combined on the same branch with ,.
+*
+* Keyword "Try" is an expression like "if" and "when", can return value.
+*
 * For, Do and Do While control structures are not expressions even in Kotlin.
-*
-* If you write a Function with a { } body then this function has a "Block Body".
-* If the Function returns an expression directly then it is called "Expression Body"
-*
-* The Kotlin compiler can analyze an expression and use it's type as the return type when it is not explicitly specified,
-* this is known as "Type Inference"
-*
-* Non specified return types can only be used on Functions with "Expression Body".
-* Functions with "Block Body" must always specify the return type and use the return instruction explicitly.
-*
-* Types can be omitted on val initialization expressions, the compiler will use the "Type Inference" to know that type the val is.
-        * If the val is not being initialized then the Type must be explicitly specified on it's declaration.
-*
+*/
+val expressionThatHasValue = if (true) 0 else 1
+
+val sameThingWithWhen = when (true) {
+    true -> 1
+    false -> 0
+}
+
+val sameThingWithTry = try {
+    0
+} catch (e: java.lang.Exception) {
+    1
+}
+
+/*
 * Variables can be declared as val (Immutable) or var (Mutable).
 * Vals cannot receive a new value after being initialized, they are like a Final variable in Java.
 * Vars can receive a new value after being initialized.
 * The Kotlin compiler infers the variable type only after first initialization.
+* The Kotlin compiler can analyze an expression and use it's type as the return type when it is not explicitly specified,
+* this is known as "Type Inference"
 *
+* Types can be omitted on val initialization expressions, the compiler will use the "Type Inference" to know that type the val is.
+* If the val is not being initialized then the Type must be explicitly specified on it's declaration.
+*/
+var b = 1
+
+val c = 0
+
+fun withTypeSpecification() {
+    val d: Int
+}
+
+fun cannotInferAgain() {
+    //b = 0F Type Inference happens only once, on initialization
+    //c = 1  Val cannot be reassigned
+}
+
+fun returnInt() = 1 //Return Type Inference
+
+/*
+* If you write a Function with a { } body then this function has a "Block Body".
+* If the Function returns an expression directly then it is called "Expression Body"
+*
+* Non specified return types can only be used on Functions with "Expression Body".
+* Functions with "Block Body" must always specify the return type and use the return instruction explicitly.
+*/
+fun withExpressionBody() = if (true) 0 else 1
+
+fun withBlockBody(): Int {
+    return if (true) 0 else 1
+}
+
+/*
 * String template: Use $ to reference local variables on string literals.
-* It is also possible to use expressions: "Hello ${list[0]}"
-*
-* Classes that contain only data and no code are often known as "Value Objects"
-*
+* It is also possible to use expressions: "Hello ${list[0]}".
+*/
+val listOfStrings = listOf("Hello", "Hi")
+
+const val string = "World"
+
+fun printTheList() {
+    println("${listOfStrings[0]} $string!")
+}
+
+/*
+* Classes that contain only data and no code are often known as "Value Objects".
+*/
+class ValueObject(val value1: Int, val value2: String)
+
+/*
+* Smart Cast is a type verification and a cast on a single operation.
+* The word "is" checks if a variable is of a type.
+* The word "as" makes an explicit cast to a type.
+*/
+fun withSmartCast(number: Number) {
+    if (number is Int) {
+        number.plus(1)
+    }
+}
+
+/*
 * Kotlin's default access modifier is "Final" and "Public"
 *
 * In Java, the combination of a Field and it's access methods is usually called "Property"
@@ -46,14 +106,47 @@ class BookTheory {
 * Val and Var are properties, val is ready only (Generates only a field and a getter)
 * and var is read-write (Generates a field, getter and setter). Access methods can be customized.
 *
-*  Look for: What is a field, what is an accessor method?
+* Access methods can be customized
+* */
+class Geometry(
+    private val height: Int,
+    private val length: Int
+) {
+    val size: Int
+        get() = height * length
+    var color: String = "Transparent"
+        set(value) {
+            field = "$value + Color"
+        }
+}
+
+/*
+* Kotlin makes no distinction between importing classes or functions and allows you to import any declaration by using
+* the reserved word "import". Higher level function can aslo be imported by its name.
 *
-* Just like "if", "when" is an expression that returns a value.
-* The argument for a "when" expression can by any type of object.
+* If you use the "*" after after the package name then all declarations defined on that package are imported. It will also
+* make all higher level functions and variables on that package visible.
+*
+* Enum classes can have declarations of properties and methods. They use the same constructor and property declaration syntax as
+* regular classes.
+*/
+enum class IntEnum(int: Int) {
+    ONE(1),
+    TWO(2),
+    THREE(3); //Must use ; to separate the constants list from methods definitions.
+    fun enumMethod() {
+
+    }
+}
+
+/*
+* 
+*
 *
 * Keyword operator "in" translates to: c in 'a'..'z' = a <= c && c <= z
 *
-* Keyword "Try" is an expression like "if" and "when", can return value.
+*
+*
 */
 //endregion
 
