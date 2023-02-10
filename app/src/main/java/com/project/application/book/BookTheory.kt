@@ -134,20 +134,77 @@ enum class IntEnum(int: Int) {
     ONE(1),
     TWO(2),
     THREE(3); //Must use ; to separate the constants list from methods definitions.
+
     fun enumMethod() {
 
     }
 }
 
 /*
-* 
-*
-*
-* Keyword operator "in" translates to: c in 'a'..'z' = a <= c && c <= z
-*
-*
-*
+* The "while" loop in Kotlin is identical to Java's.
+* The "for" loop is present in only one form equivalent to "for each" loop from Java.
+* It is written as in C# "for item in elements"
 */
+@Suppress("UNREACHABLE_CODE")
+fun withWhileLoop() {
+    while (true) { // The body is executed as long as the condition is true
+        val a = 0
+    }
+    do {
+        val b = 1
+    } while (true) // Executed unconditionally for the first time. After that it will be executed while the condition is true
+}
+
+val listOfElements = arrayListOf(1, 2, 3)
+
+fun withForLoop() {
+    for (element in listOfElements) {
+        println(element)
+    }
+}
+
+/*
+* Interval is represented with "..", it works for numbers and chars, and also for implementations of Comparable Interface.
+* Intervals in Kotlin are "closed" or "inclusive".
+* An iteration throughout an entire interval is called progression.
+* A progression can be made with "steps", the steps can be positive (forward progression) or negative (backward progression).
+* To keep the final point from the progression, the word "until" should be used.
+* Keyword operator "in" translates to: c in 'a'..'z' = a <= c && c <= z
+*/
+val interval = 1..10
+
+fun withInterval() { //Inclusive
+    for(value in interval) {
+        println(value)
+    }
+}
+
+fun withUntil() {
+    for(value in 1 until 10) { //Exclusive, 10 is not used
+        println(value)
+    }
+}
+
+fun withStep() {
+    for(value in 10 downTo  1 step 2) {
+        println(value)
+    }
+}
+/*
+* Operator "in" is used to verify if a value is in an interval.
+* */
+
+fun withIn() {
+    val a = 2 in interval //True
+    val b = 0 !in interval //True
+}
+
+/*
+* In Kotlin, the "throw" construction is an expression and can be used as part of other expressions.
+* The main difference about exceptions in Java and Kotlin is that the latter makes no distinction between checked or unchecked exceptions.
+* There is no need to specify the exceptions one function can throw and the exception can be left unhandled.
+* */
+fun withThrowExpression() = if(true) 0 else throw java.lang.IllegalArgumentException()
 //endregion
 
 //region Chapter 3
