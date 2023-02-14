@@ -527,7 +527,7 @@ class WithClicker() {
 * If the Lambda delegates to a function or a property then it can be replaced by a member reference Class::member.
 * The function must be a high level function and not a function that is member of a class.
 *
-* A Lambda can use variables from its containing function, those external variables that are acceseed by the Lambda are called
+* A Lambda can use variables from its containing function, those external variables that are accessed by the Lambda are called
 * captured variables.
 *
 * A reference to the constructor can store or postpone the creation of an instance ::Class
