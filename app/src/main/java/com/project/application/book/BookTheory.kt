@@ -174,19 +174,19 @@ fun withForLoop() {
 val interval = 1..10
 
 fun withInterval() { //Inclusive
-    for(value in interval) {
+    for (value in interval) {
         println(value)
     }
 }
 
 fun withUntil() {
-    for(value in 1 until 10) { //Exclusive, 10 is not used
+    for (value in 1 until 10) { //Exclusive, 10 is not used
         println(value)
     }
 }
 
 fun withStep() {
-    for(value in 10 downTo  1 step 2) {
+    for (value in 10 downTo 1 step 2) {
         println(value)
     }
 }
@@ -204,12 +204,25 @@ fun withIn() {
 * The main difference about exceptions in Java and Kotlin is that the latter makes no distinction between checked or unchecked exceptions.
 * There is no need to specify the exceptions one function can throw and the exception can be left unhandled.
 * */
-fun withThrowExpression() = if(true) 0 else throw java.lang.IllegalArgumentException()
+fun withThrowExpression() = if (true) 0 else throw java.lang.IllegalArgumentException()
 //endregion
 
 //region Chapter 3
 /*
-The "@JvmOverloads" annotation makes the compiler generate overloads for the annotated method.
+* Named arguments
+* If one arguments is specified on on call then all next arguments must be also specified.
+* Parameters can have a default value.
+*/
+class NamedArguments(argument: Int = 0, other: String = "zero")
+
+fun withNamedArguments() {
+    NamedArguments(argument = 1, other = "one")
+}
+
+/*
+* Java has no default value for parameters so if a function with default values in Kotlin is called from Java then all arguments must be explicitly
+* specified.
+* The "@JvmOverloads" annotation makes the compiler generate overloads for the annotated method.
 * Each overload omits one of the function parameter and uses the default value.
 *
 * High level functions are accessible through a class that is named after the containing file eg: "Ext.kt -> ExtKt class"
@@ -217,79 +230,295 @@ The "@JvmOverloads" annotation makes the compiler generate overloads for the ann
 *
 * To customize the name of the generated class, the "@file:JvmName("CustomName")" annotation can be placed right before the package name.
 *
-* Properties can also be placed on the higher level of a file.
+* Properties can also be placed on the higher level of a file. The value of this property will be stored on a static field.
 * They are exposed to Java as access methods (getter/setter)
 * To expose a high level property as a public static final field to Java, use the "const" modifier.
 * The "const" modifier can be used only on primitive types and String.
-*
-* An extension function is a function that can be called as if it was a member of a class but is defined outside of said class.
+*/
+const val constProperty: String = "const"
+
+/* An extension function is a function that can be called as if it was a member of a class but is defined outside of said class.
 * The name of the class is the "Receptor Type" and the value on which the function is called is the "Receptor object""
-*
 * Extension functions do not have access to private or protected class members.
-*
 * Internally, an extension function is a static method that accepts the receptor object as it's first argument.
+* Extensions cannot be overriden on subclasses.
+* If there is a duplicity of names with one being a member function and the other an extension function, the member function will always
+* take precedence of the extension.
+*/
+class ANewClass(private val parameter: Int = 0)
+
+fun ANewClass.newFunction() {
+    //parameter No access to private or protected members
+}
+
+fun tryNewFunction() {
+    val a = ANewClass()
+    a.newFunction()
+}
+
+/*
 * It is also possible to have "Property Extensions" where the getter must always be defined since there is no backing field.
-*
+*/
+val ANewClass.newProperty
+    get() = "newProperty"
+
+/*
+* Varargs allow for an arbitrary number of values to be passed by packaging it on an array.
+* Kotlin uses the modifier "vararg" on the parameter.
+* If the values are already packaged inside an array then the un-packaging must be made explicit with the spread operator "*".
+*/
+fun withVararg(vararg args: Int) {}
+
+fun tryWithVararg() {
+    val array = intArrayOf(1, 2, 3)
+    withVararg(*array)
+}
+
+/*
 * Infix call
-* mapOf(1 to "one")
-* The "to" word is not a built-in feature from Kotlin but a call to a special kind of method called "Infix Call".
-* On a Infix Call the name of the method is inserted right after the name of the target object and the parameter, with no
+* On a Infix Call the name of the method is inserted right after the name of the target object and and just before the parameter, with no
 * extra separators
 * 1.to("one")
 * 1 to "one"
-* Both calls are equivalent.
+* mapOf(1 to "one")
+* The "to" word is not a built-in feature from Kotlin but a call to a special kind of method called "Infix Call".
+* All previous calls are equivalent.
 * Infix Call can be used with usual methods as well with extension functions that have one required parameter.
 * To allow a function to be called like this it is necessary to mark it with the "Infix" modifier.
-* infix fun Any.to(other: Any) = Pair(this, other)
-* We can initialize two variables directly with the content of a pair.
-* val(number, name) = 1 to "one"
+*/
+infix fun String.to(other: String) = Pair(this, other)
+
+/* We can initialize two variables directly with the content of a pair.
 * This feature is called "Destructuring Declaration".
-* */
+*/
+fun tryDestructuringDeclaration() {
+    val (number, name) = 1 to "one"
+}
+
 //endregion
 
 //region Chapter 4
 /*
- Kotlin Interfaces can contain Property Declarations, Abstract Methods as well as non abstract methods implementations.
+* Kotlin Interfaces can contain Property Declarations, Abstract Methods as well as non abstract methods implementations.
 * Methods on interfaces require only a definition of a body to be default with no need for special reserved word.
-*
-* Nested classes are not internal as a standard: they do not have an implicit reference to its external class.
-*
-* Kotlin classes, methods and properties are final. The word "open" makes them open to being overriden.
+*/
+interface TryInterface {
+    val property: Int
+    fun abstractMethod()
+    fun defaultMethod() {
+
+    }
+}
+
+/*
+* Kotlin classes, methods and properties are final and public by default. The word "open" makes them open to being overriden.
 * Overriden functions and properties are still open by default, they can be made closed to changes with the word "final".
 *
-* Kotlin nested classes do not have a reference to the outer class by default. To have the reference you need to
-* use the "inner" word.
+* Nested classes are not internal as a standard: they do not have an implicit reference to its external class.
+* To have the reference you need to use the "inner" word.
+* Nested classes with no "inner" modifier are the same as Java Static Classes.
+*/
+class OuterClass() {
+    private val outerProperty = 0
+    private fun outerMethod() = 0
+    class InsideClass() {
+        //val outerReference = this@OuterClass Not possible, there is no reference to the outer class.
+        //val insideProperty = outerProperty   Not possible, there is no reference to the outer class.
+    }
+
+    inner class InnerClass() {
+        val outerReference = this@OuterClass //Get the reference to the outer class
+
+        //Inner classes can access external class members
+        val innerProperty = outerProperty
+        val accessOuterClassMethod = outerMethod()
+    }
+}
+
+fun tryNestedInnerClass() {
+    val outerClass = OuterClass()
+    val insideClass = OuterClass.InsideClass()
+    val innerClass = OuterClass().InnerClass()
+}
+
+/*
+* Sealed Class vs Enum Class.
+* Prefer Enum class when there is a need to represent a concrete set of values and favor Sealed Class when there is a concrete
+* set of classes.
+* Direct subclasses of sealed classes and interfaces must be declared in the same package  and module of the super type.
 *
+* There is a distinction between constructors of a class in Kotlin.
+* The primary constructor is declared outside of the class, with parenthesis and specifying the constructor parameters and the class properties that
+* should be initialized by these parameters.
+* All other constructors are to be declared inside the class.
+* It is also possible to declare one or multiple initialization blocs inside the class.
+* The "constructor" word can be omitted on the primary constructor when there is no annotation or modifiers being applied to it.
+*/
+class TryPrimaryConstructor(val parameter: Int) // The use of val in the constructor means that a property should be initialized with this value
+
+class TrySecondaryConstructor {
+    constructor(name: String) {
+
+    }
+
+    constructor()
+
+    init {
+        val a = 0
+    }
+}
+
+/*
+* If a class has a superclass then the primary constructor also needs to initialize the superclass
+* If no constructor is declared for a class, then a default constructor that does nothing will be generated by the compiler.
+* If this class is inherited from and no constructor is provided then an explicit call to the superclass constructor is required.
+* If the must be protected from being instantiated freely then the constructor can be made private.
+*/
+open class TryWithSuperClass
+
+class UseSuperClass : TryWithSuperClass()
+
+class UseSuperClassSecondary : TryWithSuperClass {
+    constructor(b: Int) : super()     //Delegates to superclass constructor
+    constructor(a: String) : super()  //Delegates to superclass constructor
+    constructor() : this(0)        //Delegates to another constructor from the same class
+}
+
+class PrivateConstructor private constructor()
+
+/*
 * Kotlin interfaces can contain properties with getters and setters as long as it does not reference a backing field.
-*
+*/
+interface TryWithInterface {
+    val noBackingField: String
+        get() = "String"
+    val withBackingField: String
+}
+
+class TryThisInterface() : TryWithInterface {
+    override val withBackingField = "String"
+}
+
+fun tryTheBackingField() {
+    val a = TryThisInterface()
+    a.noBackingField
+    a.withBackingField
+}
+
+/*
 * On classes, backing fields are accessible by using the reserved word "Field". It must be used inside the method block body.
-*
 * The kotlin compiler will generate the backing field when it is explicitly referenced or if the default access method is used.
-* If custom implementation of access methods do not reference "Field" then the backing field won't be present.
+* If custom implementation of access methods are defined but do not reference "Field" then the backing field won't be present.
 *
 * The default visibility for access methods is the same as the property. It can be changed by placing the modifier before
 * the word "get" or "set".
+*/
+class UsingTheBackingField(private val value: Int) {
+    private var otherValue: Int = 0
+        get() = value
+        set(value) {
+            field = value + 1
+        }
+}
+
+/*
+*
 *
 * Equality can be Structural (content) or Referential (memory point).
 * In Kotlin the "==" operator will check for referential equality as default. To check for structural equality then it is
 * necessary to override "equals()".
 * The operator "===" will always check for referential equality.
-* Hashcode method should always be defined together with equals method
+* The general contract for HashCode is that if two objects are equal then they must have the same HashCode.
+* The HashCode is different for each instance by default, so Hashcode method should always be overriden together with equals method
+*
 *
 * The Kotlin compiler can generate the overriden "equals", "hashcode" and "toString" automatically if modifier "data" is used:
-* data class
-* The implementation for equals and hashcode will take into consideration all properties declared on the primary constructor.
+*/
+data class TryDataClass(val a: Int, val b: String)
+
+/* The implementation for equals and hashcode will take into consideration all properties declared on the primary constructor.
 * Equals will verify if each property has the same value for both objects.
-* Properties that are not defined in the primary constructor are taken into consideration for the "equals" and "hashcode" methods.
-* The "data" modifier also makes the Kotlin compiler generate a "copy" method that can be used to return a new instance but with
-* the possibility of changing any of the properties values.
+* Properties that are not defined in the primary constructor are not taken into consideration for the "equals" and "hashcode" methods.
 *
+*The "data" modifier also makes the Kotlin compiler generate a "copy" method that can be used to return a new instance but with
+* the possibility of changing any of the properties values.
+*/
+fun tryDataClass() {
+    val a = TryDataClass(0, "one")
+    val b = a.copy()
+    val c = a.copy(a = 1)
+}
+
+/*
 * Kotlin has first class support for delegation as a language feature.
 * Whenever an interface is being implemented you can say that its implementation is being delegated to another object with the use of
 * the word "by".
 * If any method should be overriden then it can be while all the others continue to be delegated and with the unchanged methods
 * automatically generated by the Kotlin compiler.
 * */
+class DelegationClass(private val innerList: List<Int>) : List<Int> by innerList
+
+class DelegationOverridenClass(private val innerList: List<Int>) : List<Int> by innerList {
+    override val size: Int
+        get() = innerList.size * 2
+}
+
+/*
+* The reserved word "object" defines a class and creates an instance of this class at the same time.
+* It can be used to declare Singleton objects, Companion objects or in object expressions that can be used to replace internal
+* anonymous classes from Java.
+* Object declaration can contain declarations of properties, methods, initialization blocks and so on.
+* The only item not allowed is the Constructor. Object declarations also can inherit from classes and interfaces.
+* */
+object HigherLevelObject // One Instance
+
+class WithObject(val a: Int = 0) {
+    object InsideObject // One Instance
+}
+
+/*
+* If there is a need to write a function that can be called without having an instance, but it requires access to the internal
+* members of a class then you can write it has a member of an companion object inside this class.
+* Members of a companion object cannot be overriden in subclasses.
+* For Java interoperability the annotations @JvmStatic and @JvmField can be used, respectively, to mark a specific member as static or to
+* mark a field as static.
+* Extension functions can be applied to objects.
+* */
+class WithCompanionObject(private val a: Int = 0) {
+    companion object { // One Instance
+        fun insideFun() = 0
+        private val b = 1
+    }
+}
+
+fun tryCompanionObject() {
+    val a = WithCompanionObject.insideFun()
+}
+/*
+* Anonymous objects can also be declared to replace internal anonymous classes from Java.
+* It has the same syntax as the other object use, but omits the name of the object.
+* These anonymous objects are not singletons, whenever the expression is executed a new instance of the object will be created.
+* */
+interface Clicker {
+    fun onClick()
+}
+
+fun useClicker(clicker: Clicker) {
+    clicker.onClick()
+}
+
+class WithClicker() {
+    fun setClicker() {
+        useClicker(
+            object : Clicker {
+                override fun onClick() {
+                    val a = 0
+                }
+            }
+        )
+    }
+}
+
 //endregion
 
 //region Chapter 5

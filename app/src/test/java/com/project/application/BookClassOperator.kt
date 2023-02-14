@@ -123,7 +123,7 @@ class BookClassOperator : BookClassOperatorFixture {
 
     @Test
     fun destructuringDeclarationMap() {
-        val map = mapOf("Kotlin" to "Android", "Java" to "Android")
+        val map = mapOf<String, String>("Kotlin" to "Android", "Java" to "Android")
         printEntries(map)
         assert(map["Kotlin"] == "Android")
         assert(map["Java"] == "Android")
