@@ -1,7 +1,5 @@
 package com.project.application.book
 
-import kotlin.math.sin
-
 //Class to practice with code from the book "Kotlin In Action"
 class BookClassLambda
 
@@ -32,22 +30,22 @@ val list2 = listOf<ExampleClass>(ExampleClass(1))
 * then it can be replaced by a member reference
 * */
 fun findOldest() {
-    list.maxByOrNull() { c: Container -> c.age }
-    list.maxByOrNull { c: Container -> c.age }
-    list.maxByOrNull { c -> c.age }
-    list.maxByOrNull { it.age }
-    list.maxByOrNull(Container::age)
+    withReferences.maxByOrNull() { c: Container -> c.age }
+    withReferences.maxByOrNull { c: Container -> c.age }
+    withReferences.maxByOrNull { c -> c.age }
+    withReferences.maxByOrNull { it.age }
+    withReferences.maxByOrNull(Container::age)
     nextAction(1)
     val exampleClass = ExampleClass(1)
     val a = ExampleClass::oneFun
     a(exampleClass, 1)
     val c = exampleClass::oneFun
     c(1)
-    list.filter { it.age > 3 }
-    list.all { it.age > 3 }
+    withReferences.filter { it.age > 3 }
+    withReferences.all { it.age > 3 }
     val b = listOf("a", "ab", "b")
     b.groupBy(String::first)
-    list.asSequence().map { it }.filter { it.age > 1 }.toList()
+    withReferences.asSequence().map { it }.filter { it.age > 1 }.toList()
 }
 
 /*
@@ -80,7 +78,7 @@ fun Container.isNew() = this.age < 2
 * */
 fun storeLambda() {
     val getAge = { c: Container -> c.age }
-    list.maxByOrNull(getAge)
+    withReferences.maxByOrNull(getAge)
 }
 
 /*

@@ -494,6 +494,7 @@ class WithCompanionObject(private val a: Int = 0) {
 fun tryCompanionObject() {
     val a = WithCompanionObject.insideFun()
 }
+
 /*
 * Anonymous objects can also be declared to replace internal anonymous classes from Java.
 * It has the same syntax as the other object use, but omits the name of the object.
@@ -523,22 +524,185 @@ class WithClicker() {
 
 //region Chapter 5
 /*
-* A Lambda can be used as an alternative to anonymous objects with a single method.
-* If the Lambda delegates to a function or a property then it can be replaced by a member reference Class::member.
-* The function must be a high level function and not a function that is member of a class.
 *
+* Lambdas are small portions of code that can be passed to other functions.
+*
+* Functional programming offers the capacity to treat functions as values. It is not necessary to declare a function,
+* a block of code can be passed directly as parameter of a function.
+*
+* If the Lambda delegates to a function or a property then it can be replaced by a member reference Class::member.
+*/
+class WithReference(val int: Int)
+
+val withReferences = listOf(WithReference(0))
+
+fun tryWithReference() {
+    withReferences.maxByOrNull { it.int }
+    withReferences.maxByOrNull(WithReference::int)
+}
+/*
+* It is also possible to use the "::" operator with high level functions
+* */
+fun tryWithHighLevel() {
+    run(::tryWithReference)
+}
+
+/*
+* A Lambda expression is always between { } with no ( ) around the arguments. The arrow separates the argument list from the lambda body.
+* If the compiler can infer the type of argument the it can omitted, otherwise it must tbe defined explicitly.
+* If the context expects one lambda with a single argument and its type can be inferred then the default parameter "it" becomes available.
+*/
+val thisLambda = { int: Int -> val a = int }
+
+val otherLambda = withReferences.maxByOrNull { it.int }
+
+/*
+* It is possible to pass a lambda expression outside of the parenthesis if this is the last argument on a function call.
+* If the lambda is the only argument of a function then the parenthesis can be removed.
+*/
+fun withLastParameter(a: Int, action: () -> Unit) = 0
+
+fun tryWithLastParameter() {
+    withLastParameter(0) {
+        1 + 1
+    }
+}
+
+fun withOnlyParameter(action: () -> Unit) = 0
+
+fun tryWithOnlyParameter() {
+    withOnlyParameter { 1 + 1 }
+}
+
+/*
 * A Lambda can use variables from its containing function, those external variables that are accessed by the Lambda are called
 * captured variables.
-*
-* A reference to the constructor can store or postpone the creation of an instance ::Class
-*
+* The code that uses this variable can be stored and executed later. Its value is stored with the lambda code that uses the value.
+* To non final variables, the value is included on a special wrapper that can change it and the reference to the wrapper is stored with the
+* lambda.
+*/
+fun withLambdaVariable(int: Int, action: (int: Int) -> Unit) {
+    action.invoke(int)
+    val a = 0
+    action.invoke(a)
+}
+
+/*
+A reference to the constructor can store or postpone the creation of an instance ::Class
+*/
+val a = ::WithReference
+
+fun tryWithConstructor() {
+    val b = a(0)
+}
+
+/*
 * Extension functions can also be referenced with ::
+*/
+fun WithReference.getInt() {
+    this.int
+}
+
+fun tryWithExtension() {
+    val b = WithReference::getInt
+}
+
+/*
+* filter and map are the base to manipulate collections. The result is a new collection that contains only the elements from the
+* input collection that can satisfy the predicate.
 *
-* Interfaces with a single abstract method SAM are called functional interfaces. Java methods that hava a functional interface
-* as a parameter can be called in Kotlin by passing Lambdas.
+* The map function applies the specified function on each element of the collection and gathers the result in a new collection.
+* The result is a new collection with the same number of elements, but each element is transformed according to the specified predicate.
+*
+* flatMap can be used when a collection of collections must be combined into a single collection. If there is no transformation involved then
+* the flatten function can be used instead.
+*
+* Chained collection functions, like map and filter, create intermediate collections on an eager mode, which means that the intermediate result of each
+* step of the chain is stored on a temporary list.
+* Sequences offer an alternate way of executing this type of processing by avoiding the creation of intermediate temporary objects.
+* A sequence of elements can ba listed one by one, Sequence interface provides only one method, iterator, that can be used to obtain the values
+* of the sequence. Elements of a sequence are analyzed on lazy mode without creating collection to store intermediate results.
+* Any collection can be converted to a sequence by calling the extension function asSequence.
+*
+* As operations on a sequence are lazy, to execute them, it is necessary to iterate over the elements from the sequence or convert it to a collection.
+* Operations on a sequence are divided on two categories, intermediate and terminal. One intermediate operation returns another sequence and knows
+* how to transform the elements from the original sequence. A terminal operation returns a result.
+* Intermediate operations are always lazy.
+* The terminal operation makes all lazy processing to be executed.
+* All operations are applied on each element, sequentially, with a map and filter chained applied to a sequence:
+* The first element is processed (mapped and then filtered), the second one is processed on so on.
+*
+* The function generateSequence can be used to create a sequence, it will calculate the next elemnt of a sequence, given the previous element.
+*/
+fun tryWithSequence() {
+    withReferences.asSequence()
+        .map { it }            //Intermediate Operation
+        .filter { it.int > 0 } //Intermediate Operation
+        .toList()              //Terminal Operation
+}
+
+/*
+* Interfaces with a single abstract method SAM are called functional interfaces. Java methods that have a functional interface
+* as a parameter can be called in Kotlin by passing Lambdas. The compiler will generate an anonymous class that implements the interface.
 * The same effect can be reached by using an anonymous object, the difference being that if a lambda is used and it has no reference to external
 * variables then the same instance of the anonymous class will be used.
+* If a lambda is passed to q Kotlin function marked as inline then no class will be created, the block of code will be inserted on the function
+* use inline.
 * */
+interface ClickListener {
+    fun onClick()
+}
+
+class WithListener(val javaFunctionalInterface: JavaFunctionalInterface)
+
+fun tryWithJavaInterfaceAnonymousObject() {
+    WithListener(object : JavaFunctionalInterface { //The object will be instantiated on each call
+        override fun onClick() {
+            println("onClick")
+        }
+    })
+}
+
+fun tryWithJavaInterfaceLambda() {
+    WithListener {                                  //The anonymous class instance will be reused on calls
+        println("onClick")
+    }
+}
+
+fun tryWithJavaInterfaceLambdaCaptureVariable() {
+    val a = "onClick"                               //The lambda captured an external variable so one new instance is created on each call
+    WithListener {                                  //The anonymous class will have one field for each captured variable
+        println(a)
+    }
+}
+
+/*
+* A SAM constructor is a function generated by the compiler that allows an explicit conversion from a lambda to an instance of a functional interface.
+* SAM constructors are used when an instance of a functional interface generated by a lambda is required to be stored inside a variable.
+* */
+val listener = JavaFunctionalInterface {
+    println("onClick")
+}
+
+fun tryWithSamConstructor(){
+    val a = WithListener(listener)
+}
+
+/*
+* There is no access to "this" on a lambda as would be on an anonymous object. There is no way to reference the instqnce of the anonymous class
+* that the lambda was converted to.
+*
+* Lambdas with receptors give the capacity to call methods of a different object on the lambda body with no special qualifier.
+* Examples are Kotlin functions "with" and "apply"
+* Apply is declared as an extension function.
+* The "with" function converts its first argument as the receptor of the lambda and returns the result of the execution of the lambda code.
+* The "apply" function always returns the object that was passed to it as argument (the receptor) and not the result of the execution of
+* lambda code.
+*
+* A lambda is a way to define behavior similar to the one on a regular function. Lambdas with receptors is a way to define behavior
+* similar to an extension function.
+* */
+
 //endregion
 
 //region Chapter 6
