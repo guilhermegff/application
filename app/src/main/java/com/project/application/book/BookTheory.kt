@@ -707,40 +707,73 @@ fun tryWithSamConstructor(){
 
 //region Chapter 6
 /*
-* What is a type? "A type is a classification that determines the possible values of thies type and the operations that can be performed on value of
-* this type.
+* What is a type? "A type is a classification that determines the possible values of this type and the operations that can be performed on
+* the value of this type.
 * Safe call operator ?.
 * Elvis operator ?: If left side is null then the right side expression is executed.
 * Safe-cast operator as? It will try to cast one value to the specified type and returns null if the value does not have the appropriate type.
 * After the safe cast the compiler will make a smart cast to the next operations with the value.
-*
+*/
+fun tryWithManualCheck(value: String?) {
+        if(value != null ) value.length else println("null")
+}
+
+fun tryWithSafeCall(value: String?) {
+    val a = value?.uppercase()
+    println(a)
+}
+
+fun tryWithSafeCast(value: Any?) {
+    val a = (value as? String) ?: return
+    a.uppercase()
+}
+
+/*
 * Non null assertion !! converts a nullable argument to a non nullable argument. If the value ends up being null
 * then a NullPointerException will be thrown.
-* Let function transforms the objects on which it is called into a lambda parameter. If used with the safe call operator "?.let"
+* "let" function transforms the objects on which it is called into a lambda parameter. If used with the safe call operator "?.let"
 * then it will convert the nullable type to a non null type. The let call happens only if the value is not null after the safe call check.
 *
-* Late Init properties are marked with the "lateinit" modifier and it has to be a var so it value can be changed.
-*
+* Late Init properties are marked with the "lateinit" modifier and it has to be a var so its value can be changed.
+*/
+lateinit var late: String
+fun tryWithLateInit() {
+    late = ""
+}
+
+/*
 * By default all function type parameters are nullable. T if inferred as Any?, so T can store null even though it has no ? on it.
-* To make the type parameter not null we need to specify a non null superior limit to it. This way all nullable values are reject as arguments.
+* To make the type parameter not null we need to specify a non null superior limit to it. This way all nullable values are rejected as arguments.
 * <T: Any>, null arguments are not accepted now. The limit is non null Any. This is the only exception to the rule of ? usage to denote nullable values.
 *
-* If Java code has values annotated with "@Nullable" then it will be seen as Tyoe? in Kotlin and "@NotNull" as a non null Type value in Kotlin.
+* If Java code has values annotated with "@Nullable" then it will be seen as Type? in Kotlin and "@NotNull" as a non null Type value in Kotlin.
 * If no annotation is present in the Java side declaration the Kotlin will se those values as "Platform type". It means Kotlin has no information
 * about the nullability of that value and it can be treated as both nullable or not null. The compiler will allow all operations on it.
-* The Kotlin compiler represents the "Platform type" with "String!" the ! emphasizes that the information about it being nullable or not is unknown.
+* The Kotlin compiler represents the "Platform type" with "String!" for errors, the ! emphasizes that the information about it being nullable
+* or not is unknown.
 *
 * Kotlin makes no difference between primitive types and wrappers.
 * In most cases, for variables, properties, parameters and return types, Int type in Kotlin is compiled to the primitive type int from Java.
 * If a primitive type is used as type argument for a generic class then it is compiled to the correspondent wrapper type from Java.
 *
-* Primitive types in Java, if used in Kotlin, become no null types and not Platform types because they cannot store null values just like in Java.
+* Primitive types in Java, if used in Kotlin, become not null types and not Platform types because they cannot store null values just like in Java.
 * This happens because null values can only be stored on Reference Types in Java and not in Primitive Types.
+* If a primitive type is used as a type argument in a class, Kotlin will use the type with boxing. The JVM does not accept the use of a primitive type
+* as a type argument, so a generic class (in Java and Kotlin) must always use the boxing type.
 *
 * Kotlin does not convert numbers automatically from one type to another. Conversions functions are present to help with these operations.
 * The equals method checks the wrapper type and not only the stored value. Types must be explicitly converted so only values of the same type
 * are compared.
-*
+*/
+fun tryWithNumberConversion() {
+    val b : Int = 1
+    val d : Long = b.toLong()
+    val double : Double = 2.0
+    val float : Float = 2F
+}
+
+/*
+* Any type is the supertype of all other non nullable types in Kotlin, including primitive types.
 * If a primitive type value is attributed to a type Any variable then an automatic boxing will occur because Any is a Reference Type.
 * Kotlin functions that use Any are compiled to Object on Java bytecode.
 *
@@ -753,7 +786,7 @@ fun tryWithSamConstructor(){
 * Kotlin separates its collection interfaces into mutable and immutable collections.
 * MutableCollection extends Collection and adds methods that can modify the content of the collection.
 *
-* Read only collection are not necessarily immutable. It can be referenced somewhere as a mutable collection also.
+* Read only collections are not necessarily immutable. It can be referenced somewhere as a mutable collection also.
 * Read only collections are not always thread-safe.
 * All Kotlin collections are instances of its corresponding Java collection interface.
 * All of the Java collections interfaces have two representations in Kotlin: one mutable and one immutable.
@@ -763,6 +796,13 @@ fun tryWithSamConstructor(){
 * Spread operator * is used to pass an array when a vararg parameter is expected.
 * Array will always box the primitive types. If primitive types are wanted then specific arrays must be used: IntArray
 * */
+fun trySpreadOperator(vararg value: Int) {}
+
+fun tryWithSpreadOperator() {
+    val array = listOf(1, 2, 3)
+    trySpreadOperator(*array.toIntArray())
+}
+
 //endregion
 
 //region Chapter 7
