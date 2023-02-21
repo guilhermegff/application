@@ -812,7 +812,31 @@ fun tryWithSpreadOperator() {
 * "plus", then, by convention, it will be possible to use the "+" operator on instances of this class.
 * All functions that overload operations must use the reserved word "operator", it indicates that the implementation wants to use the convention
 * and that the naming was not accidental.
-* When the "+" is used, a call to "plus" will be called internally. a + b -> a.plus(b)
+*/
+data class WithPlusOperator(val a: Int) {
+    operator fun plus(value: Int) : Int {
+        return a + value
+    }
+}
+
+open class WithOperator(val a: Int) {
+    open operator fun plus(value: Int) : Int{
+        return a + value
+    }
+}
+
+class WithOperatorPlus() : WithOperator(0) {
+    override fun plus(value: Int) : Int {
+        return a + value
+    }
+}
+
+/*operator fun WithOperatorPlus.plus(value: Int) : Int { //Member functions have precedence over extension functions.
+    return 2 + value
+}*/
+
+/*
+* When the "+" is used, a call to "plus" will be made internally. a + b -> a.plus(b)
 * The definition of an operator can be done on class members or extension functions.
 * Kotlin has a limited number os operators that can be overloaded and each has its own name that should be used on the corresponding function.
 *
@@ -821,11 +845,18 @@ fun tryWithSpreadOperator() {
 * a % b -> mod
 * a + b -> plus
 * a - b -> minus
-*
+*/
+fun tryWithOperator() {
+    WithOperatorPlus() + 1
+    val a = WithOperatorPlus()
+    val b = a + 1
+}
+
+/*
 * Mathematical precedence of operators is maintained even when overloaded.
 * The overload can be done multiple times just like on normal functions.
 * Operators like += or -= and so on are called "Composite Attribution Operators"
-* If "plus" and "plusAssign" operators are overload the compiler will inform an error.
+* If "plus" and "plusAssign" operators are both overloaded the compiler will inform an error.
 * a += b -> a = a.plus(b) or a.plusAssign(b)? Compiler does not know.
 * For collection, operators "+" and "-" always return a new collection while "+=" and "-=" modify the collection in place (if its immutable) or return
 * a new collection if it is a mutable collection
@@ -836,8 +867,20 @@ fun tryWithSpreadOperator() {
 * !a -> not
 * ++a, a++ -> inc / ++a Increments and then execute - a++ Executes and then increment
 * --a, a-- -> dec
-*
-* Comparison Operators can also be overloaded.
+*/
+operator fun WithOperator.unaryMinus() = -a
+
+fun tryWithUnaryOperator() {
+    val a = WithOperator(2)
+    val b = -a
+}
+fun tryIncOperator() {
+    var a = 1
+    println(a++) // printed 1
+    println(++a) // printed 2
+}
+
+/* Comparison Operators can also be overloaded.
 * In Kotlin, "==" is translated to a equals call.
 * Differently from the other operators, "==" and "!=" can be used on nullable operands since they check for null equality internally.
 * a == b -> a?.equals(b) ?: (b == null)
@@ -854,10 +897,10 @@ fun tryWithSpreadOperator() {
 * The use of those operators are translated to "compareTo" calls
 * a >= b -> a.compareTo(b) >= 0
 *
-* Operations with indexes on collection can use the "Index Operator" "a[]"
+* Operations with indexes on collections can use the "Index Operator" "a[]"
 * The operator "in" can be used to check if a value is inside a collection or a interval and also to iterate over a collection.
 *
-* The "Index Operator" is translated to a "operator method get" and if it is used to set a value then the call is translated to
+* The "Index Operator" is translated to an "operator method get" and if it is used to set a value then the call is translated to
 * "operator method set".
 *
 * To use the "Operator Index" on custom classes it is needed to have the overloaded "operator get" or "operator set" methods.
@@ -868,7 +911,7 @@ fun tryWithSpreadOperator() {
 * a in c -> c.contains(a)
 * for(x in list) -> list.iterator()
 *
-* Operator ".."
+* Operator ".." -> Interval
 * start..end -> start.rangeTo(end)
 *
 * Destructuring Declarations allows the un-packaging of a single composite value to initialize multiple separated variables.
@@ -878,11 +921,13 @@ fun tryWithSpreadOperator() {
 * val(x, y) = p -> val x = p.component1() val y = p.component2()
 * For data classes the compiler will add the methods to up to 5 properties contained on the primary constructor.
 * If the class is not a data class it is possible to manually add the methods.
-* class Point(val x: Int, val y: Int) {
-* operator fun component1() = x
-* operator fun component2() = y
-* }
-*
+*/
+class Point(val x: Int, val y: Int) {
+    operator fun component1() = x
+    operator fun component2() = y
+}
+
+/*
 * Map entries have extension functions component1 and component2 that return the key and its value respectively.
 * for(entry in map.entries) {
 * val key = entry.component1()
@@ -891,7 +936,10 @@ fun tryWithSpreadOperator() {
 *
 * Delegated Properties is a resource that also depends on conventions. This resource allows properties that are more complex than just having a backing field
 * to be easily implemented, without duplicating the logic on each access method.
-*
+*/
+class WithDelegationClass(private val innerList: List<Int>) : List<Int> by innerList {}
+
+/*
 * The base of this resource is "Delegation", a design pattern on which an object, instead of executing some task, delegates it to an auxiliary object called
 * delegate.
 * class Foo {
@@ -907,7 +955,7 @@ fun tryWithSpreadOperator() {
 * class Person(val name: String) {
 *  val emails by lazy { loadEmails(this) }
 *
-* The "function" returns an object that has a method called "getValue"so it can be used with the "by" convention to create a delegated property.
+* The "function" returns an object that has a method called "getValue" so it can be used with the "by" convention to create a delegated property.
 *
 * The argument for the lazy function is a lambda that is called to initialize the value.
 * The expression to the right of the "by" convention does not need to be the creation of a new instance. It can also be a function call, another property or any
