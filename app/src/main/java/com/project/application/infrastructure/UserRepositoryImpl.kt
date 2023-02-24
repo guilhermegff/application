@@ -11,6 +11,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserList(): List<User> {
+        println("Repo ${Thread.currentThread().name}")
         return userService.users()
     }
 }
