@@ -984,7 +984,7 @@ class WithDelegationClass(private val innerList: List<Int>) : List<Int> by inner
 * () -> Int? or (() -> Int)?
 *
 * The "Function Type" are declared as a regular interface internally. A variable of a "Function Type" is an implementation of an interface FunctionN.
-* Each interface defines one single invoke method e its call makes the function execute. The variable of a "Function Type" is an instance of a class that
+* Each interface defines one single invoke method and its call makes the function execute. The variable of a "Function Type" is an instance of a class that
 * implements the FunctionN interface with the invoke method having the lambda body.
 *
 * Lambdas are usually compiled to anonymous classes, so each time a lambda expression is used an extra class may be created and if the lambda captures any
@@ -997,20 +997,20 @@ class WithDelegationClass(private val innerList: List<Int>) : List<Int> by inner
 *
 * Non Local Returns
 * If the reserved word "return" is used inside a lambda then the return will be from the function that call the lambda and not from the lambda itself.
-* The return from the most external functions is only possible if the function that accepts the lambda is marked an inline function.
+* The return from the most external function is only possible if the function that accepts the lambda is marked as an inline function.
 *
 * Local returns can be used with the help of labels.
 * it.foreach label@ {
 *  if() return @label
-*
+* }
 * The same scope rules apply to "this" expressions.
 *
 * Anonymous functions have local returns by default.
 *
-* The "return" word returns from the function that is closest and was declared with "fun" word. Lambdas do not use the "fun" word so they return from external
-* function.
-* Anonymous function are just a different syntax for lambdas.
-* }
+* The "return" word returns from the function that is closest and was declared with "fun" word. Lambdas do not use the "fun" word so they return
+* from external function.
+* Anonymous functions are just a different syntax for lambdas.
+*
 * */
 //endregion
 
@@ -1037,7 +1037,7 @@ class WithDelegationClass(private val innerList: List<Int>) : List<Int> by inner
 * "Upper Bound Constraint" <T: Number> the type must be of the specified type or its subtypes. It can have more than one constraint.
 * An unconstrained type has Any? as the upper limit.
 *
-* Generic on the JVM are usually implemented with "type erasure" which means that the type arguments of an instance of a generic class are not
+* Generics on the JVM are usually implemented with "type erasure" which means that the type arguments of an instance of a generic class are not
 * preserved during runtime.
 *
 * In Kotlin the word "inline" can be used to indicate the type erasure should not happen, they should be "reified"
@@ -1076,10 +1076,10 @@ class WithDelegationClass(private val innerList: List<Int>) : List<Int> by inner
 * The method only consumes T so it can be marked with "in" to enforce this.
 * A class that is contravariant on the type parameter is a generic class to which the following affirmation is true:
 * Consumer<A> will be a subtype to Consumer<B> if B is a subtype of A.
-* The use of the word "in" indicates that values of the corresponding type will be passed to the methods of this class e be consumed by them.
+* The use of the word "in" indicates that values of the corresponding type will be passed to the methods of this class and be consumed by them.
 * It means that the subtyping is inverted and T can be used only on in positions.
 *
-* The specification of variance modifiers on class declaration means that it is applied wherever the class is ued. This is called
+* The specification of variance modifiers on class declaration means that it is applied wherever the class is used. This is called
 * Declaration Site Variance.
 *
 * When the specification happens when the parameters are being used then it is called
@@ -1090,6 +1090,6 @@ class WithDelegationClass(private val innerList: List<Int>) : List<Int> by inner
 *
 * Star Projection <*> means that there is no information about the generic argument. It is different from <Any> because Any means it can be of any
 * subtype of Any while the projection means it is of a specific type but it is unknown.
-* It can be used when informations about type is not important.
+* It can be used when information about type is not important.
 * */
 //endregion
