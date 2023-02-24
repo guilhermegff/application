@@ -12,6 +12,7 @@ class GetUserList @Inject constructor(
     private val userUiMapper: UserUiMapper,
 )  {
     suspend operator fun invoke() = executor {
+        println("UseCase ${Thread.currentThread().name}")
         userUiMapper.transform((userRepository.getUserList()))
     }
 }

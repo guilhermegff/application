@@ -24,15 +24,19 @@ class UserListViewModel @Inject constructor(
     }
 
     private fun initializeScreenData() {
+        println("Before Launch ${Thread.currentThread().name}")
         viewModelScope.launch {
+            println("On Launch ${Thread.currentThread().name}")
             _state.update {
                 it.copy(
                     isLoading = true,
                 )
             }
             runCatching {
+                println("Run ${Thread.currentThread().name}")
                 getUserList()
             }.onSuccess { userList ->
+                println("Success ${Thread.currentThread().name}")
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -41,6 +45,7 @@ class UserListViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
+                println(Thread.currentThread().name)
                 _state.update {
                     it.copy(
                         isLoading = false,
