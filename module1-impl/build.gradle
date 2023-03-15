@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
@@ -8,7 +8,6 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.project.module1"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -21,7 +20,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-rc02'
+        kotlinCompilerExtensionVersion '1.4.3'
     }
 
     buildTypes {
@@ -55,12 +54,11 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation 'androidx.compose.runtime:runtime-rxjava2'
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

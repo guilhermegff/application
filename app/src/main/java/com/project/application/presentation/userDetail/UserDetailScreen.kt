@@ -1,10 +1,12 @@
 package com.project.application.presentation.userDetail
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,12 +22,19 @@ import com.project.application.presentation.compose.LoadingScreen
 @Composable
 internal fun UserDetailScreen(
     viewState: UserDetailViewModel.ViewState,
+    action: () -> Unit,
+    onClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
+
+    LaunchedEffect(key1 = Unit) {
+        action.invoke()
+    }
+
     when {
         viewState.isLoading -> LoadingScreen()
         viewState.isError -> ErrorScreen(onBackClick)
-        else -> ScreenContent(viewState)
+        else -> ScreenContent(viewState, onClick)
     }
 }
 
@@ -34,6 +43,7 @@ internal fun UserDetailScreen(
 @Composable
 private fun ScreenContent(
     viewState: UserDetailViewModel.ViewState,
+    onClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -60,6 +70,16 @@ private fun ScreenContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Button(
+                modifier = Modifier
+                    .background(Color.Blue),
+                onClick = {
+                    onClick.invoke()
+                }
+            ) {
+                Text(text = "Button")
+            }
+
             Text(
                 modifier = Modifier
                     .padding(top = Dp(30f))
@@ -109,6 +129,8 @@ private fun ScreenContent(
 private fun PreviewScreen() {
     UserDetailScreen(
         viewState = UserDetailViewModel.ViewState(),
+        action = {},
+        onClick = {},
         onBackClick = {},
     )
 }

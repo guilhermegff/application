@@ -29,7 +29,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-rc02'
+        kotlinCompilerExtensionVersion '1.4.3'
     }
 
     compileOptions {
@@ -47,6 +47,8 @@ kapt {
 }
 
 dependencies {
+    implementation project(path: ':module1-impl')
+
     def composeBom = platform('androidx.compose:compose-bom:2022.10.00')
     implementation composeBom
     androidTestImplementation composeBom
@@ -57,11 +59,15 @@ dependencies {
     implementation "com.google.android.material:compose-theme-adapter:1.2.1"
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.25.1"
 
+    implementation 'androidx.navigation:navigation-compose:2.5.3'
+
     implementation 'androidx.compose.ui:ui-tooling-preview'
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0'
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation 'androidx.compose.runtime:runtime-rxjava2'
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'

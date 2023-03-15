@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.project.application.core.usecase.GetUser
 import com.project.application.presentation.model.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,21 +19,22 @@ internal class UserDetailViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(ViewState())
 
-    val state = _state
+    val state: StateFlow<ViewState> = _state
 
-    init {
-        getDetail("4685")
-    }
-
-    private fun getDetail(id: String) {
+    fun getDetail(id: String) {
         viewModelScope.launch {
             _state.update {
                 it.copy(
                     isLoading = true,
                 )
             }
+            delay(1000)
             runCatching {
-                getUser.invoke(id)
+                getUser.invoke(
+                    id
+                        .removePrefix("{")
+                        .removeSuffix("}")
+                )
             }.onSuccess { userDetail ->
                 _state.update {
                     it.copy(
