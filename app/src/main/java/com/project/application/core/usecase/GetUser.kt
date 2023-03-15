@@ -12,6 +12,8 @@ class GetUser @Inject constructor(
     private val userUiMapper: UserUiMapper,
 ) {
     suspend operator fun invoke(id: String) = executor {
+        println("Executor - $executor")
+        println("UseCase ${Thread.currentThread().name}")
         userUiMapper.transform((userRepository.getUser(id)))
     }
 }

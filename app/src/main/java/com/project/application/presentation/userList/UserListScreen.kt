@@ -1,6 +1,7 @@
 package com.project.application.presentation.userList
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,11 +23,15 @@ import com.project.application.presentation.model.UserUiModel
 fun UserListScreen(
     viewState: UserListViewModel.ViewState,
     action: () -> Unit,
+    onClick: (id: String) -> Unit,
 ) {
     when {
         viewState.isLoading -> LoadingScreen()
         viewState.isError -> ErrorScreen(action)
-        else -> ScreenContent(viewState)
+        else -> ScreenContent(
+            viewState,
+            onClick,
+        )
     }
 }
 
@@ -35,6 +40,7 @@ fun UserListScreen(
 @Composable
 fun ScreenContent(
     viewState: UserListViewModel.ViewState,
+    onClick: (id: String) -> Unit,
 ) {
     Scaffold {
         LazyColumn(
@@ -42,10 +48,13 @@ fun ScreenContent(
                 .padding(horizontal = Dp(32f))
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(viewState.userListUiModel) {
-                UserRow(it)
+                UserRow(
+                    it,
+                    onClick,
+                )
             }
         }
     }
@@ -54,8 +63,13 @@ fun ScreenContent(
 @Composable
 fun UserRow(
     userUiModel: UserUiModel,
+    onClick: (id: String) -> Unit,
 ) {
-    Row() {
+    Row(
+        modifier = Modifier.clickable {
+            onClick.invoke(userUiModel.id)
+        }
+    ) {
         Column() {
             Text(
                 modifier = Modifier
@@ -89,5 +103,7 @@ private fun PreviewScreen() {
                 UserUiModel(name = "D", status = "4"),
             )
         ),
-    ) {}
+        {},
+        {}
+    )
 }

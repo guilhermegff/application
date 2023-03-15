@@ -1,25 +1,28 @@
 package com.project.application.presentation
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.collectAsState
-import com.project.application.presentation.userList.UserListScreen
-import com.project.application.presentation.userList.UserListViewModel
+import com.project.application.presentation.compose.UserNavigation
+import com.project.module1.Module1Activity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-internal class MainActivity : AppCompatActivity() {
+internal class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: UserListViewModel by viewModels()
-
         setContent {
-            val viewState = viewModel.state.collectAsState().value
-            UserListScreen(
-                viewState = viewState,
-            ) { viewModel.errorAction() }
+            UserNavigation(
+                this,
+            ) {
+                callOtherModule()
+            }
         }
+    }
+
+    private fun callOtherModule() {
+        val intent = Intent(this, Module1Activity::class.java)
+        startActivity(intent)
     }
 }
