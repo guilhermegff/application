@@ -1,6 +1,7 @@
 package com.project.application.di
 
 import com.project.application.infrastructure.UserService
+import com.project.module1.Module1NavigatorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +50,7 @@ class MainModule {
     @Provides
     fun provideExecutor() =
         ExecutorImpl()
+
+    @Provides
+    fun provideModule1() = Module1NavigatorImpl()
 }
