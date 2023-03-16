@@ -1,6 +1,6 @@
 package com.project.application.core.usecase
 
-import com.project.application.core.invoke
+import com.example.shared.invoke
 import com.project.application.infrastructure.UserRepository
 import com.project.application.presentation.mapper.UserUiMapper
 import java.util.concurrent.Executor

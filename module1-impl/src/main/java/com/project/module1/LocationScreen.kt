@@ -14,13 +14,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-internal fun Module1Screen(
-    action: () -> Unit,
+internal fun LocationScreen(
 ) {
+
+    val viewModel: LocationViewModel = hiltViewModel<LocationViewModel>()
+    viewModel.initializeScreenData()
     Scaffold(
     ) {
         Column(
@@ -38,7 +41,7 @@ internal fun Module1Screen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = Dp(10f)),
-                onClick = { action.invoke() }
+                onClick = { }
             )
         }
     }
@@ -47,5 +50,5 @@ internal fun Module1Screen(
 @Composable
 @Preview
 internal fun PreviewScreen() {
-    Module1Screen {}
+    LocationScreen()
 }
