@@ -16,8 +16,10 @@ android-gradle-plugin = '7.3.1'
 android-library = '7.3.1'
 kotlin-android = '1.8.10'
 dagger-hilt-android = '2.45'
-material3='1.0.0-alpha02'
+material3='1.0.1'
 tooling='1.4.0-rc01'
+kapt='1.8.10'
+
 [libraries]
 androidx-ktx = { group = 'androidx.core', name = 'core-ktx', version.ref = 'ktx' }
 androidx-appcompat = { group = 'androidx.appcompat', name = 'appcompat', version.ref = 'appcompat' }
@@ -47,3 +49,28 @@ android-application = { id = 'com.android.application', version.ref = 'android-g
 android-library = { id = 'com.android.library', version.ref = 'android-library' }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = 'kotlin-android' }
 dagger-hilt-android = { id = 'com.google.dagger.hilt.android', version.ref = 'dagger-hilt-android' }
+kotlin-kapt = { id = 'org.jetbrains.kotlin.kapt', version.ref = 'kapt'}
+
+[bundles]
+feature-module = [
+    'androidx-ktx',
+    'androidx-appcompat',
+    'androidx-material3',
+    'androidx-navigation-compose',
+    'androidx-compose-preview',
+    'androidx-compose-tooling',
+    'androidx-activity-compose',
+    'androidx-activity-ktx',
+    'androidx-lifecycle-viewmodel-compose',
+    'androidx-compose-runtime-livedata',
+    'androidx-compose-runtime-rxjava2',
+    'androidx-hilt-navigation-fragment',
+    'androidx-hilt-navigation-compose',
+    'retrofit2',
+    'gson',
+    'retrofit2-converter-gson',
+    'okhttp3',
+    'okhttp3-logging-interceptor',
+    'kotlinx-coroutines',
+    'dagger-hilt-android',
+]
