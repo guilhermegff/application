@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.dagger.hilt.android
+    alias libs.plugins.kotlin.kapt
 }
 
 android {
@@ -51,34 +51,7 @@ dependencies {
     implementation project(path: ':module1-impl')
     implementation project(path: ':shared')
 
-    implementation libs.androidx.ktx
-    implementation libs.androidx.appcompat
-    implementation libs.androidx.material3
-
-    implementation libs.androidx.navigation.compose
-
-    implementation libs.androidx.compose.preview
-    debugImplementation libs.androidx.compose.tooling
-
-    implementation libs.androidx.activity.compose
-    implementation libs.androidx.activity.ktx
-
-    implementation libs.androidx.lifecycle.viewmodel.compose
-    implementation libs.androidx.compose.runtime.livedata
-    implementation libs.androidx.compose.runtime.rxjava2
-    implementation libs.androidx.hilt.navigation.fragment
-    implementation libs.androidx.hilt.navigation.compose
-
-    implementation libs.retrofit2
-    implementation libs.gson
-    implementation libs.retrofit2.converter.gson
-
-    implementation libs.okhttp3
-    implementation libs.okhttp3.logging.interceptor
-
-    implementation libs.kotlinx.coroutines
-
-    implementation libs.dagger.hilt.android
+    implementation libs.bundles.feature.module
     kapt libs.dagger.hilt.compiler
 
     testImplementation 'junit:junit:4.13.2'
