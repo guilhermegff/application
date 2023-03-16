@@ -1,4 +1,5 @@
 [versions]
+
 ktx = '1.9.0'
 appcompat = '1.6.1'
 navigation-compose = '2.5.3'
@@ -21,6 +22,7 @@ tooling='1.4.0-rc01'
 kapt='1.8.10'
 
 [libraries]
+
 androidx-ktx = { group = 'androidx.core', name = 'core-ktx', version.ref = 'ktx' }
 androidx-appcompat = { group = 'androidx.appcompat', name = 'appcompat', version.ref = 'appcompat' }
 androidx-material3 = { group = 'androidx.compose.material3', name = 'material3', version.ref = 'material3' }
@@ -36,15 +38,20 @@ androidx-hilt-navigation-fragment = { group = 'androidx.hilt', name = 'hilt-navi
 androidx-hilt-navigation-compose = { group = 'androidx.hilt', name = 'hilt-navigation-compose', version.ref = 'hilt' }
 
 retrofit2 = { group = 'com.squareup.retrofit2', name = 'retrofit', version.ref = 'retrofit' }
-gson = { group = 'com.google.code.gson', name = 'gson', version.ref = 'gson' }
 retrofit2-converter-gson = { group = 'com.squareup.retrofit2', name = 'converter-gson', version.ref = 'retrofit' }
+
+gson = { group = 'com.google.code.gson', name = 'gson', version.ref = 'gson' }
+
 okhttp3 = { group = 'com.squareup.okhttp3', name = 'okhttp', version.ref = 'okhttp' }
 okhttp3-logging-interceptor = { group = 'com.squareup.okhttp3', name = 'logging-interceptor', version.ref = 'okhttp' }
+
 kotlinx-coroutines = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-coroutines-android', version.ref = 'coroutines' }
+
 dagger-hilt-android = { group = 'com.google.dagger', name = 'hilt-android', version.ref = 'hilt-android' }
 dagger-hilt-compiler = { group = 'com.google.dagger', name = 'hilt-compiler', version.ref = 'hilt-compiler' }
 
 [plugins]
+
 android-application = { id = 'com.android.application', version.ref = 'android-gradle-plugin' }
 android-library = { id = 'com.android.library', version.ref = 'android-library' }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = 'kotlin-android' }
@@ -52,6 +59,7 @@ dagger-hilt-android = { id = 'com.google.dagger.hilt.android', version.ref = 'da
 kotlin-kapt = { id = 'org.jetbrains.kotlin.kapt', version.ref = 'kapt'}
 
 [bundles]
+
 feature-module = [
     'androidx-ktx',
     'androidx-appcompat',
