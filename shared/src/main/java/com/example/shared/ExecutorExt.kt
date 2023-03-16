@@ -1,4 +1,4 @@
-package com.project.application.core
+package com.example.shared
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

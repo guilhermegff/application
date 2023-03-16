@@ -10,7 +10,7 @@
         android:theme="@style/Theme.Application"
         >
         <activity
-            android:name=".Module1Activity"
+            android:name=".LocationActivity"
             android:exported="true">
         </activity>
 
