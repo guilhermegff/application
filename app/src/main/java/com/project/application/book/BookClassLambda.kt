@@ -30,7 +30,7 @@ val list2 = listOf<ExampleClass>(ExampleClass(1))
 * then it can be replaced by a member reference
 * */
 fun findOldest() {
-    withReferences.maxByOrNull() { c: Container -> c.age }
+    /*withReferences.maxByOrNull() { c: Container -> c.age }
     withReferences.maxByOrNull { c: Container -> c.age }
     withReferences.maxByOrNull { c -> c.age }
     withReferences.maxByOrNull { it.age }
@@ -45,7 +45,7 @@ fun findOldest() {
     withReferences.all { it.age > 3 }
     val b = listOf("a", "ab", "b")
     b.groupBy(String::first)
-    withReferences.asSequence().map { it }.filter { it.age > 1 }.toList()
+    withReferences.asSequence().map { it }.filter { it.age > 1 }.toList()*/
 }
 
 /*
@@ -77,8 +77,8 @@ fun Container.isNew() = this.age < 2
 * the parameters types must be specified
 * */
 fun storeLambda() {
-    val getAge = { c: Container -> c.age }
-    withReferences.maxByOrNull(getAge)
+    /*val getAge = { c: Container -> c.age }
+    withReferences.maxByOrNull(getAge)*/
 }
 
 /*

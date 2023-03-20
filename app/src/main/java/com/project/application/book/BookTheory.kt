@@ -168,7 +168,7 @@ fun withForLoop() {
 * Intervals in Kotlin are "closed" or "inclusive".
 * An iteration throughout an entire interval is called progression.
 * A progression can be made with "steps", the steps can be positive (forward progression) or negative (backward progression).
-* To keep the final point from the progression, the word "until" should be used.
+* To keep the final point from the progression, the ".." should be used.
 * Keyword operator "in" translates to: c in 'a'..'z' = a <= c && c <= z
 */
 val interval = 1..10
@@ -210,13 +210,12 @@ fun withThrowExpression() = if (true) 0 else throw java.lang.IllegalArgumentExce
 //region Chapter 3
 /*
 * Named arguments
-* If one arguments is specified on on call then all next arguments must be also specified.
 * Parameters can have a default value.
 */
 class NamedArguments(argument: Int = 0, other: String = "zero")
 
 fun withNamedArguments() {
-    NamedArguments(argument = 1, other = "one")
+    NamedArguments(argument = 1, "one")
 }
 
 /*
@@ -704,6 +703,7 @@ fun tryWithSamConstructor(){
 * */
 
 //endregion
+
 
 //region Chapter 6
 /*
