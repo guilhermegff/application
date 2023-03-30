@@ -12,6 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Application"
 include ':app'
 include ':module1-impl'
+include ':module1-api'
+include ':shared'

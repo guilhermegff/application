@@ -1,26 +1,32 @@
 package com.project.application.presentation
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.collectAsState
-import com.project.application.presentation.compose.MainScreen
+import com.example.module1_api.Module1Navigator
+import com.project.application.presentation.compose.UserNavigation
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+internal class MainActivity () : ComponentActivity() {
+
+    @Inject
+    lateinit var module1Navigator: Module1Navigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: MainViewModel by viewModels()
-
         setContent {
-            val viewState = viewModel.state.collectAsState().value
-            MainScreen(
-                viewState = viewState,
-                onBackClick = { super.onBackPressed() },
-                action = { viewModel.getDetail() },
-            )
+            UserNavigation(
+                this,
+            ) {
+                callOtherModule()
+            }
         }
+    }
+
+    private fun callOtherModule() {
+        startActivity(module1Navigator.provideIntent(this))
     }
 }
