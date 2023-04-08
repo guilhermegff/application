@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 @Module
@@ -49,8 +50,7 @@ class MainModule {
     }
 
     @Provides
-    fun provideExecutor() =
-        ExecutorImpl()
+    fun provideExecutor() = Executor { it?.run() }
 
     @Provides
     fun provideModule1() = Module1NavigatorImpl()
