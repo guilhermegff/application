@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun LocationScreen(
+    action: () -> Unit,
 ) {
 
     val viewModel: LocationViewModel = hiltViewModel<LocationViewModel>()
@@ -41,7 +42,9 @@ internal fun LocationScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = Dp(10f)),
-                onClick = { }
+                onClick = {
+                    action.invoke()
+                }
             )
         }
     }
@@ -50,5 +53,5 @@ internal fun LocationScreen(
 @Composable
 @Preview
 internal fun PreviewScreen() {
-    LocationScreen()
+    LocationScreen() {}
 }

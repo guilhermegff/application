@@ -1,5 +1,6 @@
 package com.project.application.di
 
+import com.example.module2_impl.Module2NavigatorImpl
 import com.project.application.infrastructure.UserService
 import com.project.module1.Module1NavigatorImpl
 import dagger.Module
@@ -53,4 +54,7 @@ class MainModule {
 
     @Provides
     fun provideModule1() = Module1NavigatorImpl()
+
+    @Provides
+    fun provideModule2() = Module2NavigatorImpl()
 }

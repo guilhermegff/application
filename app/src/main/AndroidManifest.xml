@@ -25,6 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.module2_impl.MainActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name="com.project.module1.LocationActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
