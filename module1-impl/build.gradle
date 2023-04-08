@@ -40,7 +40,6 @@ android {
 dependencies {
     implementation project(path: ':module1-api')
     implementation project(path: ':module2-api')
-    implementation project(path: ':shared')
 
     implementation libs.bundles.feature.module
     kapt libs.dagger.hilt.compiler

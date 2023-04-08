@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/module1-impl" />
             <option value="$PROJECT_DIR$/module2-api" />
             <option value="$PROJECT_DIR$/module2-impl" />
-            <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>
       </GradleProjectSettings>

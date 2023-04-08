@@ -17,6 +17,5 @@ rootProject.name = "Application"
 include ':app'
 include ':module1-impl'
 include ':module1-api'
-include ':shared'
 include ':module2-api'
 include ':module2-impl'
