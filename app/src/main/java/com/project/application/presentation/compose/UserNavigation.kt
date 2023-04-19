@@ -3,8 +3,6 @@ package com.project.application.presentation.compose
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,24 +13,26 @@ import com.project.application.presentation.userList.UserListViewModel
 
 @Composable
 internal fun UserNavigation(
-    storeOwner: ViewModelStoreOwner,
-    onButtonClick: () -> Unit,
+    navigateToModule1: () -> Unit,
+    navigateToModule2: () -> Unit,
 ) {
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Navigation.userList) {
+    NavHost(navController = navController, startDestination = Navigation.mainScreen) {
         composable(
-            Navigation.userList,
-            arguments = listOf(
-                navArgument(
-                    name = "id"
-                ) {
-                    type = NavType.StringType
-                }
-            )
+            route = Navigation.mainScreen,
         ) {
+            MainScreen(
+                action1 = { navController.navigate(Navigation.userList) },
+                action2 = navigateToModule1,
+                action3 = navigateToModule2,
+            )
+        }
 
+        composable(
+            route = Navigation.userList,
+        ) {
             val viewModel = hiltViewModel<UserListViewModel>()
             val viewState = viewModel.state.collectAsState().value
             UserListScreen(
@@ -57,7 +57,6 @@ internal fun UserNavigation(
                     viewModel.getDetail(backStackEntry.arguments?.getString("id") ?: "1")
                 },
                 onClick = {
-                    onButtonClick.invoke()
                 }
             ) {
 
@@ -68,6 +67,7 @@ internal fun UserNavigation(
 
 object Navigation {
     const val idHolder = "id"
+    const val mainScreen = "mainScreen"
     const val userDetail = "userDetail/{$idHolder}"
     const val userList = "userList"
 }
