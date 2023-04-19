@@ -43,7 +43,7 @@ class Module2ViewModel : ViewModel() {
     fun changeData() {
         val limit = Random.nextInt(1, 6)
         _data.value = arrayListOf<String>().apply {
-            for (number in 1 until limit) {
+            for (number in 0 .. limit) {
                 add("String $number")
             }
         }

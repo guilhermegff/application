@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/initial_nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.project.application.presentation.MainFragment">
+        <action
+            android:id="@+id/action_initialModule_to_module2"
+            app:destination="@id/nav_graph" />
+        <action
+            android:id="@+id/action_initialModule_to_module1"
+            app:destination="@id/module1Activity" />
+        <action
+            android:id="@+id/action_initialModule_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.project.application.presentation.UserFragment">
+    </fragment>
+
+    <activity
+        android:id="@+id/module1Activity"
+        android:name="com.project.module1.LocationActivity" />
+
+    <include app:graph="@navigation/nav_graph" />
+
+</navigation>
