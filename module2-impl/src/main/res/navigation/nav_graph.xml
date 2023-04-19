@@ -14,6 +14,8 @@
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.example.module2_impl.Module2Fragment2" />
+        android:name="com.example.module2_impl.Module2Fragment2">
+        <deepLink app:uri="android-app://example.module2_impl.app/module_2_fragment_2"/>
+    </fragment>
 
 </navigation>
