@@ -12,38 +12,22 @@ import com.project.application.presentation.userList.UserListScreen
 import com.project.application.presentation.userList.UserListViewModel
 
 @Composable
-internal fun UserNavigation(
-    navigateToModule1: () -> Unit,
-    navigateToModule2: () -> Unit,
-) {
-
+internal fun UserNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Navigation.mainScreen) {
-        composable(
-            route = Navigation.mainScreen,
-        ) {
-            MainScreen(
-                action1 = { navController.navigate(Navigation.userList) },
-                action2 = navigateToModule1,
-                action3 = navigateToModule2,
-            )
-        }
-
+    NavHost(navController = navController, startDestination = Navigation.userList) {
         composable(
             route = Navigation.userList,
         ) {
             val viewModel = hiltViewModel<UserListViewModel>()
             val viewState = viewModel.state.collectAsState().value
-            UserListScreen(
-                viewState = viewState,
+            UserListScreen(viewState = viewState,
                 action = { viewModel.errorAction() },
                 onClick = { id ->
                     navController.navigate(
                         Navigation.userDetail.replace(Navigation.idHolder, id)
                     )
-                }
-            )
+                })
         }
 
         composable(
@@ -51,14 +35,9 @@ internal fun UserNavigation(
         ) { backStackEntry ->
             val viewModel = hiltViewModel<UserDetailViewModel>()
             val viewState = viewModel.state.collectAsState().value
-            UserDetailScreen(
-                viewState = viewState,
-                action = {
-                    viewModel.getDetail(backStackEntry.arguments?.getString("id") ?: "1")
-                },
-                onClick = {
-                }
-            ) {
+            UserDetailScreen(viewState = viewState, action = {
+                viewModel.getDetail(backStackEntry.arguments?.getString("id") ?: "1")
+            }, onClick = {}) {
 
             }
         }
@@ -67,7 +46,6 @@ internal fun UserNavigation(
 
 object Navigation {
     const val idHolder = "id"
-    const val mainScreen = "mainScreen"
     const val userDetail = "userDetail/{$idHolder}"
     const val userList = "userList"
 }
