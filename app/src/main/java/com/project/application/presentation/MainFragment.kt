@@ -3,7 +3,9 @@ package com.project.application.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import com.project.application.R
 
@@ -27,8 +29,11 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 }
             }
             val button3: Button = findViewById<Button?>(R.id.button3).apply {
+                val request = NavDeepLinkRequest.Builder
+                    .fromUri("android-app://example.module2_impl.app/module_2_fragment_2".toUri())
+                    .build()
                 setOnClickListener {
-                    navController.navigate(toModule2Action)
+                    navController.navigate(request)
                 }
             }
         }
