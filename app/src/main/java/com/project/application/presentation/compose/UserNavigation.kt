@@ -33,7 +33,7 @@ internal fun UserNavigation(
             )
         ) {
 
-            val viewModel = hiltViewModel<UserListViewModel>(storeOwner)
+            val viewModel = hiltViewModel<UserListViewModel>()
             val viewState = viewModel.state.collectAsState().value
             UserListScreen(
                 viewState = viewState,
@@ -49,7 +49,7 @@ internal fun UserNavigation(
         composable(
             route = Navigation.userDetail,
         ) { backStackEntry ->
-            val viewModel = hiltViewModel<UserDetailViewModel>(storeOwner)
+            val viewModel = hiltViewModel<UserDetailViewModel>()
             val viewState = viewModel.state.collectAsState().value
             UserDetailScreen(
                 viewState = viewState,
