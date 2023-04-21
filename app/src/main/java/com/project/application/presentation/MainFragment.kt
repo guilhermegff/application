@@ -30,7 +30,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             }
             val button3: Button = findViewById<Button?>(R.id.button3).apply {
                 val request = NavDeepLinkRequest.Builder
-                    .fromUri("android-app://example.module2_impl.app/module_2_fragment_2".toUri())
+                    .fromUri("android-app://example.module2_impl.app/module_2_fragment_3".toUri())
                     .build()
                 setOnClickListener {
                     navController.navigate(request)

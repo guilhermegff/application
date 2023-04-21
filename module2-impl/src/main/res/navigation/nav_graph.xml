@@ -7,15 +7,21 @@
     <fragment
         android:id="@+id/initialFragment"
         android:name="com.example.module2_impl.Module2Fragment">
-        <action android:id="@+id/action_initialFragment_to_secondFragment"
-            app:destination="@id/secondFragment"
-            />
+        <action
+            android:id="@+id/action_initialFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.example.module2_impl.Module2Fragment2">
-        <deepLink app:uri="android-app://example.module2_impl.app/module_2_fragment_2"/>
+        <deepLink app:uri="android-app://example.module2_impl.app/module_2_fragment_2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.example.module2_impl.Module2Fragment3">
+        <deepLink app:uri="android-app://example.module2_impl.app/module_2_fragment_3" />
     </fragment>
 
 </navigation>
