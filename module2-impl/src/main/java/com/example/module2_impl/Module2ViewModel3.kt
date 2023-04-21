@@ -10,7 +10,7 @@ class Module2ViewModel3 : ViewModel() {
         for (number in 0..20) {
             delay(1000)
             Log.d("TAG", "Emitted: String $number")
-            emit("String $number")
+            emit("$number")
         }
     }.onStart {
         Log.d("TAG", "Started")
