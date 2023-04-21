@@ -1,8 +1,14 @@
 package com.example.module2_impl
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +19,14 @@ import com.project.module2.R
 import kotlinx.coroutines.launch
 
 class Module2Fragment3 : Fragment(R.layout.fragment_main_3) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        /*registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {}.launch(Manifest.permission.POST_NOTIFICATIONS)*/
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,5 +56,21 @@ class Module2Fragment3 : Fragment(R.layout.fragment_main_3) {
             }
         }
         recycler.adapter = adapter
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun sendNotification() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val builder = NotificationCompat.Builder(requireActivity(), "1")
+                .setSmallIcon(androidx.appcompat.R.drawable.abc_btn_check_material)
+                .setContentTitle("Test")
+                .setContentText("a")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            NotificationManagerCompat.from(requireActivity())
+                .notify(R.string.id, builder.build())
+        }
     }
 }
