@@ -1,8 +1,9 @@
 package com.project.application
 
 import com.project.application.book.*
+import com.project.application.book.kotlininaction.LengthCounter
+import com.project.application.book.kotlininaction.Profile
 import org.junit.Test
-import java.beans.PropertyChangeListener
 import java.math.BigDecimal
 
 class BookClassOperator : BookClassOperatorFixture {
