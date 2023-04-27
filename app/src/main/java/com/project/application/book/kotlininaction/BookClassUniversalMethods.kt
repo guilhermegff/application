@@ -1,4 +1,4 @@
-package com.project.application.book
+package com.project.application.book.kotlininaction
 
 //Class to practice with code from the book "Kotlin In Action"
 class BookClassUniversalMethods
