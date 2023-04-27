@@ -1,4 +1,4 @@
-package com.project.application.book.kotlininaction
+package com.project.application.theory.kotlininaction
 
 //Class to practice with code from the book "Kotlin In Action"
 class BookClassBackingField

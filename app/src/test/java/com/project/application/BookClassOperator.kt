@@ -1,8 +1,8 @@
 package com.project.application
 
-import com.project.application.book.*
-import com.project.application.book.kotlininaction.LengthCounter
-import com.project.application.book.kotlininaction.Profile
+import com.project.application.theory.*
+import com.project.application.theory.kotlininaction.LengthCounter
+import com.project.application.theory.kotlininaction.Profile
 import org.junit.Test
 import java.math.BigDecimal
 

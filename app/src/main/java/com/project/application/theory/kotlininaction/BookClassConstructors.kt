@@ -1,4 +1,4 @@
-package com.project.application.book.kotlininaction
+package com.project.application.theory.kotlininaction
 
 import android.content.Context
 import android.util.AttributeSet
