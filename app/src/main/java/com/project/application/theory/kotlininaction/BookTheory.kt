@@ -1,7 +1,7 @@
-package com.project.application.book.kotlininaction
+package com.project.application.theory.kotlininaction
 
 class BookTheory {
-    val book = "Kotlin in Action 1st edition"
+    val book = "Kotlin in Action 1st Edition"
 }
 
 //region Chapter 2
@@ -655,6 +655,7 @@ interface ClickListener {
 
 class WithListener(val javaFunctionalInterface: JavaFunctionalInterface)
 
+@Suppress("ObjectLiteralToLambda")
 fun tryWithJavaInterfaceAnonymousObject() {
     WithListener(object :
         JavaFunctionalInterface { //The object will be instantiated on each call
