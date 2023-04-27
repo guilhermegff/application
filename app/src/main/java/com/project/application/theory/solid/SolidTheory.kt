@@ -17,7 +17,7 @@ class SolidTheory
 *
 * */
 
-/*  Interface Segregation Principle
+/* Interface Segregation Principle
 *
 *
 * */
