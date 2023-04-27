@@ -1,7 +1,5 @@
 package com.project.application.book.kotlininaction
 
-import com.project.application.book.kotlininaction.JavaFunctionalInterface
-
 class BookTheory {
     val book = "Kotlin in Action 1st edition"
 }
