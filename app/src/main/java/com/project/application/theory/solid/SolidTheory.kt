@@ -1,5 +1,7 @@
 package com.project.application.theory.solid
 
+import java.math.BigDecimal
+
 class SolidTheory
 
 //region Single Responsibility Principle
@@ -59,7 +61,16 @@ class Employee(string: String) {
 *
 * */
 
-data class EmployeeData(val data: String = "data")
+data class EmployeeData(
+    val data: String = "data",
+    val salary: BigDecimal = BigDecimal.TEN,
+    val tyoe: EmployeeType = EmployeeType.FULL_TIME,
+)
+
+enum class EmployeeType {
+    FULL_TIME,
+    CONTRACTOR
+}
 
 class PayCalculator(private val employeeData: EmployeeData) {
     fun calculatePay() {
@@ -142,6 +153,78 @@ class EmployeeFacade(employeeData: EmployeeData) {
 * 5- The risk of over-engineering is ever present
 * 6- Proper utilization of OCP allows you to provide additional business value quickly and safely
 *
+* */
+
+/*
+* This class is not protected from changes on how the tax is calculated or changes that modify the
+* set of employee types.
+* We know that the set of employee types can change.
+* */
+class SalaryCalculator() {
+    fun calculateSalary(employeeData: EmployeeData) {
+        val taxDeduction: BigDecimal = calculateTax(employeeData)
+    }
+
+    private fun calculateTax(employeeData: EmployeeData): BigDecimal {
+        return when (employeeData.tyoe) {
+            EmployeeType.FULL_TIME -> BigDecimal.TEN * 0.2.toBigDecimal()
+            EmployeeType.CONTRACTOR -> BigDecimal.TEN * 0.1.toBigDecimal()
+        }
+    }
+}
+
+/*
+* We apply the SRP towards an abstraction that encapsulates the desired behavior
+* */
+interface TaxCalculator {
+    fun calculateTax(employeeData: EmployeeData): BigDecimal
+}
+
+/*
+* Then we implement different realizations for the abstraction by utilizing the Strategy Pattern
+* */
+class TaxCalculatorFullTime() : TaxCalculator {
+    override fun calculateTax(employeeData: EmployeeData): BigDecimal {
+        return BigDecimal.TEN * 0.2.toBigDecimal()
+    }
+}
+
+class TaxCalculatorContractor() : TaxCalculator {
+    override fun calculateTax(employeeData: EmployeeData): BigDecimal {
+        return BigDecimal.TEN * 0.1.toBigDecimal()
+    }
+}
+
+/*
+* We delegate the decision to which realization should be used to a Factory Pattern
+* */
+class TaxCalculatorFactory() {
+    fun newTaxCalculator(employeeData: EmployeeData): TaxCalculator {
+        return when (employeeData.tyoe) {
+            EmployeeType.FULL_TIME -> TaxCalculatorFullTime()
+            EmployeeType.CONTRACTOR -> TaxCalculatorContractor()
+        }
+    }
+}
+
+/*
+* Now the SalaryCalculator class can be refactored and conform to the OCP
+* */
+class SalaryCalculatorRefactored() {
+    private val taxCalculatorFactory = TaxCalculatorFactory()
+
+    fun calculateSalary(employeeData: EmployeeData): BigDecimal {
+        val taxCalculator = taxCalculatorFactory.newTaxCalculator(employeeData)
+        val taxDeduction = taxCalculator.calculateTax(employeeData)
+        return employeeData.salary - taxDeduction
+    }
+}
+
+/*
+* With this refactored implementation and the use of OCP, we protect the SalaryCalculator class
+* from changes. The calculation is specialized on each realization of the abstraction.
+* Changes are to occur on the TaxCalculator factory when we add or remove new employee types.
+* Changes can also occur on the implementations that calculate the tax.
 * */
 //endregion
 
