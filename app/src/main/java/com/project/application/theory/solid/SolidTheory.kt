@@ -2,7 +2,8 @@ package com.project.application.theory.solid
 
 class SolidTheory
 
-/* Single Responsibility Principle
+//region Single Responsibility Principle
+/*
 *
 * Classes should have only one reason to change. Stakeholders, and users, are reasons to change, they are the parties who
 * can ask for something to change. If a class is responsible for fulfilling requirements from many stakeholders, or actors, then it has
@@ -23,13 +24,13 @@ class SolidTheory
 * way the changes that are required by the CFO won't bring unwanted changes to the HR team.
 *
 * According to Robert Martin, in "Clean Architecture", the SRP is about functions and classes but manifests itself on a different form
-* at two more levels. It becomes the Common Closure Principle at the level of components and the Axis of Change at the level of
+* at two more levels. It becomes the Common Closure Principle at the level of Components and the Axis of Change at the level of
 * Architectural Boundaries.
 *
 * */
 
-class Employee() {
-    val data = "data"
+class Employee(string: String) {
+    val data = string
 
     fun calculatePay() {
         //Used by the CFO
@@ -37,7 +38,7 @@ class Employee() {
     }
 
     private fun regularHours(data: String) {
-
+        println(data)
     }
 
     fun reportHours() {
@@ -101,24 +102,66 @@ class EmployeeFacade(employeeData: EmployeeData) {
     fun reportHours() = hourReporter.reportHours()
     fun save() = employeeSaver.saveEmployee()
 }
+//endregion
 
-/* Open Closed Principle
+//region Open Closed Principle
+/*
 *
-* 
+* The term Open Close Principle was coined by Bertrand Meyer in 1988 and it states that:
+* A software artifact should be open for extension but closed for modification.
+* The goal is to make the system easy to extend without incurring a high impact of change.
+* This can be achieved by applying the Single Responsibility Principle and
+* the Dependency Inversion Principle. By applying the SRP and DIP, we can protect components from changes
+* while keeping them open to be extensible. In other words, we should depend om stable abstractions and modify
+* system's behavior by providing different realizations for those abstractions.
+*
+* From the book "Agile Software Development by Robert Martin:
+* How is it possible that the behavior of a module can be modified without changing its source code?
+* Without changing the module, how can we change what a module does?
+* The answer is abstraction. It is possible to create abstractions that are fixed and yet represent
+* an unbounded group of possible behaviors. It is possible for a module to manipulate an abstraction.
+* Such a module can be closed for modification, since it depends on an abstraction that is fixed.
+* Yet the behavior of that module can be extended by creating new derivatives of the abstraction.
+*
+* By Vasiliy's definitions:
+* A modern definition of OCP could be:
+* Depend on stable abstractions and modify system's behavior by providing different realizations.
+*
+* OCP is the principle of polymorphism.
+*
+* Considerations:
+* The fact that something can change doesn't imply that it will change, or that it will change
+* according to your predictions.
+*
+* OCP Application Framework:
+* 1- Is the anticipated change related to intrinsic instability of business requirements?
+* 2- What kind of changes usually happen on projects like this one?
+* 3- If the potential change doesn't correspond to 1 or 2, don't immediately apply OCP.
+* 4- When requirements change, identify opportunities for extraction of meaningful abstractions
+*    and then refactor accordingly.
+* 5- The risk of over-engineering is ever present
+* 6- Proper utilization of OCP allows you to provide additional business value quickly and safely
 *
 * */
+//endregion
 
-/* Liskov Substitution Principle
+//region Liskov Substitution Principle
+/*
 *
 *
 * */
+//endregion
 
-/* Interface Segregation Principle
+//region Interface Segregation Principle
+/*
 *
 *
 * */
+//endregion
 
-/* Dependency Inversion Principle
+//region Dependency Inversion Principle
+/*
 *
 *
 * */
+//endregion
