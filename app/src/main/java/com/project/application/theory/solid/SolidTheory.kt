@@ -52,7 +52,7 @@ class Employee() {
 
 /* Solution
 *
-* In this solution we separate de data from the functions. Three different classes
+* In this solution we separate the data from the functions. Three different classes
 * share access to the data class. Each class holds only the code necessary for its particular function
 * The three classes do not know about each other.
 *
