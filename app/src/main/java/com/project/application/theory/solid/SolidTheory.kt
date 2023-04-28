@@ -22,8 +22,8 @@ class SolidTheory
 * The solution is to extract the multiple responsibilities into different classes so that each have only one reason to change. This
 * way the changes that are required by the CFO won't bring unwanted changes to the HR team.
 *
-* According to Robert Martin in "Clean Architecture", the SRP is about functions and classes but manifests itself on a different form
-* at two more levels.It becomes the Common Closure Principle at the level of components and the Axis of Change at the level of
+* According to Robert Martin, in "Clean Architecture", the SRP is about functions and classes but manifests itself on a different form
+* at two more levels. It becomes the Common Closure Principle at the level of components and the Axis of Change at the level of
 * Architectural Boundaries.
 *
 * */
