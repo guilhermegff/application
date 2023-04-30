@@ -231,6 +231,44 @@ class SalaryCalculatorRefactored() {
 //region Liskov Substitution Principle
 /*
 *
+* The Liskov Substitution Principle is named after Barbara Liskov, the author of scientific papers
+* on data abstractions and hierarchy.
+* A class that derives from other becomes a subclass but not necessarily a subtype.
+* Liskov's definition of a subtype:
+* "What is wanted here is something like the following substitution property:
+* if for each object o1 of type S there is an object o2 of type T such that for all programs P
+* defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2 then S is a
+* subtype of T."
+* To achieve this definition, some guiding rules have been defined:
+* Methods Signature Rules
+* - Contravariance of Arguments
+*  If a subclass implements a method from its superclass, then the number of arguments should be the same
+*  The type of each argument in subclass method should be the supertype of the respective argument in
+* superclass method
+* - Covariance of Result
+*  Either both superclass' and subclass' methods return result, or neither does
+*  If there is a result, then the type of the result in the subclass is a subtype of the type of the result
+* in the superclass
+* - Exception Rule
+*  Exceptions thrown by a method in the subclass should be contained in the set of exceptions thrown by the
+* respective method in the superclass
+* Methods Pre and Post conditions Rules
+* - Pre-Condition
+*   An assertion about the state of the system before the method is called
+*   Pre-conditions required by the methods of a subclass must not be stronger than those required
+* by methods of superclass (A subclass should be able to operate in all states that a superclass
+* can operate in)
+* - Post-Condition
+*   An assertion about the state of the system after method execution completes
+*   Post-conditions guaranteed by methods of a subclass must not be weaker than post-conditions
+* guaranteed by methods of a superclass
+* Class Property Rules
+* - Invariant Rule
+*   Invariants guaranteed by a subclass must include all invariants guaranteed by a superclass
+* - Constraint Rule
+*   Constraints enforced by a subclass must include all constraints enforced by a superclass
+* (Constraint is an assertion about how class property evolves over time)
+*
 *
 * */
 //endregion
