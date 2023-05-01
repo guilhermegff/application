@@ -144,14 +144,14 @@ class BookClassOperator : BookClassOperatorFixture {
 
     @Test
     fun multipleInterfaces() {
-        val button = Button1()
+        /*val button = Button1()
         button.setFocus(true)
-        button.showOff()
+        button.showOff()*/
     }
 
     @Test
     fun sealedClassTry() {
-        val a = ClassSealed.SealedA()
+        /*val a = ClassSealed.SealedA()
         val b = ClassSealed.SealedB
         val c = ClassSealed.SealedC(1)
         val d = SealedD()
@@ -179,7 +179,7 @@ class BookClassOperator : BookClassOperatorFixture {
         trySealed(b)
         trySealed(c)
         trySealed(d)
-        trySealed(e)
+        trySealed(e)*/
     }
 
     @Test

@@ -243,34 +243,95 @@ class SalaryCalculatorRefactored() {
 * Methods Signature Rules
 * - Contravariance of Arguments
 *  If a subclass implements a method from its superclass, then the number of arguments should be the same
-*  The type of each argument in subclass method should be the supertype of the respective argument in
-* superclass method
+*  Argument types on methods overriden in the subclass must be equal to those on the methods from the superclass,
+*  this if enforced by Java and Kotlin compiler.
+*/
+
+/*
+* The objects of the subtype ought to behave the same as those of the supertype as far as anyone or any
+* program using supertype objects can tell.
+*
+* Calls of methods made in the program that assume the object belongs to a supertype must have the same
+* behavior when the object actually belongs to a subtype.
+*
+* It is possible to have a mutable subtype of an immutable supertype, provided the mutations are invisible
+* for users of the supertype.
+* Mutations of a subtype that would be visible through the methods of an immutable supertype are ruled out.
+* */
+interface InterfaceX {
+    fun fromX() {
+        println(x)
+    }
+    val x : String get() = "X"
+}
+
+interface InterfaceY : InterfaceX {
+    fun fromY() {
+        println("Y")
+    }
+}
+
+open class  ClassX() {
+    open fun method(string: String, int: Int, interfaceY: InterfaceY) {
+        interfaceY.fromX()
+        interfaceY.fromY()
+    }
+    open fun method2(string: String, int: Int, interfaceX: InterfaceX): InterfaceX {
+        interfaceX.fromX()
+        return object : InterfaceX {}
+    }
+}
+
+class ClassY : ClassX() {
+    override fun method(string: String, int: Int, interfaceY: InterfaceY) {
+        super.method(string, int, interfaceY)
+    }
+
+    override fun method2(string: String, int: Int, interfaceX: InterfaceX): InterfaceX {
+        super.method2(string, int, interfaceX)
+        return object : InterfaceX {}
+    }
+}
+
+fun main() {
+    tryIt1()
+}
+
+fun tryIt1() {
+    val classY = ClassY()
+    val impl = object : InterfaceY {}
+
+    classY.method("string", 1, impl)
+    classY.method2("string", 2, impl)
+}
+
+/*
 * - Covariance of Result
 *  Either both superclass' and subclass' methods return result, or neither does
 *  If there is a result, then the type of the result in the subclass is a subtype of the type of the result
-* in the superclass
+*  in the superclass
 * - Exception Rule
 *  Exceptions thrown by a method in the subclass should be contained in the set of exceptions thrown by the
-* respective method in the superclass
+*  respective method in the superclass
 * Methods Pre and Post conditions Rules
 * - Pre-Condition
-*   An assertion about the state of the system before the method is called
-*   Pre-conditions required by the methods of a subclass must not be stronger than those required
-* by methods of superclass (A subclass should be able to operate in all states that a superclass
-* can operate in)
+*  An assertion about the state of the system before the method is called
+*  Pre-conditions required by the methods of a subclass must not be stronger than those required
+*  by methods of superclass (A subclass should be able to operate in all states that a superclass
+*  can operate in)
 * - Post-Condition
-*   An assertion about the state of the system after method execution completes
-*   Post-conditions guaranteed by methods of a subclass must not be weaker than post-conditions
-* guaranteed by methods of a superclass
+*  An assertion about the state of the system after method execution completes
+*  Post-conditions guaranteed by methods of a subclass must not be weaker than post-conditions
+*  guaranteed by methods of a superclass
 * Class Property Rules
 * - Invariant Rule
-*   Invariants guaranteed by a subclass must include all invariants guaranteed by a superclass
+*  Invariants guaranteed by a subclass must include all invariants guaranteed by a superclass
 * - Constraint Rule
-*   Constraints enforced by a subclass must include all constraints enforced by a superclass
-* (Constraint is an assertion about how class property evolves over time)
+*  Constraints enforced by a subclass must include all constraints enforced by a superclass
+*  (Constraint is an assertion about how class property evolves over time)
 *
 *
-* */
+*/
 //endregion
 
 //region Interface Segregation Principle
