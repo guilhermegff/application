@@ -358,13 +358,13 @@ fun tryIt1() {
 * */
 //endregion
 
-class UserOf1SeesAll(usesAll: UsesAll)
-class UserOf2SeesAll(usesAll: UsesAll)
-class UserOf3SeesAll(usesAll: UsesAll)
+class UserOf1SeesAll(val usesAll: UsesAll)
+class UserOf2SeesAll(val usesAll: UsesAll)
+class UserOf3SeesAll(val usesAll: UsesAll)
 
-class UserOf1Sees1(uses1: Uses1)
-class UserOf2Sees2(uses2: Uses2)
-class UserOf3Sees3(uses3: Uses3)
+class UserOf1Sees1(val uses1: Uses1)
+class UserOf2Sees2(val uses2: Uses2)
+class UserOf3Sees3(val uses3: Uses3)
 
 class UsesAll() : Uses1, Uses2, Uses3 {
     override fun op1() {}
@@ -382,6 +382,16 @@ interface Uses2 {
 
 interface Uses3 {
     fun op3()
+}
+
+fun tryIsp() {
+    val usesAll = UsesAll()
+    val userOf1Sees1 = UserOf1Sees1(usesAll)
+    userOf1Sees1.uses1.op1()
+    val usersOf1SeesAll = UserOf1SeesAll(usesAll)
+    usersOf1SeesAll.usesAll.op1()
+    usersOf1SeesAll.usesAll.op2()
+    usersOf1SeesAll.usesAll.op3()
 }
 //region Dependency Inversion Principle
 /*
