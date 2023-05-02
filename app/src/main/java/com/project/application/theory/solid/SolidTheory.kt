@@ -306,6 +306,16 @@ fun tryIt1() {
 }
 
 /*
+*
+* Type Hierarchies
+* Extension Subtypes and Constrained Subtypes, both relationships can appear in the same type family
+* Extension Subtypes add methods and or state to the object
+* Constrained Subtypes restrict the nondeterministic definitions of the supertype by reducing
+* variation. Variability should show up on the supertype invariant and constraint and specification
+* of each method
+* */
+
+/*
 * - Covariance of Result
 *  Either both superclass' and subclass' methods return result, or neither does
 *  If there is a result, then the type of the result in the subclass is a subtype of the type of the result
@@ -325,8 +335,11 @@ fun tryIt1() {
 *  guaranteed by methods of a superclass
 * Class Property Rules
 * - Invariant Rule
+*  Invariant = A property of an object which remains unchanged after operations or transformations
+*  are applied to the object
 *  Invariants guaranteed by a subclass must include all invariants guaranteed by a superclass
 * - Constraint Rule
+*  Constraint = A condition that solutions must satisfy
 *  Constraints enforced by a subclass must include all constraints enforced by a superclass
 *  (Constraint is an assertion about how class property evolves over time)
 *
