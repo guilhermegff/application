@@ -388,10 +388,10 @@ fun tryIsp() {
     val usesAll = UsesAll()
     val userOf1Sees1 = UserOf1Sees1(usesAll)
     userOf1Sees1.uses1.op1()
-    val usersOf1SeesAll = UserOf1SeesAll(usesAll)
-    usersOf1SeesAll.usesAll.op1()
-    usersOf1SeesAll.usesAll.op2()
-    usersOf1SeesAll.usesAll.op3()
+    val userOf1SeesAll = UserOf1SeesAll(usesAll)
+    userOf1SeesAll.usesAll.op1()
+    userOf1SeesAll.usesAll.op2()
+    userOf1SeesAll.usesAll.op3()
 }
 //region Dependency Inversion Principle
 /*
