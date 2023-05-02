@@ -244,7 +244,7 @@ class SalaryCalculatorRefactored() {
 * - Contravariance of Arguments
 *  If a subclass implements a method from its superclass, then the number of arguments should be the same
 *  Argument types on methods overriden in the subclass must be equal to those on the methods from the superclass,
-*  this if enforced by Java and Kotlin compiler.
+*  this is enforced by Java and Kotlin compiler.
 */
 
 /*
