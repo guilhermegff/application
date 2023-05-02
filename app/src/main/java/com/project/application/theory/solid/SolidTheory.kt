@@ -349,11 +349,50 @@ fun tryIt1() {
 
 //region Interface Segregation Principle
 /*
-*
+* Interface Segregation Principle has the general goal of avoiding having dependencies on more than
+* what is needed. In statically typed languages it is also a way to minimize the need for clients
+* to recompile after changes.
+* One high level benefit of ISP is that a clearer communication of the object's api is presented to
+* the client.
 *
 * */
 //endregion
 
+class UserOf1SeesAll(val usesAll: UsesAll)
+class UserOf2SeesAll(val usesAll: UsesAll)
+class UserOf3SeesAll(val usesAll: UsesAll)
+
+class UserOf1Sees1(val uses1: Uses1)
+class UserOf2Sees2(val uses2: Uses2)
+class UserOf3Sees3(val uses3: Uses3)
+
+class UsesAll() : Uses1, Uses2, Uses3 {
+    override fun op1() {}
+    override fun op2() {}
+    override fun op3() {}
+}
+
+interface Uses1 {
+    fun op1()
+}
+
+interface Uses2 {
+    fun op2()
+}
+
+interface Uses3 {
+    fun op3()
+}
+
+fun tryIsp() {
+    val usesAll = UsesAll()
+    val userOf1Sees1 = UserOf1Sees1(usesAll)
+    userOf1Sees1.uses1.op1()
+    val userOf1SeesAll = UserOf1SeesAll(usesAll)
+    userOf1SeesAll.usesAll.op1()
+    userOf1SeesAll.usesAll.op2()
+    userOf1SeesAll.usesAll.op3()
+}
 //region Dependency Inversion Principle
 /*
 *
