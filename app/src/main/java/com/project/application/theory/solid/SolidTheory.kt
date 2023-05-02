@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 class SolidTheory
 
-//region Single Responsibility Principle
+//region - Single Responsibility Principle
 /*
 *
 * Classes should have only one reason to change. Stakeholders, and users, are reasons to change, they are the parties who
@@ -115,7 +115,7 @@ class EmployeeFacade(employeeData: EmployeeData) {
 }
 //endregion
 
-//region Open Closed Principle
+//region - Open Closed Principle
 /*
 *
 * The term Open Close Principle was coined by Bertrand Meyer in 1988 and it states that:
@@ -228,7 +228,7 @@ class SalaryCalculatorRefactored() {
 * */
 //endregion
 
-//region Liskov Substitution Principle
+//region - Liskov Substitution Principle
 /*
 *
 * The Liskov Substitution Principle is named after Barbara Liskov, the author of scientific papers
@@ -347,17 +347,16 @@ fun tryIt1() {
 */
 //endregion
 
-//region Interface Segregation Principle
+//region - Interface Segregation Principle
 /*
+*
 * Interface Segregation Principle has the general goal of avoiding having dependencies on more than
 * what is needed. In statically typed languages it is also a way to minimize the need for clients
 * to recompile after changes.
-* One high level benefit of ISP is that a clearer communication of the object's api is presented to
+* One high-level benefit of ISP is that a clearer communication of the object's api is presented to
 * the client.
 *
 * */
-//endregion
-
 class UserOf1SeesAll(val usesAll: UsesAll)
 class UserOf2SeesAll(val usesAll: UsesAll)
 class UserOf3SeesAll(val usesAll: UsesAll)
@@ -393,9 +392,31 @@ fun tryIsp() {
     userOf1SeesAll.usesAll.op2()
     userOf1SeesAll.usesAll.op3()
 }
-//region Dependency Inversion Principle
+//endregion
+
+//region - Dependency Inversion Principle
 /*
 *
+* The dependency inversion principle tells us that the most flexible systems are those in which source
+* code dependencies refer only to abstractions, not to concretions.
+* The stable background of operating systems and platform facilities tend to be ignored when it comes
+* to DIP. We tolerate those concrete dependencies because we know we can rely on them not to change.
+* It is the volatile concrete elements of our system that we want to avoid depending on.
+* Stable software architectures are those that avoid depending on volatile concretions, and that
+* favor the use of stable abstract interfaces.
+* Don't refer to volatile concrete classes. Refer to abstract interfaces instead. This puts contraints
+* on the creation of objects and generally enforces the use of abstract factories.
+* Don't derive from volatile concrete classes
+* Don't override concrete functions.
+* Abstract factories can be used to manage concrete dependencies.
+* Source code dependencies should point to abstractions.
+* The abstract components contains all the high-level business rules of the application.
+* The concrete components contains all the implementation details those rules manipulate.
+* The flow of control crosses the line in the opposite direction of the source code dependencies.
+* The source code dependencies are inverted against the flow of control, which is why we refer to
+* this principle as Dependency Inversion.
+* DIP violations cannot be entirely removed, but they can be gathered in a small number of concrete
+* components and kept separated from the rest of the system.
 *
 * */
 //endregion
