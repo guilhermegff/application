@@ -419,4 +419,34 @@ fun tryIsp() {
 * components and kept separated from the rest of the system.
 *
 * */
+
+interface ServiceFactory {
+    fun makeService() : AbstractService
+}
+
+interface AbstractService
+
+class ConcreteService : AbstractService
+
+class ServiceFactoryImpl : ServiceFactory {
+    override fun makeService(): AbstractService = ConcreteService()
+}
+
+lateinit var factory: ServiceFactory
+
+/*
+*
+* Main component that knows the concretions, DIP violations cannot be entirely removed.
+* */
+fun main2() {
+    factory = ServiceFactoryImpl()
+}
+
+/*
+*
+* The Application component knows only about abstractions on compile time
+* */
+class Application {
+    val service = factory.makeService()
+}
 //endregion
