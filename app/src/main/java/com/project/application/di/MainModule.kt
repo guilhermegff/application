@@ -1,8 +1,7 @@
 package com.project.application.di
 
-import com.example.module2_impl.Module2NavigatorImpl
+import com.example.factory.NavigatorFactory
 import com.project.application.infrastructure.UserService
-import com.project.module1.Module1NavigatorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 @Module
@@ -50,11 +48,5 @@ class MainModule {
     }
 
     @Provides
-    fun provideExecutor() = Executor { it?.run() }
-
-    @Provides
-    fun provideModule1() = Module1NavigatorImpl()
-
-    @Provides
-    fun provideModule2() = Module2NavigatorImpl()
+    fun provideNavFactory() = NavigatorFactory()
 }

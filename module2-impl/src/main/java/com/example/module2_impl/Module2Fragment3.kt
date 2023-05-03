@@ -65,7 +65,6 @@ class Module2Fragment3 : Fragment(R.layout.fragment_main_3) {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             val builder = NotificationCompat.Builder(requireActivity(), "1")
-                .setSmallIcon(androidx.appcompat.R.drawable.abc_btn_check_material)
                 .setContentTitle("Test")
                 .setContentText("a")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
