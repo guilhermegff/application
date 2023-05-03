@@ -22,8 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 internal fun LocationScreen(
     action: () -> Unit,
 ) {
-
-    val viewModel: LocationViewModel = hiltViewModel<LocationViewModel>()
+    val viewModel: LocationViewModel = hiltViewModel()
     viewModel.initializeScreenData()
     Scaffold(
     ) {
