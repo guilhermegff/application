@@ -39,7 +39,6 @@ android {
 
 dependencies {
     implementation project(path: ':module2-api')
-    implementation project(path: ':module1-api')
     implementation project(path: ':factory-api')
 
     implementation libs.bundles.feature.module
