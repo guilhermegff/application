@@ -1,7 +1,7 @@
 package com.example.module3_impl
 
 import androidx.lifecycle.ViewModel
-import com.example.module3_impl.presentation.Module3UiModel
+import com.example.module3_impl.presentation.model.Module3UiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

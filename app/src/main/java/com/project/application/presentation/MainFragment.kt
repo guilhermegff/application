@@ -36,6 +36,11 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                     navController.navigate(request)
                 }
             }
+
+            val button4: Button = findViewById<Button?>(R.id.button4).apply {
+                setOnClickListener {
+                }
+            }
         }
     }
 }
