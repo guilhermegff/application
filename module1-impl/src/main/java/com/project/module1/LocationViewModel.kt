@@ -25,7 +25,7 @@ internal class LocationViewModel @Inject constructor(
         initializeScreenData()
     }
 
-    fun initializeScreenData() {
+    private fun initializeScreenData() {
         println("Before Launch ${Thread.currentThread().name}")
         viewModelScope.launch {
             println("On Launch ${Thread.currentThread().name}")

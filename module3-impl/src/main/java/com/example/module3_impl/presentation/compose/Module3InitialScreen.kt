@@ -1,4 +1,4 @@
-package com.example.module3_impl.presentation
+package com.example.module3_impl.presentation.compose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
