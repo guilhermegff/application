@@ -31,6 +31,10 @@
             android:exported="false">
         </activity>
         <activity
+            android:name="com.example.module3_impl.Module3Activity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name="com.project.module1.LocationActivity"
             android:exported="false">
         </activity>
