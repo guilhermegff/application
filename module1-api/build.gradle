@@ -21,6 +21,6 @@ android {
     }
 
     dependencies {
-        implementation project(path: ':factory-api')
+        api project(path: ':factory-api')
     }
 }

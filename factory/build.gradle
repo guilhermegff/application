@@ -31,16 +31,11 @@ android {
 }
 
 dependencies {
-
     implementation project(path: ':module1-impl')
     implementation project(path: ':module2-impl')
-    implementation project(path: ':factory-api')
-
-    implementation project(path: ':module2-api')
-    implementation project(path: ':module1-api')
-
-    implementation project(path: ':module3-api')
     implementation project(path: ':module3-impl')
+
+    api project(path: ':factory-api')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

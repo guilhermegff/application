@@ -38,8 +38,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':module1-api')
-    implementation project(path: ':factory-api')
+    api project(path: ':module1-api')
 
     implementation libs.bundles.feature.module
     kapt libs.dagger.hilt.compiler

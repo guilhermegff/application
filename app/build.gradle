@@ -49,7 +49,6 @@ kapt {
 
 dependencies {
     implementation project(path: ':factory')
-    implementation project(path: ':factory-api')
 
     implementation libs.bundles.feature.module
     kapt libs.dagger.hilt.compiler
