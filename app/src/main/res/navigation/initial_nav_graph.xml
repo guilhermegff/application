@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_initialModule_to_userFragment"
             app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_initialModule_to_module3"
+            app:destination="@id/module_3_nav_graph" />
     </fragment>
 
     <fragment
@@ -27,6 +30,7 @@
         android:id="@+id/module1Activity"
         android:name="com.project.module1.LocationActivity" />
 
-    <include app:graph="@navigation/nav_graph" />
+    <include app:graph="@navigation/nav_graph"/>
+    <include app:graph="@navigation/module_3_nav_graph"/>
 
 </navigation>

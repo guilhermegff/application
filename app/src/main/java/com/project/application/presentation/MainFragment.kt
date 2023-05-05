@@ -13,6 +13,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     private val toUserFragment = MainFragmentDirections.actionInitialModuleToUserFragment()
     private val toModule1Action = MainFragmentDirections.actionInitialModuleToModule1()
     private val toModule2Action = MainFragmentDirections.actionInitialModuleToModule2()
+    private val toModule3Action = MainFragmentDirections.actionInitialModuleToModule3()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +40,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
             val button4: Button = findViewById<Button?>(R.id.button4).apply {
                 setOnClickListener {
+                    navController.navigate(toModule3Action)
                 }
             }
         }
