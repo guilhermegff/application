@@ -39,8 +39,9 @@ android {
 
 dependencies {
     api project(path: ':module1-api')
+    implementation project(path: ':moduleDependency')
 
-    implementation libs.bundles.feature.module
+    implementation libs.dagger.hilt.android
     kapt libs.dagger.hilt.compiler
 
     testImplementation 'junit:junit:4.13.2'

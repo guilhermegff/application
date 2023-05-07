@@ -4,20 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'com.project.module2'
+    namespace 'com.example.moduledependency'
     compileSdk 33
 
     defaultConfig {
         minSdk 21
         targetSdk 33
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.3'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -36,10 +31,5 @@ android {
 }
 
 dependencies {
-    api project(path: ':module2-api')
-    implementation project(path: ':moduleDependency')
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    api libs.bundles.feature.module
 }
