@@ -49,8 +49,9 @@ kapt {
 
 dependencies {
     implementation project(path: ':factory')
+    implementation project(path: ':moduleDependency')
 
-    implementation libs.bundles.feature.module
+    implementation libs.dagger.hilt.android
     kapt libs.dagger.hilt.compiler
 
     testImplementation 'junit:junit:4.13.2'
