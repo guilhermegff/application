@@ -66,4 +66,17 @@ class GradleTheory {
 *   in-memory model of the project and gets ready to execute tasks
 * Execution Phase:
 *   gradle executes the tasks
+*
+* Library:
+* When you build a library you are effectively on the producer side: you are producing artifacts
+* which are going to be consumed by someone else, the consumer.
+* - A project that depends on another project is a consumer
+* - A task that depends on an artifact is a finer grained consumer
+* In order for a producer to compile a library, it needs all its implementation dependencies on the
+* compile classpath.
+* A dependency which is assigned to the implementation configuration of a library does not end up
+* on the compile classpath of the consumer. On the other hand, a dependency which is assigned to
+* the api configuration of a library would end up on the compile classpath of the consumer.
+* At runtime, however, all dependencies are required.
+* If a dependency is added to the project it becomes a transitive dependency of your consumers.
 * */
