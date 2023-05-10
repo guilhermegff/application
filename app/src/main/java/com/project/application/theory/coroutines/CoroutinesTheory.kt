@@ -5,6 +5,12 @@ class CoroutinesTheory {
 
 /*
 *
+* A Coroutine Scope wraps a Coroutine Context. The context has a Job object.
+* The job object can be a regular Job class object or a SupervisorJob class object.
+* The difference is that the SupervisorJob, when facing an exception, won't cancel all the children
+* or itself. The regular Job class, when faced with an exception, will cancel its children and then
+* its own scope.
+*
 * Structured Concurrency:
 * - Every coroutine needs to be started in a logical scope with a limited life-time
 * - Coroutines started in the same scope form a hierarchy (Job hierarchy)
