@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.module1.core.usecase.GetLocationList
 import com.project.module1.presentation.LocationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,9 +14,8 @@ internal class LocationViewModel @Inject constructor(
     private val getLocationList: GetLocationList,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ViewState())
-
-    val state: StateFlow<ViewState> = _state
+    private val _state = MutableSharedFlow<ViewState>(replay = 10)
+    val state: SharedFlow<ViewState> = _state
 
     init {
         initializeScreenData()
@@ -29,40 +25,35 @@ internal class LocationViewModel @Inject constructor(
         println("Before Launch ${Thread.currentThread().name}")
         viewModelScope.launch {
             println("On Launch ${Thread.currentThread().name}")
-            _state.update {
-                it.copy(
-                    isLoading = true,
-                )
-            }
-            delay(1000)
+            _state.emit(ViewState(isLoading = true))
             runCatching {
                 println("Run ${Thread.currentThread().name}")
                 getLocationList()
             }.onSuccess { locationList ->
                 println("Success ${Thread.currentThread().name}")
-                _state.update {
-                    it.copy(
+                _state.emit(
+                    ViewState(
                         isLoading = false,
                         isError = false,
                         locationUiModelList = locationList.map { location ->
                             LocationUiModel(location.name)
                         },
                     )
-                }
+                )
             }.onFailure {
                 println(Thread.currentThread().name)
-                _state.update {
-                    it.copy(
+                _state.emit(
+                    ViewState(
                         isLoading = false,
                         isError = true,
                     )
-                }
+                )
             }
         }
     }
 
     fun errorAction() {
-        if (state.value.isError) initializeScreenData()
+        if ((state as StateFlow).value.isError) initializeScreenData()
     }
 
     data class ViewState(

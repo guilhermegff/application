@@ -86,5 +86,4 @@ feature-module = [
     'okhttp3',
     'okhttp3-logging-interceptor',
     'kotlinx-coroutines',
-    'dagger-hilt-android',
 ]
