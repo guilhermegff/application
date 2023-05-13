@@ -53,7 +53,7 @@ internal class LocationViewModel @Inject constructor(
     }
 
     fun errorAction() {
-        if ((state as StateFlow).value.isError) initializeScreenData()
+        initializeScreenData()
     }
 
     data class ViewState(

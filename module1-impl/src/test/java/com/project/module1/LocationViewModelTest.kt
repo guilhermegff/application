@@ -12,56 +12,54 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 internal class LocationViewModelTest : Module1UnitTestFixture {
     @get:Rule
     val mainTestRule = MainTestRule()
 
+    private val service: LocationService = mock(LocationService::class.java)
+
     @Test
-    fun `viewmodel state shows correct loading state when initialized`() = runTest {
-        val locationViewModel = `given a successful path`()
+    fun `viewmodel state shows correct state when successfully initialized`() = runTest {
+        val locationViewModel = `given a successful path with`(service)
         val results = launchCollect(locationViewModel.state)
-        println(results)
-        assertThat(results[0].isLoading, equalTo(true))
-        assertThat(results[1].isLoading, equalTo(false))
+        assertThat(results, equalTo(initialLoading))
     }
 
-    private fun `given a successful path`(): LocationViewModel {
-        val service: LocationService = Mockito.mock(LocationService::class.java) {
-            return@mock locationList
-        }
-        val locationRepositoryImpl = LocationRepositoryImpl(service)
+    private suspend fun `given a successful path with`(locationService: LocationService): LocationViewModel {
+        `when`(locationService.locations()).thenReturn(locationList)
+        val locationRepositoryImpl = LocationRepositoryImpl(locationService)
         val getLocationList = GetLocationList(locationRepositoryImpl)
         return LocationViewModel(getLocationList)
     }
 
     @Test
-    fun `viewmodel state shows correct ui model state when initialized`() = runTest {
-        val locationViewModel = `given a successful path`()
+    fun `viewmodel state shows correct state when initialized with error`() = runTest {
+        val locationViewModel = `given a unsuccessful path with`(service)
         val results = launchCollect(locationViewModel.state)
-        println(results)
-        assertThat(results[0].locationUiModelList, equalTo(emptyList()))
-        assertThat(results[1].locationUiModelList, equalTo(uiModelLocationList))
+        assertThat(results, equalTo(initialLoadingWithError))
     }
 
     @Test
-    fun `viewmodel state shows correct error state when initialized with error`() = runTest {
-        val locationViewModel = `given a unsuccessful path`()
-        val results = launchCollect(locationViewModel.state)
-        println(results)
-        assertThat(results[0].isError, equalTo(false))
-        assertThat(results[1].isError, equalTo(true))
-    }
-
-    private fun `given a unsuccessful path`(): LocationViewModel {
-        val service: LocationService = Mockito.mock(LocationService::class.java) {
-            throw CancellationException()
+    fun `viewmodel state shows correct state when initialized with error and successful retry`() =
+        runTest {
+            val locationViewModel = `given a unsuccessful path with`(service)
+            `when`(service.locations()).thenReturn(locationList)
+            locationViewModel.errorAction()
+            val results = launchCollect(locationViewModel.state)
+            assertThat(results, equalTo(initialLoadingWithErrorAndSuccessfulRetry))
         }
-        val locationRepositoryImpl = LocationRepositoryImpl(service)
+
+    private suspend fun `given a unsuccessful path with`(locationService: LocationService): LocationViewModel {
+        val locationRepositoryImpl = LocationRepositoryImpl(locationService)
         val getLocationList = GetLocationList(locationRepositoryImpl)
+        `when`(locationService.locations()).thenAnswer {
+            CancellationException()
+        }
         return LocationViewModel(getLocationList)
     }
 }
@@ -76,5 +74,8 @@ fun <T> TestScope.launchCollect(state: Flow<T>): List<T> {
     }
     advanceUntilIdle()
     job.cancel()
+    for (result in results) {
+        println(result)
+    }
     return results
 }
