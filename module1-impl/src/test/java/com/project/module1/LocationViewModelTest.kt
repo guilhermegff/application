@@ -39,7 +39,7 @@ internal class LocationViewModelTest : Module1UnitTestFixture {
 
     @Test
     fun `viewmodel state shows correct state when initialized with error`() = runTest {
-        val locationViewModel = `given a unsuccessful path with`(service)
+        val locationViewModel = `given an unsuccessful path with`(service)
         val results = launchCollect(locationViewModel.state)
         assertThat(results, equalTo(initialLoadingWithError))
     }
@@ -47,14 +47,14 @@ internal class LocationViewModelTest : Module1UnitTestFixture {
     @Test
     fun `viewmodel state shows correct state when initialized with error and successful retry`() =
         runTest {
-            val locationViewModel = `given a unsuccessful path with`(service)
+            val locationViewModel = `given an unsuccessful path with`(service)
             `when`(service.locations()).thenReturn(locationList)
             locationViewModel.errorAction()
             val results = launchCollect(locationViewModel.state)
             assertThat(results, equalTo(initialLoadingWithErrorAndSuccessfulRetry))
         }
 
-    private suspend fun `given a unsuccessful path with`(locationService: LocationService): LocationViewModel {
+    private suspend fun `given an unsuccessful path with`(locationService: LocationService): LocationViewModel {
         val locationRepositoryImpl = LocationRepositoryImpl(locationService)
         val getLocationList = GetLocationList(locationRepositoryImpl)
         `when`(locationService.locations()).thenAnswer {
