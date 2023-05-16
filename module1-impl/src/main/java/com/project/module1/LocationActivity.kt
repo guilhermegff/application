@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
 import com.example.factory_api.AbstractNavigatorFactory2
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -18,8 +19,12 @@ class LocationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val viewState: LocationViewModel.ViewState = viewModel.state.collectAsState(
+                initial =
+                LocationViewModel.ViewState()
+            ).value
             LocationScreen(
-                viewModel = viewModel,
+                viewState = viewState,
                 retry = { viewModel.errorAction() },
                 action = {
                     val intentProvider = navigatorFactory.nav2()

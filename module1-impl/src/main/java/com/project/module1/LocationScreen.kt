@@ -19,15 +19,10 @@ import com.project.module1.presentation.LocationUiModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun LocationScreen(
-    viewModel: LocationViewModel,
+    viewState: LocationViewModel.ViewState,
     action: () -> Unit,
     retry: () -> Unit,
 ) {
-
-    val viewState: LocationViewModel.ViewState = viewModel.state.collectAsState(
-        initial =
-        LocationViewModel.ViewState()
-    ).value
 
     when {
         viewState.isLoading -> LoadingScreen()
