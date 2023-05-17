@@ -34,7 +34,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                     .fromUri("android-app://example.module2_impl.app/module_2_fragment_3".toUri())
                     .build()
                 setOnClickListener {
-                    navController.navigate(request)
+                    navController.navigate(toModule2Action)
                 }
             }
 
