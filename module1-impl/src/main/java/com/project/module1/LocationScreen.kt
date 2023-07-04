@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +14,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.project.module1.presentation.LocationUiModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun LocationScreen(
@@ -42,33 +40,35 @@ internal fun ScreenContent(
     action: () -> Unit,
 ) {
     Scaffold {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            text = "Module1 Screen",
-            color = Color.Black,
-        )
-        Button(
-            content = { Text(text = "Button") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Dp(10f)),
-            onClick = {
-                action.invoke()
-            }
-        )
-        LazyColumn(
-            modifier = Modifier
-                .padding(horizontal = Dp(32f))
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            items(viewState.locationUiModelList) {
-                UserRow(
-                    it,
-                )
+        Column {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = "Module1 Screen",
+                color = Color.Black,
+            )
+            Button(
+                content = { Text(text = "Button") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dp(10f)),
+                onClick = {
+                    action.invoke()
+                }
+            )
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = Dp(32f))
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                items(viewState.locationUiModelList) {
+                    UserRow(
+                        it,
+                    )
+                }
             }
         }
     }
