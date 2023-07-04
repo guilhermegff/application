@@ -107,7 +107,7 @@ fun withSmartCast(number: Number) {
 * and var is read-write (Generates a field, getter and setter). Access methods can be customized.
 *
 * Access methods can be customized
-* 
+*
 * */
 class Geometry(
     private val height: Int,

@@ -118,7 +118,7 @@ class EmployeeFacade(employeeData: EmployeeData) {
 //region - Open Closed Principle
 /*
 *
-* The term Open Close Principle was coined by Bertrand Meyer in 1988 and it states that:
+* The term Open Closed Principle was coined by Bertrand Meyer in 1988 and it states that:
 * A software artifact should be open for extension but closed for modification.
 * The goal is to make the system easy to extend without incurring a high impact of change.
 * This can be achieved by applying the Single Responsibility Principle and
@@ -404,7 +404,7 @@ fun tryIsp() {
 * It is the volatile concrete elements of our system that we want to avoid depending on.
 * Stable software architectures are those that avoid depending on volatile concretions, and that
 * favor the use of stable abstract interfaces.
-* Don't refer to volatile concrete classes. Refer to abstract interfaces instead. This puts contraints
+* Don't refer to volatile concrete classes. Refer to abstract interfaces instead. This puts constraints
 * on the creation of objects and generally enforces the use of abstract factories.
 * Don't derive from volatile concrete classes
 * Don't override concrete functions.
