@@ -18,7 +18,7 @@ class Module2Fragment2 : Fragment(R.layout.fragment_main_2) {
 
         val viewModel = ViewModelProvider(requireActivity())[Module2ViewModel2::class.java]
 
-        val textField : TextView = view.findViewById(R.id.txt_name)
+        val textField: TextView = view.findViewById(R.id.txt_name)
         viewModel.data.observe(viewLifecycleOwner) {
             textField.text = it
         }
