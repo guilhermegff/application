@@ -35,15 +35,14 @@ class Module2ViewModel : ViewModel() {
             "Transformed $it"
         })
 
-    private fun transformToList(strings: List<String>): List<String> =
-        strings.map {
-            "Transformed $it"
-        }
+    private fun transformToList(strings: List<String>): List<String> = strings.map {
+        "Transformed $it"
+    }
 
     fun changeData() {
         val limit = Random.nextInt(1, 6)
         _data.value = arrayListOf<String>().apply {
-            for (number in 0 .. limit) {
+            for (number in 0..limit) {
                 add("String $number")
             }
         }

@@ -943,7 +943,12 @@ class Point(val x: Int, val y: Int) {
 * Delegated Properties is a resource that also depends on conventions. This resource allows properties that are more complex than just having a backing field
 * to be easily implemented, without duplicating the logic on each access method.
 */
-class WithDelegationClass(private val innerList: List<Int>) : List<Int> by innerList {}
+class WithDelegationClass(private val innerList: MutableList<Int>) : MutableList<Int> by innerList {}
+
+fun tryDelegation() {
+    val delegation = WithDelegationClass(arrayListOf())
+    delegation.add(0)
+}
 
 /*
 * The base of this resource is "Delegation", a design pattern on which an object, instead of executing some task, delegates it to an auxiliary object called
