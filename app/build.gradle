@@ -51,6 +51,7 @@ dependencies {
     implementation project(path: ':factory')
     implementation project(path: ':factory-api')
     implementation project(path: ':moduleDependency')
+    implementation project(path: ':localDataSource-api')
 
     implementation libs.dagger.hilt.android
     kapt libs.dagger.hilt.compiler
