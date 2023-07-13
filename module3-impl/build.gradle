@@ -38,7 +38,6 @@ android {
 dependencies {
     implementation project(path: ':module3-api')
     implementation project(path: ':moduleDependency')
-    //implementation libs.bundles.feature.module
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
