@@ -38,6 +38,7 @@ android {
 dependencies {
     api project(path: ':module2-api')
     implementation project(path: ':moduleDependency')
+    //implementation libs.bundles.feature.module
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-android:5.3.1'

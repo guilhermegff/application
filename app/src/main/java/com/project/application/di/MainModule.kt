@@ -1,10 +1,13 @@
 package com.project.application.di
 
+import android.content.Context
 import com.example.factory.NavigatorFactory
+import com.example.localdatasource_impl.AppDatabase
 import com.project.application.infrastructure.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,6 +44,14 @@ class MainModule {
             .client(okHttpClient)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideDataBase(@ApplicationContext context: Context) = AppDatabase.newInstance(context)
+
+    @Singleton
+    @Provides
+    fun provideUserDao(db: AppDatabase) = db.provideUserDao()
 
     @Provides
     fun provideApiClient(retrofit: Retrofit): UserService {
