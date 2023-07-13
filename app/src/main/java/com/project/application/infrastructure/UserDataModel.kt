@@ -3,7 +3,7 @@ package com.project.application.infrastructure
 import com.example.localdatasource_api.UserEntity
 
 data class UserDataModel(
-    override val id: Int,
+    //override val id: Int,
     override val name: String,
     override val email: String,
     override val gender: String,

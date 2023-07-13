@@ -1,6 +1,8 @@
 package com.project.application.core.model
 
+import com.example.localdatasource_api.UserEntity
 import com.google.gson.annotations.SerializedName
+import com.project.application.infrastructure.UserDataModel
 
 data class User(
     @SerializedName("id")
@@ -13,4 +15,12 @@ data class User(
     val gender: String?,
     @SerializedName("status")
     val status: String?,
+)
+
+fun User.toDataModel() : UserEntity = UserDataModel(
+    //id = 1,
+    name = "name",
+    email = "email",
+    gender = "gender",
+    status = "status"
 )

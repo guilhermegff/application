@@ -52,9 +52,13 @@ dependencies {
     implementation project(path: ':factory-api')
     implementation project(path: ':moduleDependency')
     implementation project(path: ':localDataSource-api')
+    implementation project(path: ':localDataSource-impl')
 
     implementation libs.dagger.hilt.android
     kapt libs.dagger.hilt.compiler
+
+    annotationProcessor libs.androidx.room.compiler
+    kapt libs.androidx.room.compiler
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
