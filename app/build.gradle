@@ -51,7 +51,6 @@ dependencies {
     implementation project(path: ':factory')
     implementation project(path: ':factory-api')
     implementation project(path: ':moduleDependency')
-    //implementation libs.bundles.feature.module
     implementation project(path: ':localDataSource-api')
     implementation project(path: ':localDataSource-impl')
 
