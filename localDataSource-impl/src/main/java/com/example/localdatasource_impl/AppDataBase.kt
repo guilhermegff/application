@@ -13,7 +13,9 @@ abstract class AppDatabase : AppDatabaseApi, RoomDatabase() {
     abstract fun userDao(): UserDao
 
     @Suppress("UNCHECKED_CAST")
-    override fun provideUserDao(): UserDaoContract<UserEntity> = userDao() as UserDaoContract<UserEntity>
+    override fun provideUserDao(): UserDaoContract<UserEntity> =
+        userDao() as? UserDaoContract<UserEntity>
+            ?: throw IllegalArgumentException("Must use UserEntity type")
 
     companion object {
         fun newInstance(context: Context): AppDatabase = Room.databaseBuilder(
