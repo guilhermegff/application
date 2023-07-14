@@ -1,6 +1,6 @@
 package com.project.application.core.model
 
-import com.example.localdatasource_api.UserEntity
+import com.example.localdatasource_api.user.UserEntity
 import com.google.gson.annotations.SerializedName
 import com.project.application.infrastructure.UserDataModel
 

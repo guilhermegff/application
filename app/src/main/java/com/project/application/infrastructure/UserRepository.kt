@@ -1,6 +1,6 @@
 package com.project.application.infrastructure
 
-import com.example.localdatasource_api.UserEntity
+import com.example.localdatasource_api.user.UserEntity
 import com.project.application.core.model.User
 
 interface UserRepository {

@@ -2,7 +2,7 @@ package com.project.application.di
 
 import com.example.factory.NavigatorFactory
 import com.example.factory_api.AbstractNavigatorFactory2
-import com.example.localdatasource_api.UserDataBaseApi
+import com.example.localdatasource_api.user.UserDataBaseContractFactory
 import com.example.localdatasource_impl.AppDatabase
 import com.project.application.infrastructure.UserRepository
 import com.project.application.infrastructure.UserRepositoryImpl
@@ -22,7 +22,7 @@ abstract class DiModule() {
 @InstallIn(SingletonComponent::class)
 abstract class UserDiModule() {
     @Binds
-    abstract fun provideUserDataBaseApi(db: AppDatabase) : UserDataBaseApi
+    abstract fun provideUserDataBaseApi(db: AppDatabase) : UserDataBaseContractFactory
 
     @Binds
     abstract fun provideRepo(userDetailRepositoryImpl: UserRepositoryImpl) : UserRepository

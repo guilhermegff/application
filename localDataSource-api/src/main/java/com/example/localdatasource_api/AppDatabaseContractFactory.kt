@@ -1,0 +1,5 @@
+package com.example.localdatasource_api
+
+import com.example.localdatasource_api.user.UserDataBaseContractFactory
+
+interface AppDatabaseContractFactory : UserDataBaseContractFactory

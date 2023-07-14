@@ -1,4 +1,4 @@
-package com.example.localdatasource_api
+package com.example.localdatasource_api.user
 
 interface UserEntity {
     //val id: Int

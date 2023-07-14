@@ -1,7 +1,7 @@
 package com.example.localdatasource_impl
 
 import androidx.room.*
-import com.example.localdatasource_api.UserDaoContract
+import com.example.localdatasource_api.user.UserDaoContract
 
 @Dao
 abstract class UserDao : UserDaoContract<UserDataBaseModel> {
