@@ -2,8 +2,8 @@ package com.project.application.di
 
 import android.content.Context
 import com.example.factory.NavigatorFactory
-import com.example.localdatasource_api.UserDbMapper
-import com.example.localdatasource_api.UserEntity
+import com.example.localdatasource_api.user.UserDbMapper
+import com.example.localdatasource_api.user.UserEntity
 import com.example.localdatasource_impl.AppDatabase
 import com.example.localdatasource_impl.UserDbMapperImpl
 import com.project.application.infrastructure.UserService

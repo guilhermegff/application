@@ -3,7 +3,7 @@ package com.example.localdatasource_impl
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.localdatasource_api.UserEntity
+import com.example.localdatasource_api.user.UserEntity
 
 @Entity
 data class UserDataBaseModel(

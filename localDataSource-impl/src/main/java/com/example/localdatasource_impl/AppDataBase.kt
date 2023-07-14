@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.localdatasource_api.AppDatabaseApi
-import com.example.localdatasource_api.UserDaoContract
-import com.example.localdatasource_api.UserEntity
+import com.example.localdatasource_api.AppDatabaseContractFactory
+import com.example.localdatasource_api.user.UserDaoContract
+import com.example.localdatasource_api.user.UserEntity
 
 @Database(entities = [UserDataBaseModel::class], version = 1)
-abstract class AppDatabase : AppDatabaseApi, RoomDatabase() {
+abstract class AppDatabase : AppDatabaseContractFactory, RoomDatabase() {
     abstract fun userDao(): UserDao
 
     @Suppress("UNCHECKED_CAST")
