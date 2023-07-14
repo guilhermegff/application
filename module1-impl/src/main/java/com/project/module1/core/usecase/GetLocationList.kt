@@ -9,7 +9,15 @@ import javax.inject.Inject
 class GetLocationList @Inject constructor(
     private val locationRepository: LocationRepository,
 ) {
-    suspend operator fun invoke() = withContext(Dispatchers.Main) {
+    suspend operator fun invoke() = withContext(Dispatchers.Default) {
+        try {
+            val fromDatabase = locationRepository.fetchUser(1)
+            println("/////////////")
+            println("From database: $fromDatabase")
+            println("/////////////")
+        } catch (e: Exception) {
+            println("From database error: $e")
+        }
         locationRepository.getLocationList()
     }
 }

@@ -2,7 +2,11 @@ package com.project.application.di
 
 import android.content.Context
 import com.example.factory.NavigatorFactory
+import com.example.localdatasource_api.UserDataBaseApi
+import com.example.localdatasource_api.UserDbMapper
+import com.example.localdatasource_api.UserEntity
 import com.example.localdatasource_impl.AppDatabase
+import com.example.localdatasource_impl.UserDbMapperImpl
 import com.project.application.infrastructure.UserService
 import dagger.Module
 import dagger.Provides
@@ -51,6 +55,10 @@ class MainModule {
 
     @Singleton
     @Provides
+    fun provideUserDataBaseApi(db: AppDatabase) : UserDataBaseApi = db
+
+    //@Singleton
+    @Provides
     fun provideUserDao(db: AppDatabase) = db.provideUserDao()
 
     @Provides
@@ -60,4 +68,7 @@ class MainModule {
 
     @Provides
     fun provideNavFactory() = NavigatorFactory()
+
+    @Provides
+    fun provideUserDbMapper() : UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
 }
