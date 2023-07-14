@@ -2,7 +2,6 @@ package com.project.application.di
 
 import android.content.Context
 import com.example.factory.NavigatorFactory
-import com.example.localdatasource_api.UserDataBaseApi
 import com.example.localdatasource_api.UserDbMapper
 import com.example.localdatasource_api.UserEntity
 import com.example.localdatasource_impl.AppDatabase
@@ -22,7 +21,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class MainModule {
+    @Provides
+    fun provideNavFactory() = NavigatorFactory()
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+class ApplicationHttpServiceModule {
     @Singleton
     @Provides
     fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -48,27 +53,31 @@ class MainModule {
             .client(okHttpClient)
             .build()
     }
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+class ApplicationDataBaseModule {
     @Singleton
     @Provides
     fun provideDataBase(@ApplicationContext context: Context) = AppDatabase.newInstance(context)
+}
 
-    @Singleton
-    @Provides
-    fun provideUserDataBaseApi(db: AppDatabase) : UserDataBaseApi = db
-
-    //@Singleton
+@Module
+@InstallIn(SingletonComponent::class)
+class UserDataBaseModule {
     @Provides
     fun provideUserDao(db: AppDatabase) = db.provideUserDao()
 
     @Provides
+    fun provideUserDbMapper() : UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class LegacyFeatureInAppPackageModule {
+    @Provides
     fun provideApiClient(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
-
-    @Provides
-    fun provideNavFactory() = NavigatorFactory()
-
-    @Provides
-    fun provideUserDbMapper() : UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
 }
