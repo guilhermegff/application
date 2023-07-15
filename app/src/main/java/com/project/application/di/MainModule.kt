@@ -2,10 +2,13 @@ package com.project.application.di
 
 import android.content.Context
 import com.example.factory.NavigatorFactory
+import com.example.localdatasource_api.location.LocationDbMapper
+import com.example.localdatasource_api.location.LocationEntity
 import com.example.localdatasource_api.user.UserDbMapper
 import com.example.localdatasource_api.user.UserEntity
 import com.example.localdatasource_impl.AppDatabase
-import com.example.localdatasource_impl.UserDbMapperImpl
+import com.example.localdatasource_impl.location.LocationDbMapperImpl
+import com.example.localdatasource_impl.user.UserDbMapperImpl
 import com.project.application.infrastructure.UserService
 import dagger.Module
 import dagger.Provides
@@ -71,6 +74,16 @@ class UserDataBaseModule {
 
     @Provides
     fun provideUserDbMapper() : UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class LocationDataBaseModule {
+    @Provides
+    fun provideLocationDao(db: AppDatabase) = db.provideLocationDao()
+
+    @Provides
+    fun provideLocationDbMapper() : LocationDbMapper<LocationEntity> = LocationDbMapperImpl.newInstance()
 }
 
 @Module

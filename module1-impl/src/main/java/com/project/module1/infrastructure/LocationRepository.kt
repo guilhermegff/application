@@ -1,9 +1,10 @@
 package com.project.module1.infrastructure
 
-import com.example.localdatasource_api.user.UserEntity
+import com.example.localdatasource_api.location.LocationEntity
 import com.project.module1.core.Location
 
 interface LocationRepository {
     suspend fun getLocationList(): List<Location>
-    suspend fun fetchUser(id: Int) : UserEntity
+    suspend fun fetchLocation(id: Int) : LocationEntity
+    suspend fun saveLocation(locationEntity: LocationEntity)
 }
