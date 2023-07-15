@@ -1,4 +1,4 @@
-package com.example.localdatasource_impl
+package com.example.localdatasource_impl.user
 
 import androidx.room.*
 import com.example.localdatasource_api.user.UserDaoContract

@@ -18,7 +18,7 @@ class GetUser @Inject constructor(
             userRepository.saveUser(user.toDataModel())
             val fromDatabase = userRepository.fetchUser(1)
             println("/////////////")
-            println("From database: $fromDatabase")
+            println("From User database: $fromDatabase")
             println("/////////////")
         } catch (e: Exception) {
             println("From database error: $e")

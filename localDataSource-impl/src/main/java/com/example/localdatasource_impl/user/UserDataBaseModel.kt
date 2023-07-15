@@ -1,4 +1,4 @@
-package com.example.localdatasource_impl
+package com.example.localdatasource_impl.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
