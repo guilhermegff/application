@@ -1,7 +1,7 @@
 package com.project.application.di
 
-import com.example.factory.NavigatorFactory
-import com.example.factory_api.AbstractNavigatorFactory2
+import com.example.factory.IntentFactories
+import com.example.factory_api.Module2IntentFactory
 import com.example.localdatasource_api.location.LocationDatabaseContractFactory
 import com.example.localdatasource_api.user.UserDataBaseContractFactory
 import com.example.localdatasource_impl.AppDatabase
@@ -16,7 +16,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class DiModule() {
     @Binds
-    abstract fun provideNavigationFactory(navigatorFactory: NavigatorFactory) : AbstractNavigatorFactory2
+    abstract fun provideIntentFactory(intentFactories: IntentFactories) : Module2IntentFactory
 }
 
 @Module

@@ -5,14 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
-import com.example.factory_api.AbstractNavigatorFactory2
+import com.example.factory_api.Module2IntentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LocationActivity : ComponentActivity() {
     @Inject
-    lateinit var navigatorFactory: AbstractNavigatorFactory2
+    lateinit var intentFactory: Module2IntentFactory
 
     private val viewModel: LocationViewModel by viewModels()
 
@@ -27,8 +27,8 @@ class LocationActivity : ComponentActivity() {
                 viewState = viewState,
                 retry = { viewModel.errorAction() },
                 action = {
-                    val intentProvider = navigatorFactory.nav2()
-                    startActivity(intentProvider.provideIntent(this))
+                    val intentProvider = intentFactory.provideModule2IntentFactory()
+                    startActivity(intentProvider.createIntent(this))
                 }
             )
         }
