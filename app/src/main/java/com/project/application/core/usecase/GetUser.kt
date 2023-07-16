@@ -20,6 +20,7 @@ class GetUser @Inject constructor(
             println("/////////////")
             println("From User database: $fromDatabase")
             println("/////////////")
+            userRepository.saveToken("token")
         } catch (e: Exception) {
             println("From database error: $e")
         }

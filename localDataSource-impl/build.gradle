@@ -33,6 +33,9 @@ dependencies {
     api project(path: ':localDataSource-api')
     implementation libs.androidx.ktx
 
+    implementation libs.dagger.hilt.android
+    kapt libs.dagger.hilt.compiler
+
     api libs.androidx.room
     annotationProcessor libs.androidx.room.compiler
 
