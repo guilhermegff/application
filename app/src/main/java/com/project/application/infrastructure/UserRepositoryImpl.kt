@@ -1,15 +1,13 @@
 package com.project.application.infrastructure
 
-import com.example.localdatasource_api.user.UserDaoContract
-import com.example.localdatasource_api.user.UserDbMapper
 import com.example.localdatasource_api.user.UserEntity
+import com.example.localdatasource_api.user.UserLocalDaoContract
 import com.project.application.core.model.User
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userService: UserService,
-    private val userDao: UserDaoContract<UserEntity>,
-    private val mapper: UserDbMapper<UserEntity>,
+    private val userLocalDao: UserLocalDaoContract,
 ) : UserRepository {
 
     override suspend fun getUser(id: String): User {
@@ -22,10 +20,14 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveUser(userEntity: UserEntity) {
-        userDao.insertAll(mapper.transform(userEntity))
+        userLocalDao.insertAll(userEntity)
     }
 
     override suspend fun fetchUser(id: Int): UserEntity {
-        return userDao.getAll().first()
+        return userLocalDao.getAll().first()
+    }
+
+    override suspend fun saveToken(token: String) {
+        userLocalDao.saveToken(token)
     }
 }
