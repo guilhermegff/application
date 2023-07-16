@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':localDataSource-api')
+    api project(path: ':localDataSource-api')
     implementation libs.androidx.ktx
 
     api libs.androidx.room

@@ -31,6 +31,7 @@ android {
 }
 
 dependencies {
+    api project(path: ':factory-api')
     implementation project(path: ':module1-impl')
     implementation project(path: ':module2-impl')
     implementation project(path: ':module3-impl')

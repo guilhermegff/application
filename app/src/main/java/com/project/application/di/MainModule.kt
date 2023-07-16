@@ -1,7 +1,7 @@
 package com.project.application.di
 
 import android.content.Context
-import com.example.factory.NavigatorFactory
+import com.example.factory.IntentFactories
 import com.example.localdatasource_api.location.LocationDbMapper
 import com.example.localdatasource_api.location.LocationEntity
 import com.example.localdatasource_api.user.UserDbMapper
@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class MainModule {
     @Provides
-    fun provideNavFactory() = NavigatorFactory()
+    fun provideIntentFactories() = IntentFactories()
 }
 
 @Module
