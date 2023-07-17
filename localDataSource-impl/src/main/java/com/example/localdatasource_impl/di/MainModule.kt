@@ -1,10 +1,11 @@
-package com.example.localdatasource_impl
+package com.example.localdatasource_impl.di
 
 import android.content.Context
 import com.example.localdatasource_api.location.LocationDatabaseContractFactory
 import com.example.localdatasource_api.location.LocationDbMapper
 import com.example.localdatasource_api.location.LocationEntity
 import com.example.localdatasource_api.user.*
+import com.example.localdatasource_impl.AppDatabase
 import com.example.localdatasource_impl.location.LocationDbMapperImpl
 import com.example.localdatasource_impl.user.UserDbMapperImpl
 import com.example.localdatasource_impl.user.UserLocalDao
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class MainModule {
+internal class MainModule {
     @Singleton
     @Provides
     fun provideDataBase(@ApplicationContext context: Context) = AppDatabase.newInstance(context)
@@ -27,20 +28,24 @@ class MainModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UserDataBaseModule {
+internal class UserDataBaseModule {
     @Provides
     fun provideUserDao(db: AppDatabase): UserDaoContract<UserEntity> = db.provideUserDao()
 
     @Provides
     fun provideUserDbMapper(): UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
 
+    @Singleton
     @Provides
-    fun provideUserSharedPreferences(): UserSharedPreferencesDaoContract = UserSharedPreferences()
+    fun provideUserSharedPreferences(@ApplicationContext context: Context) =
+        UserSharedPreferences.newInstance(
+            context.getSharedPreferences("User", Context.MODE_PRIVATE)
+        )
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class UserDataBaseAbstractModule {
+internal abstract class UserDataBaseAbstractModule {
     @Binds
     abstract fun provideUserLocalDao(userLocalDao: UserLocalDao): UserLocalDaoContract
 
@@ -53,7 +58,7 @@ abstract class UserDataBaseAbstractModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LocationDataBaseModule {
+internal class LocationDataBaseModule {
     @Provides
     fun provideLocationDao(db: AppDatabase) = db.provideLocationDao()
 
