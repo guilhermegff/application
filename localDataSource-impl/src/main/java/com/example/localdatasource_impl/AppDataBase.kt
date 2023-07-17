@@ -15,7 +15,7 @@ import com.example.localdatasource_impl.user.UserDao
 import com.example.localdatasource_impl.user.UserDataBaseModel
 
 @Database(entities = [UserDataBaseModel::class, LocationDataBaseModel::class], version = 1)
-abstract class AppDatabase : AppDatabaseContractFactory, RoomDatabase() {
+internal abstract class AppDatabase : AppDatabaseContractFactory, RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun locationDao(): LocationDao
 

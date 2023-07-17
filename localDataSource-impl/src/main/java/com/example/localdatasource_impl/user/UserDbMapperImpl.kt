@@ -3,7 +3,7 @@ package com.example.localdatasource_impl.user
 import com.example.localdatasource_api.user.UserDbMapper
 import com.example.localdatasource_api.user.UserEntity
 
-class UserDbMapperImpl private constructor(): UserDbMapper<UserDataBaseModel> {
+internal class UserDbMapperImpl private constructor(): UserDbMapper<UserDataBaseModel> {
     override fun transform(obj: UserEntity): UserDataBaseModel {
         return UserDataBaseModel(
             id = 1,
