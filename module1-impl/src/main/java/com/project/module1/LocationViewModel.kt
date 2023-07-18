@@ -5,13 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.project.module1.core.usecase.GetLocationList
 import com.project.module1.presentation.LocationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class LocationViewModel @Inject constructor(
     private val getLocationList: GetLocationList,
+    private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _state = MutableSharedFlow<ViewState>(replay = 10)
@@ -28,7 +31,10 @@ internal class LocationViewModel @Inject constructor(
             _state.emit(ViewState(isLoading = true))
             runCatching {
                 println("Run ${Thread.currentThread().name}")
-                getLocationList()
+                withContext(dispatcher) {
+                    println("Context ${Thread.currentThread().name}")
+                    getLocationList()
+                }
             }.onSuccess { locationList ->
                 println("Success ${Thread.currentThread().name}")
                 _state.emit(

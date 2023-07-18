@@ -1,13 +1,13 @@
 package com.project.module1
 
 import com.project.module1.core.usecase.GetLocationList
-import com.project.module1.infrastructure.LocationRepositoryImpl
-import com.project.module1.infrastructure.LocationService
+import com.project.module1.infrastructure.LocationRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -21,25 +21,25 @@ internal class LocationViewModelTest : Module1UnitTestFixture {
     @get:Rule
     val mainTestRule = MainTestRule()
 
-    private val service: LocationService = mock(LocationService::class.java)
+    private val repo: LocationRepository = mock(LocationRepository::class.java)
 
     @Test
     fun `viewmodel state shows correct state when successfully initialized`() = runTest {
-        val locationViewModel = `given a successful path with`(service)
+        val locationViewModel = `given a successful path`()
         val results = launchCollect(locationViewModel.state)
         assertThat(results, equalTo(initialLoading))
     }
 
-    private suspend fun `given a successful path with`(locationService: LocationService): LocationViewModel {
-        `when`(locationService.locations()).thenReturn(locationList)
-        val locationRepositoryImpl = LocationRepositoryImpl(locationService)
-        val getLocationList = GetLocationList(locationRepositoryImpl)
-        return LocationViewModel(getLocationList)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private suspend fun `given a successful path`(): LocationViewModel {
+        val getLocationList = GetLocationList(repo)
+        `when`(repo.getLocationList()).thenReturn(locationList)
+        return LocationViewModel(getLocationList, UnconfinedTestDispatcher())
     }
 
     @Test
     fun `viewmodel state shows correct state when initialized with error`() = runTest {
-        val locationViewModel = `given an unsuccessful path with`(service)
+        val locationViewModel = `given an unsuccessful path`()
         val results = launchCollect(locationViewModel.state)
         assertThat(results, equalTo(initialLoadingWithError))
     }
@@ -47,20 +47,20 @@ internal class LocationViewModelTest : Module1UnitTestFixture {
     @Test
     fun `viewmodel state shows correct state when initialized with error and successful retry`() =
         runTest {
-            val locationViewModel = `given an unsuccessful path with`(service)
-            `when`(service.locations()).thenReturn(locationList)
+            val locationViewModel = `given an unsuccessful path`()
+            `when`(repo.getLocationList()).thenReturn(locationList)
             locationViewModel.errorAction()
             val results = launchCollect(locationViewModel.state)
             assertThat(results, equalTo(initialLoadingWithErrorAndSuccessfulRetry))
         }
 
-    private suspend fun `given an unsuccessful path with`(locationService: LocationService): LocationViewModel {
-        val locationRepositoryImpl = LocationRepositoryImpl(locationService)
-        val getLocationList = GetLocationList(locationRepositoryImpl)
-        `when`(locationService.locations()).thenAnswer {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private suspend fun `given an unsuccessful path`(): LocationViewModel {
+        val getLocationList = GetLocationList(repo)
+        `when`(repo.getLocationList()).thenAnswer {
             CancellationException()
         }
-        return LocationViewModel(getLocationList)
+        return LocationViewModel(getLocationList, UnconfinedTestDispatcher())
     }
 }
 

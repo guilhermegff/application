@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 
 @Module
@@ -15,4 +17,7 @@ class LocationModule {
     fun provideApiClient(retrofit: Retrofit): LocationService {
         return retrofit.create(LocationService::class.java)
     }
+
+    @Provides
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }
