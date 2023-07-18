@@ -9,4 +9,6 @@ interface UserRepository {
     suspend fun saveUser(userEntity: UserEntity)
     suspend fun fetchUser(id: Int): UserEntity
     suspend fun saveToken(token: String)
+    suspend fun saveId(id: String)
+    suspend fun getId()
 }

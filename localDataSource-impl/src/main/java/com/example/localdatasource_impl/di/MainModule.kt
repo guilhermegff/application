@@ -7,6 +7,7 @@ import com.example.localdatasource_api.location.LocationEntity
 import com.example.localdatasource_api.user.*
 import com.example.localdatasource_impl.AppDatabase
 import com.example.localdatasource_impl.location.LocationDbMapperImpl
+import com.example.localdatasource_impl.user.UserDataStore
 import com.example.localdatasource_impl.user.UserDbMapperImpl
 import com.example.localdatasource_impl.user.UserLocalDao
 import com.example.localdatasource_impl.user.UserSharedPreferences
@@ -37,10 +38,16 @@ internal class UserDataBaseModule {
 
     @Singleton
     @Provides
-    fun provideUserSharedPreferences(@ApplicationContext context: Context) =
+    fun provideUserSharedPreferences(@ApplicationContext context: Context): UserSharedPreferencesDaoContract =
         UserSharedPreferences.newInstance(
             context.getSharedPreferences("User", Context.MODE_PRIVATE)
         )
+
+    @Singleton
+    @Provides
+    fun provideUserDataStore(@ApplicationContext context: Context): UserDataStoreDaoContract  {
+        return UserDataStore(context)
+    }
 }
 
 @Module

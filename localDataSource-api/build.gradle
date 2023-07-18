@@ -35,5 +35,7 @@ android {
         annotationProcessor libs.androidx.room.compiler
 
         kapt libs.androidx.room.compiler
+
+        implementation libs.androidx.data.store.preferences
     }
 }

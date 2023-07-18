@@ -30,4 +30,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun saveToken(token: String) {
         userLocalDao.saveToken(token)
     }
+
+    override suspend fun saveId(id: String) {
+        userLocalDao.saveId(id)
+    }
+
+    override suspend fun getId() {
+        userLocalDao.getId()
+    }
 }

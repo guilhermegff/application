@@ -6,8 +6,10 @@ import javax.inject.Inject
 class UserLocalDao @Inject constructor(
     private val userDaoContract: UserDaoContract<UserEntity>,
     private val userDbMapper: UserDbMapper<UserEntity>,
-    private val shared: UserSharedPreferencesDaoContract
+    private val shared: UserSharedPreferencesDaoContract,
+    private val store: UserDataStoreDaoContract,
 ) : UserLocalDaoContract {
+
     override fun getAll(): List<UserEntity> {
         return userDaoContract.getAll()
     }
@@ -30,5 +32,13 @@ class UserLocalDao @Inject constructor(
 
     override fun saveToken(token: String) {
         shared.saveToken(token)
+    }
+
+    override suspend fun saveId(id: String) {
+        store.saveId(id)
+    }
+
+    override suspend fun getId() {
+        store.getId()
     }
 }
