@@ -10,7 +10,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userLocalDao: UserLocalDaoContract,
 ) : UserRepository {
 
-    override suspend fun getUser(id: String): User {
+    override suspend fun fetchUser(id: String): User {
         return userService.user(id)
     }
 
@@ -23,7 +23,7 @@ class UserRepositoryImpl @Inject constructor(
         userLocalDao.insertAll(userEntity)
     }
 
-    override suspend fun fetchUser(id: Int): UserEntity {
+    override suspend fun queryUser(id: Int): UserEntity {
         return userLocalDao.getAll().first()
     }
 
