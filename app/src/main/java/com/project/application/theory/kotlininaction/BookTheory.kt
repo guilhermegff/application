@@ -276,7 +276,7 @@ fun tryWithVararg() {
 
 /*
 * Infix call
-* On a Infix Call the name of the method is inserted right after the name of the target object and and just before the parameter, with no
+* On a Infix Call the name of the method is inserted right after the name of the target object and just before the parameter, with no
 * extra separators
 * 1.to("one")
 * 1 to "one"
@@ -550,7 +550,7 @@ fun tryWithHighLevel() {
 
 /*
 * A Lambda expression is always between { } with no ( ) around the arguments. The arrow separates the argument list from the lambda body.
-* If the compiler can infer the type of argument the it can omitted, otherwise it must tbe defined explicitly.
+* If the compiler can infer the type of argument the it can be omitted, otherwise it must tbe defined explicitly.
 * If the context expects one lambda with a single argument and its type can be inferred then the default parameter "it" becomes available.
 */
 val thisLambda = { int: Int -> val a = int }
@@ -600,8 +600,8 @@ fun tryWithConstructor() {
 /*
 * Extension functions can also be referenced with ::
 */
-fun WithReference.getInt() {
-    this.int
+fun WithReference.getInt(): Int {
+    return this.int
 }
 
 fun tryWithExtension() {
@@ -621,7 +621,7 @@ fun tryWithExtension() {
 * Chained collection functions, like map and filter, create intermediate collections on an eager mode, which means that the intermediate result of each
 * step of the chain is stored on a temporary list.
 * Sequences offer an alternate way of executing this type of processing by avoiding the creation of intermediate temporary objects.
-* A sequence of elements can ba listed one by one, Sequence interface provides only one method, iterator, that can be used to obtain the values
+* A sequence of elements can be listed one by one, Sequence interface provides only one method, iterator, that can be used to obtain the values
 * of the sequence. Elements of a sequence are analyzed on lazy mode without creating collection to store intermediate results.
 * Any collection can be converted to a sequence by calling the extension function asSequence.
 *
@@ -782,7 +782,7 @@ fun tryWithNumberConversion() {
 * If a primitive type value is attributed to a type Any variable then an automatic boxing will occur because Any is a Reference Type.
 * Kotlin functions that use Any are compiled to Object on Java bytecode.
 *
-* Unit has the same function as void in Java, it means the function doesn't return anything in special.
+* Unit has the same utility as void in Java, it means the function doesn't return anything in special.
 * Unit is different from Java void as it is a complete type and can be used as a Type Argument.
 * It is not needed to add the expression "return Unit" because when the Unit type is the return type then the compiler adds it automatically.
 * Kotlin has a special return type called Nothing, it indicates the function will never normally terminate.
@@ -795,7 +795,7 @@ fun tryWithNumberConversion() {
 * Read only collections are not always thread-safe.
 * All Kotlin collections are instances of its corresponding Java collection interface.
 * All of the Java collections interfaces have two representations in Kotlin: one mutable and one immutable.
-* As Java makes no kind of similar distinction, if you pass a Collection or MutableCollection, both will be seen as
+* As Java makes no similar distinction, if you pass a Collection or MutableCollection, both will be seen as
 * Collection in Java and be subject to read-write access.
 *
 * Spread operator * is used to pass an array when a vararg parameter is expected.
@@ -836,9 +836,9 @@ class WithOperatorPlus() : WithOperator(0) {
     }
 }
 
-/*operator fun WithOperatorPlus.plus(value: Int) : Int { //Member functions have precedence over extension functions.
+operator fun WithOperatorPlus.plus(value: Int) : Int { //Member functions have precedence over extension functions.
     return 2 + value
-}*/
+}
 
 /*
 * When the "+" is used, a call to "plus" will be made internally. a + b -> a.plus(b)
@@ -881,8 +881,8 @@ fun tryWithUnaryOperator() {
 }
 fun tryIncOperator() {
     var a = 1
-    println(a++) // printed 1
-    println(++a) // printed 2
+    println(a++) // prints 1
+    println(++a) // prints 2
 }
 
 /*
@@ -951,7 +951,7 @@ fun tryDelegation() {
 }
 
 /*
-* The base of this resource is "Delegation", a design pattern on which an object, instead of executing some task, delegates it to an auxiliary object called
+* The base of this resource is "Delegation", a design pattern on which an object instead of executing some task, delegates it to an auxiliary object called
 * delegate.
 * class Foo {
 *  var p: Type by Delegate()

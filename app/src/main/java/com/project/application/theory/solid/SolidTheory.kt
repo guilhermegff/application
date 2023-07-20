@@ -123,7 +123,7 @@ class EmployeeFacade(employeeData: EmployeeData) {
 * The goal is to make the system easy to extend without incurring a high impact of change.
 * This can be achieved by applying the Single Responsibility Principle and
 * the Dependency Inversion Principle. By applying the SRP and DIP, we can protect components from changes
-* while keeping them open to be extensible. In other words, we should depend om stable abstractions and modify
+* while keeping them open to be extensible. In other words, we should depend on stable abstractions and modify
 * system's behavior by providing different realizations for those abstractions.
 *
 * From the book "Agile Software Development by Robert Martin:
