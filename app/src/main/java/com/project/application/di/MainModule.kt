@@ -1,7 +1,6 @@
 package com.project.application.di
 
 import com.example.factory.IntentFactories
-import com.example.localdatasource_api.user.UserEntity
 import com.project.application.infrastructure.UserService
 import dagger.Module
 import dagger.Provides
@@ -58,25 +57,3 @@ class LegacyFeatureInAppPackageModule {
         return retrofit.create(UserService::class.java)
     }
 }
-
-@Module
-@InstallIn(SingletonComponent::class)
-class ActProv {
-    @Singleton
-    @Provides
-    fun provideSomething() = UserDataModel1("name", "email", "gender", "status")
-}
-
-class UserDataModel1(
-    override val name: String,
-    override val email: String,
-    override val gender: String,
-    override val status: String
-) : UserEntity {
-
-}
-
-
-
-
-
