@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import com.example.factory_api.Module2IntentFactory
+import com.example.localdatasource_api.user.UserEntity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,9 +15,13 @@ class LocationActivity : ComponentActivity() {
     @Inject
     lateinit var intentFactory: Module2IntentFactory
 
+    @Inject
+    lateinit var something: UserEntity
+
     private val viewModel: LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             val viewState: LocationViewModel.ViewState = viewModel.state.collectAsState(
@@ -32,5 +37,6 @@ class LocationActivity : ComponentActivity() {
                 }
             )
         }
+        println("String L: $something")
     }
 }
