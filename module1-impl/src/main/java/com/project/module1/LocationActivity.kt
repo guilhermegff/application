@@ -17,6 +17,7 @@ class LocationActivity : ComponentActivity() {
     private val viewModel: LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             val viewState: LocationViewModel.ViewState = viewModel.state.collectAsState(
