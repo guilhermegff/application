@@ -1,7 +1,6 @@
 package com.project.application.di
 
 import com.example.factory.IntentFactories
-import com.project.application.infrastructure.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,14 +45,5 @@ class ApplicationHttpServiceModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
-    }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-class LegacyFeatureInAppPackageModule {
-    @Provides
-    fun provideApiClient(retrofit: Retrofit): UserService {
-        return retrofit.create(UserService::class.java)
     }
 }
