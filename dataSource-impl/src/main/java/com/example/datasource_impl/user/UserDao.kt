@@ -1,22 +1,44 @@
 package com.example.datasource_impl.user
 
-import androidx.room.*
-import com.example.datasource_api.user.UserDaoContract
+import com.example.datasource_api.user.*
+import javax.inject.Inject
 
-@Dao
-abstract class UserDao : UserDaoContract<UserDataBaseModel> {
-    @Query("SELECT * FROM userDataBaseModel")
-    abstract override fun getAll(): List<UserDataBaseModel>
+class UserDao @Inject constructor(
+    private val userDataBaseDaoContract: UserDataBaseDaoContract<UserEntity>,
+    private val userDbMapper: UserDbMapper<UserEntity>,
+    private val shared: UserSharedPreferencesDaoContract,
+    private val store: UserDataStoreDaoContract,
+) : UserDaoContract {
 
-    @Query("SELECT * FROM userDataBaseModel WHERE id IN (:userIds)")
-    abstract override fun loadAllByIds(userIds: IntArray): List<UserDataBaseModel>
+    override fun getAll(): List<UserEntity> {
+        return userDataBaseDaoContract.getAll()
+    }
 
-    @Query("SELECT * FROM userDataBaseModel WHERE name LIKE :first LIMIT 1")
-    abstract override fun findByName(first: String): UserDataBaseModel
+    override fun loadAllByIds(userIds: IntArray): List<UserEntity> {
+        return userDataBaseDaoContract.loadAllByIds(userIds)
+    }
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(users: UserDataBaseModel)
+    override fun findByName(first: String): UserEntity {
+        return userDataBaseDaoContract.findByName(first)
+    }
 
-    @Delete
-    abstract override fun delete(user: UserDataBaseModel)
+    override fun insertAll(users: UserEntity) {
+        userDataBaseDaoContract.insertAll(userDbMapper.transform(users))
+    }
+
+    override fun delete(user: UserEntity) {
+        userDataBaseDaoContract.delete(userDbMapper.transform(user))
+    }
+
+    override fun saveToken(token: String) {
+        shared.saveToken(token)
+    }
+
+    override suspend fun saveId(id: String) {
+        store.saveId(id)
+    }
+
+    override suspend fun getId() {
+        store.getId()
+    }
 }

@@ -1,13 +1,13 @@
 package com.example.module4_impl.infrastructure
 
 import com.example.datasource_api.user.UserEntity
-import com.example.datasource_api.user.UserLocalDaoContract
+import com.example.datasource_api.user.UserDaoContract
 import com.example.module4_impl.core.model.User
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userService: UserService,
-    private val userLocalDao: UserLocalDaoContract,
+    private val userLocalDao: UserDaoContract,
 ) : UserRepository {
 
     override suspend fun fetchUser(id: String): User {
