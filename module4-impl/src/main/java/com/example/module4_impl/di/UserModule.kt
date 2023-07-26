@@ -9,9 +9,9 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LegacyFeatureInAppPackageModule {
+class UserModule {
     @Provides
-    fun provideApiClient(retrofit: Retrofit): com.example.module4_impl.infrastructure.UserService {
+    fun provideApiClient(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 }
