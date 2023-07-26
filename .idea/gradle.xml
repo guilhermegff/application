@@ -11,10 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/dataSource-impl" />
             <option value="$PROJECT_DIR$/factory" />
             <option value="$PROJECT_DIR$/factory-api" />
             <option value="$PROJECT_DIR$/localDataSource-api" />
-            <option value="$PROJECT_DIR$/localDataSource-impl" />
             <option value="$PROJECT_DIR$/module1-api" />
             <option value="$PROJECT_DIR$/module1-impl" />
             <option value="$PROJECT_DIR$/module2-api" />
