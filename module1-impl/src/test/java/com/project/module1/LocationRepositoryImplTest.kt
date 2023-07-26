@@ -1,8 +1,8 @@
 package com.project.module1
 
-import com.example.localdatasource_api.location.LocationDaoContract
-import com.example.localdatasource_api.location.LocationDbMapper
-import com.example.localdatasource_api.location.LocationEntity
+import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationDbMapper
+import com.example.datasource_api.location.LocationEntity
 import com.project.module1.infrastructure.LocationRepositoryImpl
 import com.project.module1.infrastructure.LocationService
 import kotlinx.coroutines.runBlocking

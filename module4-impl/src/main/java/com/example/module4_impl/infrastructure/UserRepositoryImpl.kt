@@ -1,7 +1,7 @@
 package com.example.module4_impl.infrastructure
 
-import com.example.localdatasource_api.user.UserEntity
-import com.example.localdatasource_api.user.UserLocalDaoContract
+import com.example.datasource_api.user.UserEntity
+import com.example.datasource_api.user.UserLocalDaoContract
 import com.example.module4_impl.core.model.User
 import javax.inject.Inject
 

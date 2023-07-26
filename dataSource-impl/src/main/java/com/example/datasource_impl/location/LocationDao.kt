@@ -1,7 +1,7 @@
 package com.example.datasource_impl.location
 
 import androidx.room.*
-import com.example.localdatasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationDaoContract
 
 @Dao
 interface LocationDao : LocationDaoContract<LocationDataBaseModel> {
