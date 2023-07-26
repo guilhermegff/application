@@ -7,21 +7,21 @@ import androidx.room.RoomDatabase
 import com.example.datasource_api.AppDatabaseContractFactory
 import com.example.datasource_api.location.LocationDaoContract
 import com.example.datasource_api.location.LocationEntity
-import com.example.datasource_api.user.UserDaoContract
+import com.example.datasource_api.user.UserDataBaseDaoContract
 import com.example.datasource_api.user.UserEntity
 import com.example.datasource_impl.location.LocationDao
 import com.example.datasource_impl.location.LocationDataBaseModel
-import com.example.datasource_impl.user.UserDao
+import com.example.datasource_impl.user.UserDataBase
 import com.example.datasource_impl.user.UserDataBaseModel
 
 @Database(entities = [UserDataBaseModel::class, LocationDataBaseModel::class], version = 1)
 internal abstract class AppDatabase : AppDatabaseContractFactory, RoomDatabase() {
-    abstract fun userDao(): UserDao
+    abstract fun userDao(): UserDataBase
     abstract fun locationDao(): LocationDao
 
     @Suppress("UNCHECKED_CAST")
-    final override fun provideUserDao(): UserDaoContract<UserEntity> =
-        userDao() as? UserDaoContract<UserEntity>
+    final override fun provideUserDao(): UserDataBaseDaoContract<UserEntity> =
+        userDao() as? UserDataBaseDaoContract<UserEntity>
             ?: throw IllegalArgumentException("Must use UserEntity type")
 
     @Suppress("UNCHECKED_CAST")

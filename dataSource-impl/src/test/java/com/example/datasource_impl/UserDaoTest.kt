@@ -1,11 +1,11 @@
 package com.example.datasource_impl
 
-import com.example.datasource_api.user.UserDaoContract
+import com.example.datasource_api.user.UserDataBaseDaoContract
 import com.example.datasource_api.user.UserDataStoreDaoContract
 import com.example.datasource_api.user.UserEntity
 import com.example.datasource_api.user.UserSharedPreferencesDaoContract
 import com.example.datasource_impl.user.UserDbMapperImpl
-import com.example.datasource_impl.user.UserLocalDao
+import com.example.datasource_impl.user.UserDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.equalTo
@@ -13,21 +13,21 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.Mockito.*
 
-class UserLocalDaoTest : UserLocalDaoTestFixture {
+class UserDaoTest : UserLocalDaoTestFixture {
     @Suppress("UNCHECKED_CAST")
-    private val userDaoContract = mock(UserDaoContract::class.java).apply {
+    private val userDataBaseDaoContract = mock(UserDataBaseDaoContract::class.java).apply {
         `when`(this.getAll()).thenReturn(expectedList)
         `when`(this.loadAllByIds(ids)).thenReturn(expectedList)
         `when`(this.findByName(userDataModel.name)).thenReturn(userDataModel)
-    } as UserDaoContract<UserEntity>
+    } as UserDataBaseDaoContract<UserEntity>
 
     private val userSharedPreferencesDaoContract =
         mock(UserSharedPreferencesDaoContract::class.java)
     private val userDataStoreDaoContract = mock(UserDataStoreDaoContract::class.java)
     private val userDbMapper = UserDbMapperImpl.newInstance()
 
-    private val userLocalDao = UserLocalDao(
-        userDaoContract,
+    private val userDao = UserDao(
+        userDataBaseDaoContract,
         userDbMapper,
         userSharedPreferencesDaoContract,
         userDataStoreDaoContract,
@@ -35,50 +35,50 @@ class UserLocalDaoTest : UserLocalDaoTestFixture {
 
     @Test
     fun `userLocalDao returns expected list when getAll is called`() {
-        val result = userLocalDao.getAll()
+        val result = userDao.getAll()
         assertThat(result, equalTo(expectedList))
     }
 
     @Test
     fun `userDaoContract getAll is called once when userLocalDao calls getAll`() {
-        userLocalDao.getAll()
-        verify(userDaoContract, times(1)).getAll()
+        userDao.getAll()
+        verify(userDataBaseDaoContract, times(1)).getAll()
     }
 
     @Test
     fun `userLocalDao returns expected list when loadAllByIds is called`() {
-        val result = userLocalDao.loadAllByIds(ids)
+        val result = userDao.loadAllByIds(ids)
         assertThat(result, equalTo(expectedList))
     }
 
     @Test
     fun `userDaoContract loadAllByIds is called once when userLocalDao calls loadAllByIds`() {
-        userLocalDao.loadAllByIds(ids)
-        verify(userDaoContract, times(1)).loadAllByIds(ids)
+        userDao.loadAllByIds(ids)
+        verify(userDataBaseDaoContract, times(1)).loadAllByIds(ids)
     }
 
     @Test
     fun `userLocalDao returns expected object when findByName is called`() {
-        val result = userLocalDao.findByName(userDataModel.name)
+        val result = userDao.findByName(userDataModel.name)
         assertThat(result, equalTo(userDataModel))
     }
 
     @Test
     fun `userDaoContract findByName is called once when userLocalDao calls findByName`() {
-        userLocalDao.findByName(userDataModel.name)
-        verify(userDaoContract, times(1)).findByName(userDataModel.name)
+        userDao.findByName(userDataModel.name)
+        verify(userDataBaseDaoContract, times(1)).findByName(userDataModel.name)
     }
 
     @Test
     fun `userDaoContract insertAll is called once when userLocalDao calls insertAll`() {
-        userLocalDao.insertAll(userDataModel)
-        verify(userDaoContract, times(1)).insertAll(userDataBaseModel)
+        userDao.insertAll(userDataModel)
+        verify(userDataBaseDaoContract, times(1)).insertAll(userDataBaseModel)
     }
 
     @Test
     fun `userDaoContract delete is called once when userLocalDao call delete`() {
-        userLocalDao.delete(userDataModel)
-        verify(userDaoContract, times(1)).delete(userDataBaseModel)
+        userDao.delete(userDataModel)
+        verify(userDataBaseDaoContract, times(1)).delete(userDataBaseModel)
     }
 
     @Test

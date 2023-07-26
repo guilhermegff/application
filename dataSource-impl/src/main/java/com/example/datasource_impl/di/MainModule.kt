@@ -9,7 +9,7 @@ import com.example.datasource_impl.AppDatabase
 import com.example.datasource_impl.location.LocationDbMapperImpl
 import com.example.datasource_impl.user.UserDataStore
 import com.example.datasource_impl.user.UserDbMapperImpl
-import com.example.datasource_impl.user.UserLocalDao
+import com.example.datasource_impl.user.UserDao
 import com.example.datasource_impl.user.UserSharedPreferences
 import dagger.Binds
 import dagger.Module
@@ -31,7 +31,7 @@ internal class MainModule {
 @InstallIn(SingletonComponent::class)
 internal class UserDataBaseModule {
     @Provides
-    fun provideUserDao(db: AppDatabase): UserDaoContract<UserEntity> = db.provideUserDao()
+    fun provideUserDao(db: AppDatabase): UserDataBaseDaoContract<UserEntity> = db.provideUserDao()
 
     @Provides
     fun provideUserDbMapper(): UserDbMapper<UserEntity> = UserDbMapperImpl.newInstance()
@@ -54,7 +54,7 @@ internal class UserDataBaseModule {
 @InstallIn(SingletonComponent::class)
 internal abstract class UserDataBaseAbstractModule {
     @Binds
-    abstract fun provideUserLocalDao(userLocalDao: UserLocalDao): UserLocalDaoContract
+    abstract fun provideUserLocalDao(userDao: UserDao): UserDaoContract
 
     @Binds
     abstract fun provideUserDataBaseApi(db: AppDatabase): UserDataBaseContractFactory
