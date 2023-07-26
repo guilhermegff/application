@@ -41,7 +41,7 @@ android {
 dependencies {
     api project(path: ':module4-api')
     implementation project(path: ':moduleDependency')
-    implementation project(path: ':localDataSource-api')
+    implementation project(path: ':dataSource-api')
 
     implementation libs.dagger.hilt.android
     kapt libs.dagger.hilt.compiler

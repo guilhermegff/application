@@ -1,6 +1,6 @@
 package com.example.datasource_impl.user
 
-import com.example.localdatasource_api.user.*
+import com.example.datasource_api.user.*
 import javax.inject.Inject
 
 class UserLocalDao @Inject constructor(

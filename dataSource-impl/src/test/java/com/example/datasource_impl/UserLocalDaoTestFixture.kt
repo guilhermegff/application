@@ -1,6 +1,6 @@
-package com.example.datasource
+package com.example.datasource_impl
 
-import com.example.localdatasource_api.user.UserEntity
+import com.example.datasource_api.user.UserEntity
 import com.example.datasource_impl.user.UserDataBaseModel
 
 internal interface UserLocalDaoTestFixture {

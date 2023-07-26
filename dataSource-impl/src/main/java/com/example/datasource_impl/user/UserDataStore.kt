@@ -3,7 +3,7 @@ package com.example.datasource_impl.user
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.localdatasource_api.user.UserDataStoreDaoContract
+import com.example.datasource_api.user.UserDataStoreDaoContract
 import com.example.datasource_impl.dataStore
 
 private const val ID_DATA_STORE = "id"

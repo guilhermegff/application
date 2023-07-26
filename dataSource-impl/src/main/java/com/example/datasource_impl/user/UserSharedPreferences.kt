@@ -2,7 +2,7 @@ package com.example.datasource_impl.user
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.example.localdatasource_api.user.UserSharedPreferencesDaoContract
+import com.example.datasource_api.user.UserSharedPreferencesDaoContract
 
 internal class UserSharedPreferences private constructor(private val sharedPreferences: SharedPreferences) :
     UserSharedPreferencesDaoContract {

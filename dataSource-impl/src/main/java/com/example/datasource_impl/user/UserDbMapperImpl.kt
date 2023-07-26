@@ -1,7 +1,7 @@
 package com.example.datasource_impl.user
 
-import com.example.localdatasource_api.user.UserDbMapper
-import com.example.localdatasource_api.user.UserEntity
+import com.example.datasource_api.user.UserDbMapper
+import com.example.datasource_api.user.UserEntity
 
 internal class UserDbMapperImpl private constructor(): UserDbMapper<UserDataBaseModel> {
     override fun transform(obj: UserEntity): UserDataBaseModel {

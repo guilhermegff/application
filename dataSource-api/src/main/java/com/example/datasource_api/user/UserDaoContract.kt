@@ -1,4 +1,4 @@
-package com.example.localdatasource_api.user
+package com.example.datasource_api.user
 
 interface UserDaoContract<T: UserEntity> {
      fun getAll(): List<T>

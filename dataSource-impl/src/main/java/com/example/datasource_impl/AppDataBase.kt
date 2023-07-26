@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.localdatasource_api.AppDatabaseContractFactory
-import com.example.localdatasource_api.location.LocationDaoContract
-import com.example.localdatasource_api.location.LocationEntity
-import com.example.localdatasource_api.user.UserDaoContract
-import com.example.localdatasource_api.user.UserEntity
+import com.example.datasource_api.AppDatabaseContractFactory
+import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationEntity
+import com.example.datasource_api.user.UserDaoContract
+import com.example.datasource_api.user.UserEntity
 import com.example.datasource_impl.location.LocationDao
 import com.example.datasource_impl.location.LocationDataBaseModel
 import com.example.datasource_impl.user.UserDao

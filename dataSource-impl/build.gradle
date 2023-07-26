@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    api project(path: ':localDataSource-api')
+    api project(path: ':dataSource-api')
     implementation libs.androidx.ktx
 
     implementation libs.dagger.hilt.android

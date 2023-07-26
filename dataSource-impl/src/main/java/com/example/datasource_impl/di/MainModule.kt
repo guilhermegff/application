@@ -1,10 +1,10 @@
 package com.example.datasource_impl.di
 
 import android.content.Context
-import com.example.localdatasource_api.location.LocationDatabaseContractFactory
-import com.example.localdatasource_api.location.LocationDbMapper
-import com.example.localdatasource_api.location.LocationEntity
-import com.example.localdatasource_api.user.*
+import com.example.datasource_api.location.LocationDatabaseContractFactory
+import com.example.datasource_api.location.LocationDbMapper
+import com.example.datasource_api.location.LocationEntity
+import com.example.datasource_api.user.*
 import com.example.datasource_impl.AppDatabase
 import com.example.datasource_impl.location.LocationDbMapperImpl
 import com.example.datasource_impl.user.UserDataStore

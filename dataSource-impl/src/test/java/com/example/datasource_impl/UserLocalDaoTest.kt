@@ -1,9 +1,9 @@
-package com.example.datasource
+package com.example.datasource_impl
 
-import com.example.localdatasource_api.user.UserDaoContract
-import com.example.localdatasource_api.user.UserDataStoreDaoContract
-import com.example.localdatasource_api.user.UserEntity
-import com.example.localdatasource_api.user.UserSharedPreferencesDaoContract
+import com.example.datasource_api.user.UserDaoContract
+import com.example.datasource_api.user.UserDataStoreDaoContract
+import com.example.datasource_api.user.UserEntity
+import com.example.datasource_api.user.UserSharedPreferencesDaoContract
 import com.example.datasource_impl.user.UserDbMapperImpl
 import com.example.datasource_impl.user.UserLocalDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi

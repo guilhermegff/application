@@ -1,4 +1,4 @@
-package com.example.localdatasource_api
+package com.example.datasource_api
 
 sealed interface LocalDataSourceResult {
     object Error : LocalDataSourceResult
