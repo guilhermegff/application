@@ -8,7 +8,16 @@ class UserDao @Inject constructor(
     private val userDbMapper: UserDbMapper<UserEntity>,
     private val shared: UserSharedPreferencesDaoContract,
     private val store: UserDataStoreDaoContract,
+    private val service: UserService,
 ) : UserDaoContract {
+
+    override suspend fun user(id: String): UserEntity {
+        return service.user(id)
+    }
+
+    override suspend fun users(): List<UserEntity> {
+        return service.users()
+    }
 
     override fun getAll(): List<UserEntity> {
         return userDataBaseDaoContract.getAll()
@@ -32,6 +41,10 @@ class UserDao @Inject constructor(
 
     override fun saveToken(token: String) {
         shared.saveToken(token)
+    }
+
+    override fun retrieveToken(): String {
+        return shared.retrieveToken()
     }
 
     override suspend fun saveId(id: String) {

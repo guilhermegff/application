@@ -8,7 +8,7 @@ import com.example.datasource_api.user.UserEntity
 @Entity
 data class UserDataBaseModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    override val id: Int,
     @ColumnInfo(name = "name")
     override val name: String,
     override val email: String,

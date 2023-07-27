@@ -12,15 +12,11 @@ internal class UserSharedPreferences private constructor(private val sharedPrefe
         }
     }
 
-    /*override fun retrieveToken(): LocalDataSourceResult = try {
-        val token = sharedPreferences.getString(TOKEN_KEY, null)
-        when (token.isNullOrEmpty()) {
-            true -> LocalDataSourceResult.NotFound
-            false -> LocalDataSourceResult.Result(token)
-        }
+    override fun retrieveToken(): String = try {
+        sharedPreferences.getString(TOKEN_KEY, "") ?: ""
     } catch (exception: Exception) {
-        LocalDataSourceResult.Error
-    }*/
+        ""
+    }
 
     companion object {
         const val TOKEN_KEY = "Token"
