@@ -36,7 +36,7 @@ internal fun UserNavigation() {
             val viewModel = hiltViewModel<UserDetailViewModel>()
             val viewState = viewModel.state.collectAsState().value
             UserDetailScreen(viewState = viewState, action = {
-                viewModel.getDetail(backStackEntry.arguments?.getString("id") ?: "1")
+                viewModel.getDetail(backStackEntry.arguments?.getString("id") ?: "2")
             }, onClick = {}) {
 
             }

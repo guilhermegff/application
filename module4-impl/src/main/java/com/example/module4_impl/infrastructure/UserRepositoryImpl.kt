@@ -1,41 +1,43 @@
 package com.example.module4_impl.infrastructure
 
-import com.example.datasource_api.user.UserEntity
 import com.example.datasource_api.user.UserDaoContract
-import com.example.module4_impl.core.model.User
+import com.example.module4_impl.core.UserDomainMapper
+import com.example.module4_impl.core.model.UserDomainModel
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val userService: UserService,
-    private val userLocalDao: UserDaoContract,
-) : UserRepository {
+    private val userDaoContract: UserDaoContract,
+    private val userDomainMapper: UserDomainMapper,
+) : UserRepository<UserDataModel, UserDomainModel> {
 
-    override suspend fun fetchUser(id: String): User {
-        return userService.user(id)
-    }
+    override suspend fun fetchUser(id: String) = userDomainMapper.transform(userDaoContract.user(id))
 
-    override suspend fun getUserList(): List<User> {
+    override suspend fun getUserList(): List<UserDomainModel> {
         println("Repo ${Thread.currentThread().name}")
-        return userService.users()
+        return userDomainMapper.transform(userDaoContract.users())
     }
 
-    override suspend fun saveUser(userEntity: UserEntity) {
-        userLocalDao.insertAll(userEntity)
+    override suspend fun saveUser(userEntity: UserDataModel) {
+        userDaoContract.insertAll(userEntity)
     }
 
-    override suspend fun queryUser(id: Int): UserEntity {
-        return userLocalDao.getAll().first()
+    override suspend fun queryUser(id: Int): UserDomainModel {
+        return userDomainMapper.transform(userDaoContract.getAll().first())
     }
 
     override suspend fun saveToken(token: String) {
-        userLocalDao.saveToken(token)
+        userDaoContract.saveToken(token)
+    }
+
+    override suspend fun retrieveToken(): String {
+        return userDaoContract.retrieveToken()
     }
 
     override suspend fun saveId(id: String) {
-        userLocalDao.saveId(id)
+        userDaoContract.saveId(id)
     }
 
     override suspend fun getId() {
-        userLocalDao.getId()
+        userDaoContract.getId()
     }
 }

@@ -1,17 +1,21 @@
 package com.example.module4_impl.di
 
-import com.example.module4_impl.infrastructure.UserService
+import com.example.datasource_api.user.UserDaoContract
+import com.example.module4_impl.core.UserDomainMapper
+import com.example.module4_impl.infrastructure.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UserModule {
+class MainModule() {
     @Provides
-    fun provideApiClient(retrofit: Retrofit): UserService {
-        return retrofit.create(UserService::class.java)
-    }
+    fun provideDomainMapper() = UserDomainMapper()
+
+    @Provides
+    fun provideRepoImpl(
+        userDao: UserDaoContract, userDomainMapper: UserDomainMapper
+    ) = UserRepositoryImpl(userDao, userDomainMapper)
 }

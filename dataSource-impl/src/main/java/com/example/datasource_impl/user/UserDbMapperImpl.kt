@@ -8,8 +8,8 @@ internal class UserDbMapperImpl private constructor(): UserDbMapper<UserDataBase
         return UserDataBaseModel(
             id = 1,
             name = obj.name,
-            email = obj.email,
-            gender = obj.gender,
+            email = obj.email ?: "",
+            gender = obj.gender ?: "",
             status = obj.status,
         )
     }

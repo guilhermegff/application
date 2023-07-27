@@ -7,9 +7,9 @@ import com.example.datasource_api.location.LocationEntity
 import com.example.datasource_api.user.*
 import com.example.datasource_impl.AppDatabase
 import com.example.datasource_impl.location.LocationDbMapperImpl
+import com.example.datasource_impl.user.*
 import com.example.datasource_impl.user.UserDataStore
 import com.example.datasource_impl.user.UserDbMapperImpl
-import com.example.datasource_impl.user.UserDao
 import com.example.datasource_impl.user.UserSharedPreferences
 import dagger.Binds
 import dagger.Module
@@ -17,6 +17,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -25,6 +26,15 @@ internal class MainModule {
     @Singleton
     @Provides
     fun provideDataBase(@ApplicationContext context: Context) = AppDatabase.newInstance(context)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class UserRemoteModule {
+    @Provides
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+    }
 }
 
 @Module

@@ -2,7 +2,8 @@ package com.example.module4_impl.presentation.userDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.module4_impl.core.usecase.GetUser
+import com.example.module4_impl.core.usecase.GetUserUseCase
+import com.example.module4_impl.core.usecase.GetUserUseCaseResult
 import com.example.module4_impl.presentation.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class UserDetailViewModel @Inject constructor(
-    private val getUser: GetUser,
+    private val getUserUseCase: GetUserUseCase,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -25,41 +26,61 @@ internal class UserDetailViewModel @Inject constructor(
 
     fun getDetail(id: String) {
         viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    isLoading = true,
-                )
-            }
+            showLoading()
             delay(1000)
-            runCatching {
-                withContext(dispatcher) {
-                    getUser.invoke(
-                        id
-                            .removePrefix("{")
-                            .removeSuffix("}")
-                    )
-                }
-            }.onSuccess { userDetail ->
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        userUiModel = userDetail,
-                    )
-                }
-            }.onFailure {
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        isError = true,
-                    )
+            withContext(dispatcher) {
+                val cleanId = id
+                    .removePrefix("{")
+                    .removeSuffix("}")
+                when(getUserUseCase(cleanId)) {
+                    is GetUserUseCaseResult.Error -> showError()
+                    is GetUserUseCaseResult.Success -> showSuccess()
+                    is GetUserUseCaseResult.SuccessWithNoId -> showSuccessWithWarning()
                 }
             }
+        }
+    }
+
+    private fun showLoading() {
+        _state.update {
+            it.copy(
+                isLoading = true,
+            )
+        }
+    }
+
+    private fun showError() {
+        _state.update {
+            it.copy(
+                isLoading = false,
+                isError = true,
+            )
+        }
+    }
+
+    private fun showSuccess() {
+        _state.update {
+            it.copy(
+                isLoading = false,
+                userUiModel = it.userUiModel,
+            )
+        }
+    }
+
+    private fun showSuccessWithWarning() {
+        _state.update {
+            it.copy(
+                isLoading = false,
+                showWarning = true,
+                userUiModel = it.userUiModel,
+            )
         }
     }
 
     data class ViewState(
         val isLoading: Boolean = false,
         val isError: Boolean = false,
+        val showWarning: Boolean = false,
         val userUiModel: UserUiModel = UserUiModel()
     )
 }
