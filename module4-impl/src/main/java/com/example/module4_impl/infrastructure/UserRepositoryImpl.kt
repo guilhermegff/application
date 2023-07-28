@@ -8,7 +8,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userDaoContract: UserDaoContract,
     private val userDomainMapper: UserDomainMapper,
-) : UserRepository<UserDataModel, UserDomainModel> {
+) : UserRepository<UserDomainModel> {
 
     override suspend fun fetchUser(id: String) = userDomainMapper.transform(userDaoContract.user(id))
 
@@ -17,7 +17,7 @@ class UserRepositoryImpl @Inject constructor(
         return userDomainMapper.transform(userDaoContract.users())
     }
 
-    override suspend fun saveUser(userEntity: UserDataModel) {
+    override suspend fun saveUser(userEntity: UserDomainModel) {
         userDaoContract.insertAll(userEntity)
     }
 
