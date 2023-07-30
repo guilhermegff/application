@@ -1,10 +1,10 @@
 package com.example.datasource_impl.user
 
 import androidx.room.*
-import com.example.datasource_api.user.UserDataBaseDaoContract
+import com.example.datasource_api.user.UserDataBaseDao
 
 @Dao
-abstract class UserDataBase : UserDataBaseDaoContract<UserDataBaseModel> {
+abstract class UserDataBase : UserDataBaseDao<UserDataBaseModel> {
     @Query("SELECT * FROM userDataBaseModel")
     abstract override fun getAll(): List<UserDataBaseModel>
 

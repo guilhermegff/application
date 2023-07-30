@@ -2,8 +2,10 @@ package com.example.module4_impl.presentation.userDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.datasource_api.user.UserEntity
 import com.example.module4_impl.core.usecase.GetUserUseCase
 import com.example.module4_impl.core.usecase.GetUserUseCaseResult
+import com.example.module4_impl.presentation.UserUiMapper
 import com.example.module4_impl.presentation.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UserDetailViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
+    private val userUiMapper: UserUiMapper<UserUiModel>,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -32,10 +35,10 @@ internal class UserDetailViewModel @Inject constructor(
                 val cleanId = id
                     .removePrefix("{")
                     .removeSuffix("}")
-                when(getUserUseCase(cleanId)) {
+                when(val result = getUserUseCase(cleanId)) {
                     is GetUserUseCaseResult.Error -> showError()
-                    is GetUserUseCaseResult.Success -> showSuccess()
-                    is GetUserUseCaseResult.SuccessWithNoId -> showSuccessWithWarning()
+                    is GetUserUseCaseResult.Success -> showSuccess(result.obj)
+                    is GetUserUseCaseResult.SuccessWithNoId -> showSuccessWithWarning(result.obj)
                 }
             }
         }
@@ -58,21 +61,21 @@ internal class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun showSuccess() {
+    private fun showSuccess(userEntity: UserEntity) {
         _state.update {
             it.copy(
                 isLoading = false,
-                userUiModel = it.userUiModel,
+                userUiModel = userUiMapper.transform(userEntity),
             )
         }
     }
 
-    private fun showSuccessWithWarning() {
+    private fun showSuccessWithWarning(userEntity: UserEntity) {
         _state.update {
             it.copy(
                 isLoading = false,
                 showWarning = true,
-                userUiModel = it.userUiModel,
+                userUiModel = userUiMapper.transform(userEntity),
             )
         }
     }

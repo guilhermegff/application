@@ -1,6 +1,6 @@
 package com.project.module1.infrastructure
 
-import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationDao
 import com.example.datasource_api.location.LocationDbMapper
 import com.example.datasource_api.location.LocationEntity
 import com.project.module1.core.Location
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class LocationRepositoryImpl @Inject constructor(
     private val locationService: LocationService,
-    private val locationDao: LocationDaoContract<LocationEntity>,
+    private val locationDao: LocationDao<LocationEntity>,
     private val mapper: LocationDbMapper<LocationEntity>
 ) : LocationRepository {
     override suspend fun getLocationList(): List<Location> {

@@ -4,29 +4,29 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.datasource_api.AppDatabaseContractFactory
-import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.AppDatabaseFactory
+import com.example.datasource_api.location.LocationDao
 import com.example.datasource_api.location.LocationEntity
-import com.example.datasource_api.user.UserDataBaseDaoContract
+import com.example.datasource_api.user.UserDataBaseDao
 import com.example.datasource_api.user.UserEntity
-import com.example.datasource_impl.location.LocationDao
+import com.example.datasource_impl.location.LocationDataBase
 import com.example.datasource_impl.location.LocationDataBaseModel
 import com.example.datasource_impl.user.UserDataBase
 import com.example.datasource_impl.user.UserDataBaseModel
 
 @Database(entities = [UserDataBaseModel::class, LocationDataBaseModel::class], version = 1)
-internal abstract class AppDatabase : AppDatabaseContractFactory, RoomDatabase() {
+internal abstract class AppDatabase : AppDatabaseFactory, RoomDatabase() {
     abstract fun userDao(): UserDataBase
-    abstract fun locationDao(): LocationDao
+    abstract fun locationDao(): LocationDataBase
 
     @Suppress("UNCHECKED_CAST")
-    final override fun provideUserDao(): UserDataBaseDaoContract<UserEntity> =
-        userDao() as? UserDataBaseDaoContract<UserEntity>
+    final override fun provideUserDao(): UserDataBaseDao<UserEntity> =
+        userDao() as? UserDataBaseDao<UserEntity>
             ?: throw IllegalArgumentException("Must use UserEntity type")
 
     @Suppress("UNCHECKED_CAST")
-    final override fun provideLocationDao(): LocationDaoContract<LocationEntity> =
-        locationDao() as? LocationDaoContract<LocationEntity>
+    final override fun provideLocationDao(): LocationDao<LocationEntity> =
+        locationDao() as? LocationDao<LocationEntity>
             ?: throw IllegalArgumentException("Must use LocationEntity type")
 
     companion object {

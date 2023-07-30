@@ -67,7 +67,7 @@ fun UserRow(
 ) {
     Row(
         modifier = Modifier.clickable {
-            onClick.invoke(userUiModel.id)
+            onClick.invoke(userUiModel.id.toString())
         }
     ) {
         Column() {

@@ -1,11 +1,8 @@
 package com.example.datasource_impl
 
-import com.example.datasource_api.user.UserDataBaseDaoContract
-import com.example.datasource_api.user.UserDataStoreDaoContract
-import com.example.datasource_api.user.UserEntity
-import com.example.datasource_api.user.UserSharedPreferencesDaoContract
+import com.example.datasource_api.user.*
 import com.example.datasource_impl.user.UserDbMapperImpl
-import com.example.datasource_impl.user.UserDao
+import com.example.datasource_impl.user.UserDaoImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.equalTo
@@ -13,24 +10,27 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.Mockito.*
 
-class UserDaoTest : UserLocalDaoTestFixture {
+class UserDaoImplTest : UserLocalDaoTestFixture {
     @Suppress("UNCHECKED_CAST")
-    private val userDataBaseDaoContract = mock(UserDataBaseDaoContract::class.java).apply {
+    private val userDataBaseDao = mock(UserDataBaseDao::class.java).apply {
         `when`(this.getAll()).thenReturn(expectedList)
         `when`(this.loadAllByIds(ids)).thenReturn(expectedList)
         `when`(this.findByName(userDataModel.name)).thenReturn(userDataModel)
-    } as UserDataBaseDaoContract<UserEntity>
+    } as UserDataBaseDao<UserEntity>
 
-    private val userSharedPreferencesDaoContract =
-        mock(UserSharedPreferencesDaoContract::class.java)
-    private val userDataStoreDaoContract = mock(UserDataStoreDaoContract::class.java)
+    private val userRemoteDao = mock(UserRemoteDao::class.java)
+
+    private val userSharedPreferencesDao =
+        mock(UserSharedPreferencesDao::class.java)
+    private val userDataStoreDao = mock(UserDataStoreDao::class.java)
     private val userDbMapper = UserDbMapperImpl.newInstance()
 
-    private val userDao = UserDao(
-        userDataBaseDaoContract,
+    private val userDao = UserDaoImpl(
+        userDataBaseDao,
         userDbMapper,
-        userSharedPreferencesDaoContract,
-        userDataStoreDaoContract,
+        userSharedPreferencesDao,
+        userDataStoreDao,
+        userRemoteDao,
     )
 
     @Test
@@ -42,7 +42,7 @@ class UserDaoTest : UserLocalDaoTestFixture {
     @Test
     fun `userDaoContract getAll is called once when userLocalDao calls getAll`() {
         userDao.getAll()
-        verify(userDataBaseDaoContract, times(1)).getAll()
+        verify(userDataBaseDao, times(1)).getAll()
     }
 
     @Test
@@ -54,7 +54,7 @@ class UserDaoTest : UserLocalDaoTestFixture {
     @Test
     fun `userDaoContract loadAllByIds is called once when userLocalDao calls loadAllByIds`() {
         userDao.loadAllByIds(ids)
-        verify(userDataBaseDaoContract, times(1)).loadAllByIds(ids)
+        verify(userDataBaseDao, times(1)).loadAllByIds(ids)
     }
 
     @Test
@@ -66,39 +66,39 @@ class UserDaoTest : UserLocalDaoTestFixture {
     @Test
     fun `userDaoContract findByName is called once when userLocalDao calls findByName`() {
         userDao.findByName(userDataModel.name)
-        verify(userDataBaseDaoContract, times(1)).findByName(userDataModel.name)
+        verify(userDataBaseDao, times(1)).findByName(userDataModel.name)
     }
 
     @Test
     fun `userDaoContract insertAll is called once when userLocalDao calls insertAll`() {
         userDao.insertAll(userDataModel)
-        verify(userDataBaseDaoContract, times(1)).insertAll(userDataBaseModel)
+        verify(userDataBaseDao, times(1)).insertAll(userDataBaseModel)
     }
 
     @Test
     fun `userDaoContract delete is called once when userLocalDao call delete`() {
         userDao.delete(userDataModel)
-        verify(userDataBaseDaoContract, times(1)).delete(userDataBaseModel)
+        verify(userDataBaseDao, times(1)).delete(userDataBaseModel)
     }
 
     @Test
     fun `userSharedPreferencesDaoContract saveToken is called once when userLocalDao calls saveToken`() {
-        userSharedPreferencesDaoContract.saveToken(token)
-        verify(userSharedPreferencesDaoContract, times(1)).saveToken(token)
+        userSharedPreferencesDao.saveToken(token)
+        verify(userSharedPreferencesDao, times(1)).saveToken(token)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `userDataStoreDaoContract saveId is called once when userLocalDao calls saveId`() =
         runTest {
-            userDataStoreDaoContract.saveId(ids.first().toString())
-            verify(userDataStoreDaoContract, times(1)).saveId(ids.first().toString())
+            userDataStoreDao.saveId(ids.first().toString())
+            verify(userDataStoreDao, times(1)).saveId(ids.first().toString())
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `userDataStoreDaoContract getId is called once when userLocalDao calls getId`() = runTest {
-        userDataStoreDaoContract.getId()
-        verify(userDataStoreDaoContract, times(1)).getId()
+        userDataStoreDao.getId()
+        verify(userDataStoreDao, times(1)).getId()
     }
 }

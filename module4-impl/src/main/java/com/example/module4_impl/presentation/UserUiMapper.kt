@@ -1,22 +1,8 @@
 package com.example.module4_impl.presentation
 
-import com.example.module4_impl.core.model.UserDomainModel
-import javax.inject.Inject
+import com.example.datasource_api.user.UserEntity
 
-class UserUiMapper @Inject constructor() {
-    fun transform(user: UserDomainModel) = with(user) {
-        UserUiModel(
-            id = id.toString() ?: "",
-            name = name ?: "",
-            email = email ?: "",
-            gender = gender ?: "",
-            status = status ?: "",
-        )
-    }
-
-    fun transform(userList: List<UserDomainModel>) = userList.map {
-        with(it) {
-            transform(it)
-        }
-    }
+interface UserUiMapper<out T : UserEntity> {
+    fun transform(userEntity: UserEntity): T
+    fun transform(userEntityList: List<UserEntity>): List<T>
 }

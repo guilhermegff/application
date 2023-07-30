@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-    api project(path: ':module4-api')
     implementation project(path: ':moduleDependency')
     implementation project(path: ':dataSource-api')
 

@@ -2,10 +2,10 @@ package com.example.datasource_impl.user
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.example.datasource_api.user.UserSharedPreferencesDaoContract
+import com.example.datasource_api.user.UserSharedPreferencesDao
 
-internal class UserSharedPreferences private constructor(private val sharedPreferences: SharedPreferences) :
-    UserSharedPreferencesDaoContract {
+internal class UserSharedPreferencesDaoImpl private constructor(private val sharedPreferences: SharedPreferences) :
+    UserSharedPreferencesDao {
     override fun saveToken(token: String) {
         sharedPreferences.edit {
             putString(TOKEN_KEY, token)
@@ -20,7 +20,7 @@ internal class UserSharedPreferences private constructor(private val sharedPrefe
 
     companion object {
         const val TOKEN_KEY = "Token"
-        fun newInstance(sharedPreferences: SharedPreferences): UserSharedPreferencesDaoContract =
-            UserSharedPreferences(sharedPreferences)
+        fun newInstance(sharedPreferences: SharedPreferences): UserSharedPreferencesDao =
+            UserSharedPreferencesDaoImpl(sharedPreferences)
     }
 }
