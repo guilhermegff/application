@@ -1,6 +1,6 @@
 package com.example.datasource_api.user
 
-interface UserSharedPreferencesDaoContract {
+interface UserSharedPreferencesDao {
     fun saveToken(token: String)
     fun retrieveToken(): String
 }

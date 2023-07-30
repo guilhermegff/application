@@ -1,6 +1,6 @@
 package com.project.module1
 
-import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationDao
 import com.example.datasource_api.location.LocationDbMapper
 import com.example.datasource_api.location.LocationEntity
 import com.project.module1.infrastructure.LocationRepositoryImpl
@@ -18,7 +18,7 @@ class LocationRepositoryImplTest : Module1UnitTestFixture {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private val dao: LocationDaoContract<LocationEntity> = mock(LocationDaoContract::class.java) as LocationDaoContract<LocationEntity>
+    private val dao: LocationDao<LocationEntity> = mock(LocationDao::class.java) as LocationDao<LocationEntity>
     @Suppress("UNCHECKED_CAST")
     private val mapper: LocationDbMapper<LocationEntity> = mock(LocationDbMapper::class.java) as LocationDbMapper<LocationEntity>
     private val locationRepositoryImpl = LocationRepositoryImpl(service, dao, mapper)

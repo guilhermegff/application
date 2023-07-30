@@ -1,10 +1,10 @@
 package com.example.datasource_impl.location
 
 import androidx.room.*
-import com.example.datasource_api.location.LocationDaoContract
+import com.example.datasource_api.location.LocationDao
 
 @Dao
-interface LocationDao : LocationDaoContract<LocationDataBaseModel> {
+interface LocationDataBase : LocationDao<LocationDataBaseModel> {
     @Query("SELECT * FROM locationDataBaseModel")
     abstract override fun getAll(): List<LocationDataBaseModel>
 

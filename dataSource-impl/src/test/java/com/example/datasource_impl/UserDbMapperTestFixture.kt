@@ -6,6 +6,7 @@ import com.example.datasource_impl.user.UserDataBaseModel
 internal interface UserDbMapperTestFixture {
     val userDataModel
         get() = object : UserEntity {
+            override val id: Int = 0
             override val name: String = "name"
             override val email: String = "email"
             override val gender: String = "gender"
