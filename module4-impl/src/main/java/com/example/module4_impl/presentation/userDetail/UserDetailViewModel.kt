@@ -29,22 +29,21 @@ internal class UserDetailViewModel @Inject constructor(
 
     fun getDetail(id: String) {
         viewModelScope.launch {
-            showLoading()
+            setLoading()
             delay(1000)
             withContext(dispatcher) {
-                val cleanId = id
-                    .removePrefix("{")
-                    .removeSuffix("}")
-                when(val result = getUserUseCase(cleanId)) {
-                    is GetUserUseCaseResult.Error -> showError()
-                    is GetUserUseCaseResult.Success -> showSuccess(result.obj)
-                    is GetUserUseCaseResult.SuccessWithNoId -> showSuccessWithWarning(result.obj)
+                when (val result = getUserUseCase(trim(id))) {
+                    is GetUserUseCaseResult.Error -> setError()
+                    is GetUserUseCaseResult.Success -> setSuccess(result.obj)
+                    is GetUserUseCaseResult.SuccessWithNoId -> setSuccessWithWarning(result.obj)
                 }
             }
         }
     }
 
-    private fun showLoading() {
+    private fun trim(id: String) = id.removePrefix("{").removeSuffix("}")
+
+    private fun setLoading() {
         _state.update {
             it.copy(
                 isLoading = true,
@@ -52,7 +51,7 @@ internal class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun showError() {
+    private fun setError() {
         _state.update {
             it.copy(
                 isLoading = false,
@@ -61,7 +60,7 @@ internal class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun showSuccess(userEntity: UserEntity) {
+    private fun setSuccess(userEntity: UserEntity) {
         _state.update {
             it.copy(
                 isLoading = false,
@@ -70,7 +69,7 @@ internal class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun showSuccessWithWarning(userEntity: UserEntity) {
+    private fun setSuccessWithWarning(userEntity: UserEntity) {
         _state.update {
             it.copy(
                 isLoading = false,
