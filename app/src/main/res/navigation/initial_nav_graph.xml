@@ -18,12 +18,16 @@
             app:destination="@id/module_4_nav_graph" />
         <action
             android:id="@+id/action_initialModule_to_module3"
-            app:destination="@id/module_3_nav_graph" />
+            app:destination="@id/module3Activity" />
     </fragment>
 
     <activity
         android:id="@+id/module1Activity"
         android:name="com.project.module1.LocationActivity" />
+
+    <activity
+        android:id="@+id/module3Activity"
+        android:name="com.example.module3_impl.Module3Activity" />
 
     <include app:graph="@navigation/nav_graph"/>
     <include app:graph="@navigation/module_3_nav_graph"/>
