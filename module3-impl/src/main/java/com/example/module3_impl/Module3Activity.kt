@@ -13,11 +13,17 @@ import kotlin.math.sin
 internal class Module3Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(MyView(this))
+        setContentView(MyView(this).apply {
+            mHeight = resources.displayMetrics.heightPixels
+            mWidth = resources.displayMetrics.widthPixels
+        })
     }
 }
 
 class MyView(context: Context) : View(context) {
+    var mHeight: Int = 0
+    var mWidth: Int = 0
+
     private val paint1: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         color = 0xffff0000.toInt()
@@ -218,10 +224,33 @@ class MyView(context: Context) : View(context) {
         return affineTransforms(subtractCentroid(points), matrix)
     }
 
+    private val linePoints = arrayOf(11, 29, 10, 20, 12, 5, 31, 24, 21, 13)
+
+    private fun createLinePath(input: Array<Int>, width: Int, height: Int): Path {
+        var points = Array<Point>(input.size) { Point() }
+        var minValue = 999999
+        var maxValue = -999999
+        input.forEachIndexed { index, _ ->
+            points[index] = Point(index, input[index])
+            minValue = Math.min(minValue, input[index])
+            maxValue = Math.max(maxValue, input[index])
+        }
+        points = translate(points, 0, -minValue)
+        val yScale: Double = (height / (maxValue - minValue).toDouble())
+        val xScale: Double = (width / (input.size - 1).toDouble())
+        points = scale(points, xScale, yScale)
+        val result = Path()
+        result.moveTo((points[0].x).toFloat(), (points[0].y).toFloat())
+        points.forEachIndexed { index, point ->
+            result.lineTo(point.x.toFloat(), point.y.toFloat())
+        }
+        return result
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        canvas?.drawPath(path5, paint3)
+        /*canvas?.drawPath(path5, paint3)
         canvas?.drawPath(path5, paint1)
         val newPoints3 = rotate(points, 180.0)
         updatePath(points, newPoints3, path5)
@@ -233,6 +262,9 @@ class MyView(context: Context) : View(context) {
         val newSquarePoints = rotate(squarePoints, 45.0)
         updatePath(squarePoints, newSquarePoints, squarePath)
         canvas?.drawPath(squarePath, paint1)
-        canvas?.drawPath(squarePath, paint3)
+        canvas?.drawPath(squarePath, paint3)*/
+
+        val graph = createLinePath(linePoints, mWidth, mHeight)
+        canvas?.drawPath(graph, paint1)
     }
 }
