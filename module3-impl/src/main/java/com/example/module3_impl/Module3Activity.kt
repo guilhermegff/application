@@ -63,19 +63,19 @@ class MyView(context: Context) : View(context) {
     }
 
     private val path5: Path = Path().apply {
-        moveTo(550f, 1200f)
-        lineTo(850f, 1180f)
-        lineTo(1125f, 1225f)
-        lineTo(1400f, 1210f)
-        lineTo(1600f, 1225f)
+        moveTo(300f, 800f)
+        lineTo(550f, 500f)
+        lineTo(800f, 800f)
         close()
     }
 
     private val points: Array<Point> = arrayOf(
-        Point(550, 1200), Point(850, 1180), Point(1125, 1225), Point(1400, 1210), Point(1600, 1225)
+        Point(300, 800),
+        Point(550, 500),
+        Point(800, 800),
     )
 
-    private val square: Array<Point> = arrayOf(
+    private val squarePoints: Array<Point> = arrayOf(
         Point(500, 300),
         Point(500, 400),
         Point(600, 400),
@@ -99,20 +99,21 @@ class MyView(context: Context) : View(context) {
         shader = linear
     }
 
-    private fun updatePath(newPoints: Array<Point>) {
-        path5.reset()
-        val x = (newPoints[0].x).toFloat()
-        val y = (newPoints[0].y).toFloat()
-        newPoints.forEachIndexed { n, _ ->
-            if (n == 0) {
-                path5.moveTo(x, y)
+    private fun updatePath(oldPoints: Array<Point>, newPoints: Array<Point>, path: Path) {
+        path.reset()
+        val centralized = addCentroid(oldPoints, newPoints)
+        val initialX = (centralized[0].x).toFloat()
+        val initialY = (centralized[0].y).toFloat()
+        newPoints.forEachIndexed { point, _ ->
+            if (point == 0) {
+                path.moveTo(initialX, initialY)
             } else {
-                val a = (newPoints[n].x).toFloat()
-                val b = (newPoints[n].y).toFloat()
-                path5.lineTo(a, b)
+                val x = (centralized[point].x).toFloat()
+                val y = (centralized[point].y).toFloat()
+                path.lineTo(x, y)
             }
         }
-        path5.close()
+        path.close()
     }
 
     private fun subtractCentroid(points: Array<Point>): Array<Point> {
@@ -145,23 +146,6 @@ class MyView(context: Context) : View(context) {
             result.add(Point(p.x + x, p.y + y))
         }
         return result.toTypedArray()
-    }
-
-    private fun updateSquarePath(oldPoints: Array<Point>, newPoints: Array<Point>) {
-        squarePath.reset()
-        val c = addCentroid(oldPoints, newPoints)
-        val x = (c[0].x).toFloat()
-        val y = (c[0].y).toFloat()
-        newPoints.forEachIndexed { n, _ ->
-            if (n == 0) {
-                squarePath.moveTo(x, y)
-            } else {
-                val a = (c[n].x).toFloat()
-                val b = (c[n].y).toFloat()
-                squarePath.lineTo(a, b)
-            }
-        }
-        squarePath.close()
     }
 
     private fun affineTransforms(
@@ -203,7 +187,6 @@ class MyView(context: Context) : View(context) {
         matrix[2][0] = 0.0
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
-
         return affineTransforms(points, matrix)
     }
 
@@ -218,17 +201,16 @@ class MyView(context: Context) : View(context) {
         matrix[2][0] = 0.0
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
-
         return affineTransforms(points, matrix)
     }
 
-    private fun rotate(points: Array<Point>, px: Double, py: Double): Array<Point> {
+    private fun rotate(points: Array<Point>, degrees: Double): Array<Point> {
         val matrix = Array(3) { DoubleArray(3) }
-        matrix[0][0] = cos(Math.toRadians(px))
-        matrix[0][1] = -sin(Math.toRadians(px))
+        matrix[0][0] = cos(Math.toRadians(degrees))
+        matrix[0][1] = -sin(Math.toRadians(degrees))
         matrix[0][2] = 0.0
-        matrix[1][0] = sin(Math.toRadians(px))
-        matrix[1][1] = cos(Math.toRadians(px))
+        matrix[1][0] = sin(Math.toRadians(degrees))
+        matrix[1][1] = cos(Math.toRadians(degrees))
         matrix[1][2] = 0.0
         matrix[2][0] = 0.0
         matrix[2][1] = 0.0
@@ -238,35 +220,18 @@ class MyView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        /*
-        canvas?.drawRect(500f, 500f, 700f, 700f, paint)
-        canvas?.drawRect(500f, 500f, 700f, 700f, greenPaint)
-        canvas?.drawCircle(600f, 600f, 145f, paint)
-        canvas?.drawCircle(500f, 450f, 50f, paint)
 
-        canvas?.drawPath(path, paint)
-
-        canvas?.drawPath(path3, paint2)
-        canvas?.drawPath(path2, paint1)
-        canvas?.drawPath(path3, paint1)
-        canvas?.drawPath(path4, paint3)
-        canvas?.drawPath(path4, paint1)
         canvas?.drawPath(path5, paint3)
-        canvas?.drawCircle(211.4f, 407.1f, 250f, paint1)
-        */
-
-        /*canvas?.drawPath(path5, paint3)
         canvas?.drawPath(path5, paint1)
-        //var newPoints3 = shear(points, 2.0, .0)
-        //updatePath(newPoints3)
-        var newPoints3 = rotate(points, 45.0 ,2.0)
-        updatePath(newPoints3)
-        canvas?.drawPath(path5, paint1)*/
+        val newPoints3 = rotate(points, 180.0)
+        updatePath(points, newPoints3, path5)
+        canvas?.drawPath(path5, paint1)
+        canvas?.drawPath(path5, paint3)
 
         canvas?.drawPath(squarePath, paint1)
         canvas?.drawPath(squarePath, paint3)
-        val newSquarePoints = rotate(square, 45.0, 2.0)
-        updateSquarePath(square, newSquarePoints)
+        val newSquarePoints = rotate(squarePoints, 45.0)
+        updatePath(squarePoints, newSquarePoints, squarePath)
         canvas?.drawPath(squarePath, paint1)
         canvas?.drawPath(squarePath, paint3)
     }
