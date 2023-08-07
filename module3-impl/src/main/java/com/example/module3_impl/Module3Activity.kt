@@ -76,10 +76,10 @@ class MyView(context: Context) : View(context) {
     )
 
     private val square: Array<Point> = arrayOf(
-        Point(-50, -50),
-        Point(-50, 40),
-        Point(50, 50),
-        Point(50, -50),//550 350
+        Point(500, 300),
+        Point(500, 400),
+        Point(600, 400),
+        Point(600, 300)
     )
 
     private val squarePath: Path = Path().apply {
@@ -115,83 +115,64 @@ class MyView(context: Context) : View(context) {
         path5.close()
     }
 
-    private fun updateSquarePath(newPoints: Array<Point>) {
+    private fun subtractCentroid(points: Array<Point>): Array<Point> {
+        var x: Int = 0
+        var y: Int = 0
+        points.forEach {
+            x += it.x
+            y += it.y
+        }
+        x /= points.size
+        y /= points.size
+        val result = arrayListOf<Point>()
+        for (p in points) {
+            result.add(Point(p.x - x, p.y - y))
+        }
+        return result.toTypedArray()
+    }
+
+    private fun addCentroid(from: Array<Point>, to: Array<Point>): Array<Point> {
+        var x: Int = 0
+        var y: Int = 0
+        from.forEach {
+            x += it.x
+            y += it.y
+        }
+        x /= from.size
+        y /= from.size
+        val result = arrayListOf<Point>()
+        for (p in to) {
+            result.add(Point(p.x + x, p.y + y))
+        }
+        return result.toTypedArray()
+    }
+
+    private fun updateSquarePath(oldPoints: Array<Point>, newPoints: Array<Point>) {
         squarePath.reset()
-        val x = (newPoints[0].x).toFloat()
-        val y = (newPoints[0].y).toFloat()
+        val c = addCentroid(oldPoints, newPoints)
+        val x = (c[0].x).toFloat()
+        val y = (c[0].y).toFloat()
         newPoints.forEachIndexed { n, _ ->
             if (n == 0) {
                 squarePath.moveTo(x, y)
             } else {
-                val a = (newPoints[n].x).toFloat()
-                val b = (newPoints[n].y).toFloat()
+                val a = (c[n].x).toFloat()
+                val b = (c[n].y).toFloat()
                 squarePath.lineTo(a, b)
             }
         }
         squarePath.close()
     }
 
-    private fun updateSquarePath2(newPoints: Array<Point>) {
-        squarePath.reset()
-        val x = (newPoints[0].x + 550).toFloat()
-        val y = (newPoints[0].y + 350).toFloat()
-        newPoints.forEachIndexed { n, _ ->
-            if (n == 0) {
-                squarePath.moveTo(x, y)
-            } else {
-                val a = (newPoints[n].x + 550).toFloat()
-                val b = (newPoints[n].y + 350).toFloat()
-                squarePath.lineTo(a, b)
-            }
-        }
-        squarePath.close()
-    }
-
-    private fun affineTransformsTranslation(
+    private fun affineTransforms(
         vertices: Array<Point>, matrix: Array<DoubleArray>
     ): Array<Point> {
-        val result = Array<Point>(vertices.size) { Point() }
+        val result = Array(vertices.size) { Point() }
         vertices.forEachIndexed { n, _ ->
             val t =
                 (matrix[0][0] * vertices[n].x + matrix[0][1] * vertices[n].y + matrix[0][2]).toInt()
             val u =
                 (matrix[1][0] * vertices[n].x + matrix[1][1] * vertices[n].y + matrix[1][2]).toInt()
-            result[n] = Point(t, u)
-        }
-        return result
-    }
-
-    private fun affineTransformsScale(
-        points: Array<Point>, matrix: Array<DoubleArray>
-    ): Array<Point> {
-        val result = Array<Point>(points.size) { Point() }
-        points.forEachIndexed { n, _ ->
-            val t = (matrix[0][0] * points[n].x).toInt()
-            val u = (matrix[1][1] * points[n].y).toInt()
-            result[n] = Point(t, u)
-        }
-        return result
-    }
-
-    private fun affineTransformsShear(
-        points: Array<Point>, matrix: Array<DoubleArray>
-    ): Array<Point> {
-        val result = Array<Point>(points.size) { Point() }
-        points.forEachIndexed { n, _ ->
-            val t = (matrix[0][0] * points[n].x + matrix[0][1] * points[n].x).toInt()
-            val u = (matrix[1][0] * points[n].y + matrix[1][1] * points[n].y).toInt()
-            result[n] = Point(t, u)
-        }
-        return result
-    }
-
-    private fun affineTransformsRotate(
-        points: Array<Point>, matrix: Array<DoubleArray>
-    ): Array<Point> {
-        val result = Array<Point>(points.size) { Point() }
-        points.forEachIndexed { n, _ ->
-            val t = (matrix[0][0] * points[n].x + matrix[0][1] * points[n].x).toInt()
-            val u = (matrix[1][0] * points[n].y + matrix[1][1] * points[n].y).toInt()
             result[n] = Point(t, u)
         }
         return result
@@ -208,7 +189,7 @@ class MyView(context: Context) : View(context) {
         matrix[2][0] = 0.0
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
-        return affineTransformsTranslation(input, matrix)
+        return affineTransforms(input, matrix)
     }
 
     private fun scale(points: Array<Point>, px: Double, py: Double): Array<Point> {
@@ -223,7 +204,7 @@ class MyView(context: Context) : View(context) {
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
 
-        return affineTransformsTranslation(points, matrix)
+        return affineTransforms(points, matrix)
     }
 
     private fun shear(points: Array<Point>, px: Double, py: Double): Array<Point> {
@@ -238,7 +219,7 @@ class MyView(context: Context) : View(context) {
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
 
-        return affineTransformsTranslation(points, matrix)
+        return affineTransforms(points, matrix)
     }
 
     private fun rotate(points: Array<Point>, px: Double, py: Double): Array<Point> {
@@ -252,11 +233,8 @@ class MyView(context: Context) : View(context) {
         matrix[2][0] = 0.0
         matrix[2][1] = 0.0
         matrix[2][2] = 1.0
-
-        return affineTransformsTranslation(points, matrix)
+        return affineTransforms(subtractCentroid(points), matrix)
     }
-
-
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -277,19 +255,18 @@ class MyView(context: Context) : View(context) {
         canvas?.drawCircle(211.4f, 407.1f, 250f, paint1)
         */
 
-        canvas?.drawPath(path5, paint3)
+        /*canvas?.drawPath(path5, paint3)
         canvas?.drawPath(path5, paint1)
         //var newPoints3 = shear(points, 2.0, .0)
         //updatePath(newPoints3)
         var newPoints3 = rotate(points, 45.0 ,2.0)
         updatePath(newPoints3)
-        canvas?.drawPath(path5, paint1)
+        canvas?.drawPath(path5, paint1)*/
 
         canvas?.drawPath(squarePath, paint1)
         canvas?.drawPath(squarePath, paint3)
-        val newSquarePath = rotate(square, 45.0, 2.0)
-        updateSquarePath(newSquarePath)
-        updateSquarePath2(newSquarePath)
+        val newSquarePoints = rotate(square, 45.0, 2.0)
+        updateSquarePath(square, newSquarePoints)
         canvas?.drawPath(squarePath, paint1)
         canvas?.drawPath(squarePath, paint3)
     }
