@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Timer
+import java.util.TimerTask
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.tan
 
 @AndroidEntryPoint
 internal class Module3Activity : AppCompatActivity() {
@@ -24,23 +27,313 @@ internal class Module3Activity : AppCompatActivity() {
 class MyView(context: Context) : View(context) {
     private var mHeight: Int = 0
     private var mWidth: Int = 0
+
     private val cubeVertices = Array(8) { Coordinate() }
-    private var drawCubeVertices = arrayOf<Coordinate>()
-    private var drawCubeVertices2 = arrayOf<Coordinate>()
-    private var drawCubeVertices3 = arrayOf<Coordinate>()
 
-    private var drawCubeVertices4 = arrayOf<Coordinate>()
-    private var drawCubeVertices5 = arrayOf<Coordinate>()
-    private var drawCubeVertices6 = arrayOf<Coordinate>()
+    private var drawCube1Vertices = arrayOf<Coordinate>()
+    private var drawCube2Vertices = arrayOf<Coordinate>()
+    private var drawCube3Vertices = arrayOf<Coordinate>()
 
-    private var drawCubeVertices7 = arrayOf<Coordinate>()
-    private var drawCubeVertices8 = arrayOf<Coordinate>()
-    private var drawCubeVertices9 = arrayOf<Coordinate>()
+    private var drawCube4Vertices = arrayOf<Coordinate>()
+    private var drawCube5Vertices = arrayOf<Coordinate>()
+    private var drawCube6Vertices = arrayOf<Coordinate>()
+
+    private var drawCube7Vertices = arrayOf<Coordinate>()
+    private var drawCube8Vertices = arrayOf<Coordinate>()
+    private var drawCube9Vertices = arrayOf<Coordinate>()
+
+    private var drawCube10Vertices = arrayOf<Coordinate>()
+    private var drawCube11Vertices = arrayOf<Coordinate>()
+    private var drawCube12Vertices = arrayOf<Coordinate>()
+
+    private var drawCube13Vertices = arrayOf<Coordinate>()
+    private var drawCube14Vertices = arrayOf<Coordinate>()
+
+    private var drawCube15Vertices = arrayOf<Coordinate>()
+    private var drawCube16Vertices = arrayOf<Coordinate>()
+
+    private var drawRobotHeadVertices = arrayOf<Coordinate>()
+    private var drawRobotNeckVertices = arrayOf<Coordinate>()
+    private var drawRobotTorsoVertices = arrayOf<Coordinate>()
+
+    private var drawRobotLeftLegVertices = arrayOf<Coordinate>()
 
     constructor(screenHeight: Int, screenWidth: Int, context: Context) : this(context) {
         mHeight = screenHeight
         mWidth = screenWidth
 
+        defineInitialCubeVertices()
+
+        /*cube1Transforms()
+        cube2Transforms()
+        cube3Transforms()
+        cube4Transforms()
+        cube5Transforms()
+        cube6Transforms()
+        cube7Transforms()
+        cube8Transforms()
+        cube9Transforms()*/
+
+        /*val timer = Timer()
+        var reset = false
+        val task = object : TimerTask() {
+            var angleX = 0.0
+            var angleY = 0.0
+            var angleZ = 0.0
+            override fun run() {
+                drawCube10Vertices = scale3D2(cubeVertices, 90.0, 90.0, 90.0)
+                drawCube10Vertices = euler(drawCube10Vertices, angleX, angleY, angleZ)
+                drawCube10Vertices = translate3D2(drawCube10Vertices, 200.0, 200.0, 0.0)
+                this@MyView.invalidate()
+
+                if (!reset) {
+                    if (angleX in 200.0..250.0) {
+                        angleZ += 1.0
+                        angleX += 1.0
+                    } else {
+                        angleX += 1.0
+                    }
+                    if (angleX == 360.0) reset = true
+                }
+
+                if (reset) {
+                    if (angleX in 200.0..250.0) {
+                        angleZ -= 1.0
+                        angleX -= 1.0
+                    } else {
+                        angleX -= 1.0
+                    }
+                    if (angleX == 0.0) reset = false
+                }
+            }
+        }
+        timer.scheduleAtFixedRate(task, 100, 150)
+        this.invalidate()*/
+
+        /*val timer2 = Timer()
+        val task2 = object : TimerTask() {
+            var angle = 0.0
+            override fun run() {
+                drawCube11Vertices = translate3D2(cubeVertices, 2.0, 2.0, 2.0)
+                drawCube11Vertices = scale3D2(drawCube11Vertices, 40.0, 40.0, 40.0)
+                drawCube11Vertices = rotateX2(drawCube11Vertices, 90.0)
+                drawCube11Vertices = rotateZ2(drawCube11Vertices, angle)
+                drawCube11Vertices = rotateY2(drawCube11Vertices, 60.0)
+                drawCube11Vertices = translate3D2(drawCube11Vertices, 200.0, 200.0, 0.0)
+                this@MyView.invalidate()
+                angle += 10.0
+                if (angle >= 360) angle = 0.0
+            }
+        }
+        timer2.scheduleAtFixedRate(task2, 750, 150)
+        this.invalidate()*/
+
+        /*val timer3 = Timer()
+        val task3 = object : TimerTask() {
+            var angle = 0.0
+            override fun run() {
+                drawCube12Vertices = translate3D2(cubeVertices, 2.0, 2.0, 2.0)
+                drawCube12Vertices = scale3D2(drawCube12Vertices, 40.0, 40.0, 40.0)
+                drawCube12Vertices = rotateX2(drawCube12Vertices, angle)
+                drawCube12Vertices = rotateY2(drawCube12Vertices, 60.0)
+                drawCube12Vertices = rotateZ2(drawCube12Vertices, 90.0)
+                drawCube12Vertices = translate3D2(drawCube12Vertices, 200.0, 200.0, 0.0)
+
+                this@MyView.invalidate()
+                angle += 10.0
+                if (angle >= 360) angle = 0.0
+            }
+        }
+        timer3.scheduleAtFixedRate(task3, 500, 200)
+        this.invalidate()*/
+
+        val timer4 = Timer()
+        drawCube13Vertices = translate3D2(cubeVertices, 2.0, 2.0, 2.0)
+        drawCube13Vertices = scale3D2(drawCube13Vertices, 40.0, 40.0, 40.0)
+        /*val task4 = object : TimerTask() {
+            var positionX = 0f
+            var dir = true
+            override fun run() {
+                if (positionX + 120 >= width && dir) {
+                    dir = false
+                } else if (!dir && positionX + 40 <= 0) {
+                    dir = true
+                }
+                if (dir) {
+                    drawCube13Vertices = translate3D2(drawCube13Vertices, 1.0, 0.0, 0.0)
+                    positionX += 1f
+                } else {
+                    drawCube13Vertices = translate3D2(drawCube13Vertices, -1.0, 0.0, 0.0)
+                    positionX -= 1f
+                }
+                this@MyView.invalidate()
+            }
+        }
+        timer4.scheduleAtFixedRate(task4, 100, 20)*/
+        this.invalidate()
+
+        /*val timer5 = Timer()
+        drawCube14Vertices = translate3D2(cubeVertices, 2.0, 2.0, 2.0)
+        drawCube14Vertices = scale3D2(drawCube14Vertices, 40.0, 40.0, 40.0)
+        val task5 = object : TimerTask() {
+            var positionY = 0f
+            var dir = true
+            override fun run() {
+                if (positionY + 120 >= height && dir) {
+                    dir = false
+                } else if (!dir && positionY + 40 <= 0) {
+                    dir = true
+                }
+                if (dir) {
+                    drawCube14Vertices = translate3D2(drawCube14Vertices, 0.0, 1.0, 0.0)
+                    positionY += 1f
+                } else {
+                    drawCube14Vertices = translate3D2(drawCube14Vertices, 0.0, -1.0, 0.0)
+                    positionY -= 1f
+                }
+                this@MyView.invalidate()
+            }
+        }
+        timer5.scheduleAtFixedRate(task5, 100, 20)
+        this.invalidate()*/
+
+        /*val timer6 = Timer()
+        drawCube15Vertices = translate3D2(cubeVertices, 35.0, 15.0, 2.0)
+        drawCube15Vertices = scale3D2(drawCube15Vertices, 90.0, 90.0, 90.0)
+        drawCube15Vertices = euler(drawCube15Vertices, 30.0, 60.0, 0.0)
+        val task6 = object : TimerTask() {
+            var positionY = 0f
+            var dir = true
+            override fun run() {
+                drawCube15Vertices = quaternion2(drawCube15Vertices, -0.006, 0.0, 0.0)
+                this@MyView.invalidate()
+            }
+        }
+        timer6.scheduleAtFixedRate(task6, 0, 50)*/
+
+
+        /*val timer7 = Timer()
+        drawCube16Vertices = translate3D2(cubeVertices, 350.0, 250.0, 0.0)
+        drawCube16Vertices = scale3D2(drawCube16Vertices, 90.0, 90.0, 90.0)
+        drawCube16Vertices = euler(drawCube16Vertices, 30.0, 60.0, 0.0)
+        val task7 = object : TimerTask() {
+            override fun run() {
+                drawCube16Vertices = quaternion2(drawCube16Vertices, -0.0065, 0.0, 0.0)
+                this@MyView.invalidate()
+            }
+        }
+        timer7.scheduleAtFixedRate(task7, 0, 51)
+        this.invalidate()*/
+
+        //robotHead()
+
+        //robotNeck()
+
+        val timerHead = Timer()
+        //drawRobotHeadVertices = rotateY2(cubeVertices, 30.0)
+        //drawRobotHeadVertices = rotateX2(drawRobotHeadVertices,  45.0)
+        // translate3D2(drawRobotHeadVertices, 11.0, 10.0, 2.0)
+        //drawRobotHeadVertices = addCuboidCentroid(drawRobotHeadVertices, scale3D2(drawRobotHeadVertices, 45.0, 45.0, 45.0))
+
+        //drawRobotHeadVertices = scale3D2(drawRobotHeadVertices, 45.0, 45.0, 45.0)
+        //drawRobotHeadVertices = translate3D2(drawRobotHeadVertices, 200.0, 200.0, 0.0)
+
+        val taskHead = object : TimerTask() {
+            var countY = 0.0
+            var reset = false
+            override fun run() {
+                drawRobotHeadVertices = translate3D2(cubeVertices, 2.0, 2.0, 2.0)
+                //drawRobotHeadVertices = projection(drawRobotHeadVertices, 1.1, 1.0, -1.0, 30.0)
+                drawRobotHeadVertices = rotateX2(drawRobotHeadVertices,  countY * 4)
+                drawRobotHeadVertices = quaternion2(drawRobotHeadVertices, -countY, countY, countY/4)//projection(drawRobotHeadVertices, 1.1, 1.0, -1.0, countY)
+                drawRobotHeadVertices = addCuboidCentroid(translate3D2(drawRobotHeadVertices, 200.0, 200.0, 0.0), scale3D2(drawRobotHeadVertices, 45.0, 90.0, 45.0))
+                if (!reset) {
+                    if (countY < 1.0) {
+                        countY += 0.1
+                    }
+                    if (countY > 1.0) reset = true
+                }
+
+                if (reset) {
+                    if (countY > -1.0) {
+                        countY -= 0.1
+                    }
+                    if (countY < -1.0) reset = false
+                }
+                this@MyView.invalidate()
+            }
+        }
+        timerHead.scheduleAtFixedRate(taskHead, 0, 60)
+        this.invalidate()
+
+        val timerNeck = Timer()
+
+        val taskNeck = object : TimerTask() {
+            var countY = 0.0
+            var reset = false
+            override fun run() {
+                drawRobotNeckVertices = rotateY2(cubeVertices,  countY)
+                //drawRobotNeckVertices = rotateX2(drawRobotNeckVertices,  45.0)
+                countY ++
+                drawRobotNeckVertices = translate3D2(drawRobotNeckVertices, 21.5, 22.5, 2.0)
+                drawRobotNeckVertices = addCuboidCentroid(drawRobotNeckVertices, scale3D2(drawRobotNeckVertices, 45.0, 45.0, 45.0))
+
+                /*if (!reset) {
+                    if (countY < 1.0) {
+                        countY += 0.01
+                    }
+                    if (countY > 1.0) reset = true
+                }
+
+                if (reset) {
+                    if (countY > -1.0) {
+                        countY -= 0.01
+                    }
+                    if (countY < -1.0) reset = false
+                }*/
+
+                this@MyView.invalidate()
+            }
+        }
+        timerNeck.scheduleAtFixedRate(taskNeck, 0, 60)
+
+        val timerTorso = Timer()
+        val taskTorso = object : TimerTask() {
+            var countY = 0.0
+            override fun run() {
+                drawRobotTorsoVertices = rotateY2(cubeVertices,  countY)
+                //drawRobotTorsoVertices = rotateX2(drawRobotTorsoVertices,  45.0)
+                countY ++
+                drawRobotTorsoVertices = translate3D2(drawRobotTorsoVertices, 8.0, 7.25, 2.0)
+                drawRobotTorsoVertices = addCuboidCentroid(drawRobotTorsoVertices, scale3D2(drawRobotTorsoVertices, 125.0, 175.0, 75.0))
+
+                this@MyView.invalidate()
+            }
+        }
+        timerTorso.scheduleAtFixedRate(taskTorso, 0, 60)
+
+        this.invalidate()
+
+        val timerLeftLeg = Timer()
+        val taskLeftLeg = object : TimerTask() {
+            var countY = 0.0
+            override fun run() {
+
+                //drawRobotLeftLegVertices = rotateX2(drawRobotLeftLegVertices,  45.0)
+                countY ++
+                drawRobotLeftLegVertices = translate3D2(cubeVertices, 20.0, 10.22, 2.0)
+                drawRobotLeftLegVertices = rotateY2(drawRobotLeftLegVertices,  countY)
+                drawRobotLeftLegVertices = addCuboidCentroid(drawRobotLeftLegVertices, scale3D2(drawRobotLeftLegVertices, 45.0, 155.0, 75.0))
+
+                this@MyView.invalidate()
+            }
+        }
+        timerLeftLeg.scheduleAtFixedRate(taskLeftLeg, 0, 60)
+
+        this.invalidate()
+    }
+
+    private fun defineInitialCubeVertices() {
         with(cubeVertices) {
             this[0] = Coordinate(-1.0, -1.0, -1.0, 1.0)
             this[1] = Coordinate(-1.0, -1.0, 1.0, 1.0)
@@ -51,52 +344,69 @@ class MyView(context: Context) : View(context) {
             this[6] = Coordinate(1.0, 1.0, -1.0, 1.0)
             this[7] = Coordinate(1.0, 1.0, 1.0, 1.0)
         }
+    }
 
-        drawCubeVertices = translate3D(cubeVertices, 20.0, 20.0, 40.0)
-        drawCubeVertices = scale3D(drawCubeVertices, 40.0, 40.0, 40.0)
-        drawCubeVertices = rotateZ(drawCubeVertices, 80.0)
-        drawCubeVertices = rotateY(drawCubeVertices, 30.0)
+    private fun cube1Transforms() {
+        drawCube1Vertices = translate3D(cubeVertices, 20.0, 20.0, 40.0)
+        drawCube1Vertices = scale3D(drawCube1Vertices, 40.0, 40.0, 40.0)
+        drawCube1Vertices = rotateZ(drawCube1Vertices, 80.0)
+        drawCube1Vertices = rotateY(drawCube1Vertices, 30.0)
+    }
 
-        drawCubeVertices2 = translate3D(cubeVertices, 25.0, 20.0, 40.0)
-        drawCubeVertices2 = scale3D(drawCubeVertices2, 40.0, 40.0, 40.0)
-        drawCubeVertices2 = rotateZ(drawCubeVertices2, 85.0)
-        drawCubeVertices2 = rotateY(drawCubeVertices2, 30.0)
+    private fun cube2Transforms() {
+        drawCube2Vertices = translate3D(cubeVertices, 25.0, 20.0, 40.0)
+        drawCube2Vertices = scale3D(drawCube2Vertices, 40.0, 40.0, 40.0)
+        drawCube2Vertices = rotateZ(drawCube2Vertices, 85.0)
+        drawCube2Vertices = rotateY(drawCube2Vertices, 30.0)
+    }
 
-        drawCubeVertices3 = translate3D(cubeVertices, 30.0, 20.0, 40.0)
-        drawCubeVertices3 = scale3D(drawCubeVertices3, 40.0, 40.0, 40.0)
-        drawCubeVertices3 = rotateZ(drawCubeVertices3, 90.0)
-        drawCubeVertices3 = rotateY(drawCubeVertices3, 30.0)
+    private fun cube3Transforms() {
+        drawCube3Vertices = translate3D(cubeVertices, 30.0, 20.0, 40.0)
+        drawCube3Vertices = scale3D(drawCube3Vertices, 40.0, 40.0, 40.0)
+        drawCube3Vertices = rotateZ(drawCube3Vertices, 90.0)
+        drawCube3Vertices = rotateY(drawCube3Vertices, 30.0)
+    }
 
-        drawCubeVertices4 = translate3D(cubeVertices, 20.0, 15.0, 40.0)
-        drawCubeVertices4 = scale3D(drawCubeVertices4, 40.0, 40.0, 40.0)
-        drawCubeVertices4 = rotateZ(drawCubeVertices4, 80.0)
-        drawCubeVertices4 = rotateY(drawCubeVertices4, 30.0)
+    private fun cube4Transforms() {
+        drawCube4Vertices = translate3D(cubeVertices, 20.0, 15.0, 40.0)
+        drawCube4Vertices = scale3D(drawCube4Vertices, 40.0, 40.0, 40.0)
+        drawCube4Vertices = rotateZ(drawCube4Vertices, 80.0)
+        drawCube4Vertices = rotateY(drawCube4Vertices, 30.0)
+    }
 
-        drawCubeVertices5 = translate3D(cubeVertices, 20.0, 10.0, 40.0)
-        drawCubeVertices5 = scale3D(drawCubeVertices5, 40.0, 40.0, 40.0)
-        drawCubeVertices5 = rotateZ(drawCubeVertices5, 85.0)
-        drawCubeVertices5 = rotateY(drawCubeVertices5, 30.0)
+    private fun cube5Transforms() {
+        drawCube5Vertices = translate3D(cubeVertices, 20.0, 10.0, 40.0)
+        drawCube5Vertices = scale3D(drawCube5Vertices, 40.0, 40.0, 40.0)
+        drawCube5Vertices = rotateZ(drawCube5Vertices, 85.0)
+        drawCube5Vertices = rotateY(drawCube5Vertices, 30.0)
+    }
 
-        drawCubeVertices6 = translate3D(cubeVertices, 20.0, 5.0, 40.0)
-        drawCubeVertices6 = scale3D(drawCubeVertices6, 40.0, 40.0, 40.0)
-        drawCubeVertices6 = rotateZ(drawCubeVertices6, 90.0)
-        drawCubeVertices6 = rotateY(drawCubeVertices6, 30.0)
+    private fun cube6Transforms() {
+        drawCube6Vertices = translate3D(cubeVertices, 20.0, 5.0, 40.0)
+        drawCube6Vertices = scale3D(drawCube6Vertices, 40.0, 40.0, 40.0)
+        drawCube6Vertices = rotateZ(drawCube6Vertices, 90.0)
+        drawCube6Vertices = rotateY(drawCube6Vertices, 30.0)
+    }
 
-        drawCubeVertices7 = translate3D(cubeVertices, 20.0, 20.0, 35.0)
-        drawCubeVertices7 = scale3D(drawCubeVertices7, 40.0, 40.0, 40.0)
-        drawCubeVertices7 = rotateZ(drawCubeVertices7, 80.0)
-        drawCubeVertices7 = rotateY(drawCubeVertices7, 30.0)
+    private fun cube7Transforms() {
+        drawCube7Vertices = translate3D(cubeVertices, 20.0, 20.0, 35.0)
+        drawCube7Vertices = scale3D(drawCube7Vertices, 40.0, 40.0, 40.0)
+        drawCube7Vertices = rotateZ(drawCube7Vertices, 80.0)
+        drawCube7Vertices = rotateY(drawCube7Vertices, 30.0)
+    }
 
-        drawCubeVertices8 = translate3D(cubeVertices, 20.0, 20.0, 30.0)
-        drawCubeVertices8 = scale3D(drawCubeVertices8, 40.0, 40.0, 40.0)
-        drawCubeVertices8 = rotateZ(drawCubeVertices8, 85.0)
-        drawCubeVertices8 = rotateY(drawCubeVertices8, 30.0)
+    private fun cube8Transforms() {
+        drawCube8Vertices = translate3D(cubeVertices, 20.0, 20.0, 30.0)
+        drawCube8Vertices = scale3D(drawCube8Vertices, 40.0, 40.0, 40.0)
+        drawCube8Vertices = rotateZ(drawCube8Vertices, 85.0)
+        drawCube8Vertices = rotateY(drawCube8Vertices, 30.0)
+    }
 
-        drawCubeVertices9 = translate3D(cubeVertices, 20.0, 20.0, 25.0)
-        drawCubeVertices9 = scale3D(drawCubeVertices9, 40.0, 40.0, 40.0)
-        drawCubeVertices9 = rotateZ(drawCubeVertices9, 90.0)
-        drawCubeVertices9 = rotateY(drawCubeVertices9, 30.0)
-        this.invalidate()
+    private fun cube9Transforms() {
+        drawCube9Vertices = translate3D(cubeVertices, 20.0, 20.0, 25.0)
+        drawCube9Vertices = scale3D(drawCube9Vertices, 40.0, 40.0, 40.0)
+        drawCube9Vertices = rotateZ(drawCube9Vertices, 90.0)
+        drawCube9Vertices = rotateY(drawCube9Vertices, 30.0)
     }
 
     private val paint1: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -108,6 +418,17 @@ class MyView(context: Context) : View(context) {
     private val paint2 = Paint().apply {
         setARGB(100, 0, 255, 0)
         style = Paint.Style.FILL
+    }
+
+    private val paint3 = Paint().apply {
+        style = Paint.Style.FILL
+        shader = linear
+    }
+
+    private val paint4: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        color = Color.BLACK
+        strokeWidth = 5f
     }
 
     private val path1: Path = Path().apply {
@@ -172,11 +493,6 @@ class MyView(context: Context) : View(context) {
         100f, 220f, 150f, 240f, Color.BLUE, Color.RED, Shader.TileMode.MIRROR
     )
 
-    private val paint3 = Paint().apply {
-        style = Paint.Style.FILL
-        shader = linear
-    }
-
     private fun updatePath(oldPoints: Array<Point>, newPoints: Array<Point>, path: Path) {
         path.reset()
         val centralized = addCentroid(oldPoints, newPoints)
@@ -192,6 +508,12 @@ class MyView(context: Context) : View(context) {
             }
         }
         path.close()
+    }
+
+    private fun updatePath2(
+        oldPoints: Array<Coordinate>, newPoints: Array<Coordinate>
+    ): Array<Coordinate> {
+        return addCuboidCentroid(oldPoints, newPoints)
     }
 
     private fun subtractCentroid(points: Array<Point>): Array<Point> {
@@ -210,6 +532,25 @@ class MyView(context: Context) : View(context) {
         return result.toTypedArray()
     }
 
+    private fun subtractCuboidCentroid(points: Array<Coordinate>): Array<Coordinate> {
+        var x: Double = 0.0
+        var y: Double = 0.0
+        var z: Double = 0.0
+        points.forEach {
+            x += it.x
+            y += it.y
+            z += it.z
+        }
+        x /= points.size
+        y /= points.size
+        z /= points.size
+        val result = arrayListOf<Coordinate>()
+        for (p in points) {
+            result.add(Coordinate(p.x - x, p.y - y, p.z - z))
+        }
+        return result.toTypedArray()
+    }
+
     private fun addCentroid(from: Array<Point>, to: Array<Point>): Array<Point> {
         var x: Int = 0
         var y: Int = 0
@@ -222,6 +563,27 @@ class MyView(context: Context) : View(context) {
         val result = arrayListOf<Point>()
         for (p in to) {
             result.add(Point(p.x + x, p.y + y))
+        }
+        return result.toTypedArray()
+    }
+
+    private fun addCuboidCentroid(
+        from: Array<Coordinate>, to: Array<Coordinate>
+    ): Array<Coordinate> {
+        var x: Double = 0.0
+        var y: Double = 0.0
+        var z: Double = 0.0
+        from.forEach {
+            x += it.x
+            y += it.y
+            z += it.z
+        }
+        x /= points.size
+        y /= points.size
+        z /= points.size
+        val result = arrayListOf<Coordinate>()
+        for (p in to) {
+            result.add(Coordinate(p.x + x, p.y + y, p.z + z))
         }
         return result.toTypedArray()
     }
@@ -296,6 +658,35 @@ class MyView(context: Context) : View(context) {
         return affineTransforms(subtractCentroid(points), matrix)
     }
 
+    private fun euler(
+        vertices: Array<Coordinate>, sx: Double, sy: Double, sz: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = cos(
+            Math.toRadians(sx) * cos(Math.toRadians(sz)) + (sin(Math.toRadians(sx)) * cos(
+                Math.toRadians(sy) * -sin(Math.toRadians(sz))
+            ))
+        )
+        this[0][1] =
+            cos(Math.toRadians(sx)) * sin(Math.toRadians(sz)) + (sin(Math.toRadians(sx)) * cos(
+                Math.toRadians(sy)
+            )) * cos(Math.toRadians(sz))
+        this[0][2] = sin(Math.toRadians(sx)) * sin(Math.toRadians(sy))
+        this[1][0] =
+            -sin(Math.toRadians(sx)) * cos(sz) + (cos((Math.toRadians(sx))) * cos(Math.toRadians(sy))) * -sin(
+                Math.toRadians(sz)
+            )
+        this[1][1] = -sin(Math.toRadians(sx)) * sin(
+            Math.toRadians(sz) + (cos(Math.toRadians(sx)) * cos(
+                Math.toRadians(sy)
+            )) * cos(Math.toRadians(sz))
+        )
+        this[1][2] = cos(Math.toRadians(sx)) * cos(Math.toRadians(sy))
+        this[2][0] = -sin(Math.toRadians(sy)) * -sin(Math.toRadians(sz))
+        this[2][1] = -sin(Math.toRadians(sy)) * cos(Math.toRadians(sz))
+        this[2][2] = cos(Math.toRadians(sy))
+        transformation2(vertices, this)
+    }
+
     private val linePoints = arrayOf(11, 29, 10, 20, 12, 5, 31, 24, 21, 13)
 
     private fun createLinePath(input: Array<Int>, width: Int, height: Int): Path {
@@ -332,6 +723,10 @@ class MyView(context: Context) : View(context) {
                 w = 1.0
             }
         }
+
+        override fun toString(): String {
+            return "${this.x} + ${this.y} + ${this.z} + ${this.w}"
+        }
     }
 
     private val identityMatrix: Array<Double>
@@ -340,10 +735,14 @@ class MyView(context: Context) : View(context) {
             0.0, 1.0, 0.0, 0.0,
             0.0, 0.0, 1.0, 0.0,
             0.0, 0.0, 0.0, 1.0,
-           /* doubleArrayOf(1.0, 0.0, 0.0, 0.0),
+        )
+
+    private val identityMatrix2: Array<DoubleArray>
+        get() = arrayOf(
+            doubleArrayOf(1.0, 0.0, 0.0, 0.0),
             doubleArrayOf(0.0, 1.0, 0.0, 0.0),
             doubleArrayOf(0.0, 0.0, 1.0, 0.0),
-            doubleArrayOf(0.0, 0.0, 0.0, 1.0)*/
+            doubleArrayOf(0.0, 0.0, 0.0, 1.0)
         )
 
     private fun transformation(vertex: Coordinate, matrix: Array<Double>) = Coordinate(
@@ -353,6 +752,13 @@ class MyView(context: Context) : View(context) {
         matrix[12] * vertex.x + matrix[13] * vertex.y + matrix[14] * vertex.z + matrix[15]
     )
 
+    private fun transformation2(vertex: Coordinate, matrix: Array<DoubleArray>) = Coordinate(
+        matrix[0][0] * vertex.x + matrix[0][1] * vertex.y + matrix[0][2] * vertex.z + matrix[0][3],
+        matrix[1][0] * vertex.x + matrix[1][1] * vertex.y + matrix[1][2] * vertex.z + matrix[1][3],
+        matrix[2][0] * vertex.x + matrix[2][1] * vertex.y + matrix[2][2] * vertex.z + matrix[2][3],
+        matrix[3][0] * vertex.x + matrix[3][1] * vertex.y + matrix[3][2] * vertex.z + matrix[3][3]
+    )
+
     private fun transformation(vertices: Array<Coordinate>, matrix: Array<Double>) =
         Array(vertices.size) {
             transformation(vertices[it], matrix).apply {
@@ -360,53 +766,101 @@ class MyView(context: Context) : View(context) {
             }
         }
 
+    private fun transformation2(vertices: Array<Coordinate>, matrix: Array<DoubleArray>) =
+        Array(vertices.size) {
+            transformation2(vertices[it], matrix).apply {
+                normalise()
+            }
+        }
+
     private fun translate3D(
         vertices: Array<Coordinate>, tx: Double, ty: Double, tz: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[0][3] = tx
-        this[1][3] = ty
-        this[3][3] = tz*/
         this[3] = tx
         this[7] = ty
         this[11] = tz
         transformation(vertices, this)
     }
 
+    private fun translate3D2(
+        vertices: Array<Coordinate>, tx: Double, ty: Double, tz: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][3] = tx
+        this[1][3] = ty
+        this[3][3] = tz
+        transformation2(vertices, this)
+    }
+
     private fun scale3D(
         vertices: Array<Coordinate>, sx: Double, sy: Double, sz: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[0][0] = sx
-        this[1][1] = sy
-        this[2][2] = sz*/
         this[0] = sx
         this[5] = sy
         this[10] = sz
         transformation(vertices, this)
     }
 
+    private fun scale3D2(
+        vertices: Array<Coordinate>, sx: Double, sy: Double, sz: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = sx
+        this[1][1] = sy
+        this[2][2] = sz
+        transformation2(vertices, this)
+    }
+
     private fun shear3D(
         vertices: Array<Coordinate>, hx: Double, hy: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[0][0] = cos(Math.toRadians(degrees))
-        this[0][1] = -sin(Math.toRadians(degrees))
-        this[1][0] = sin(Math.toRadians(degrees))
-        this[1][1] = cos(Math.toRadians(degrees))*/
-        //this[1] = cos(Math.toRadians(degrees))
-        this[2] = hx
-        //this[4] = sin(Math.toRadians(degrees))
-        this[6] = hy
-        //this[8] = cos(Math.toRadians(degrees))
-        //this[9] = cos(Math.toRadians(degrees))
+        //this[0][2] = hx
+        //this[1][2] = hy
         transformation(vertices, this)
+    }
+
+    private fun quaternion(
+        vertices: Array<Coordinate>, ax: Double, ay: Double, az: Double
+    ): Array<Coordinate> = with(identityMatrix) {
+        this[0] = 1.0 + (ax * ax) - (ay * ay) - (az * az)
+        this[1] = 2 * ax * ay - 2 * 1 * az
+        this[2] = 2 * ax * az + 2 * 1 * ay
+        this[4] = 2 * ax * ay + 2 * 1 * az
+        this[5] = 1.0 + (ay * ay) - (ax * ax) - (az * az)
+        this[6] = 2 * ay * az - 2 * 1 * ax
+        this[8] = 2 * ax * az - 2 * 1 * ay
+        this[9] = 2 * ay * az + 2 * 1 * ax
+        this[10] = 1 + (az * az) - (ax * ax) - (ay * ay)
+        transformation(vertices, this)
+    }
+
+    private fun quaternion2(
+        vertices: Array<Coordinate>, ax: Double, ay: Double, az: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = 1.0 + (ax * ax) - (ay * ay) - (az * az)
+        this[0][1] = 2 * ax * ay - 2 * 1 * az
+        this[0][2] = 2 * ax * az + 2 * 1 * ay
+        this[1][0] = 2 * ax * ay + 2 * 1 * az
+        this[1][1] = 1.0 + (ay * ay) - (ax * ax) - (az * az)
+        this[1][2] = 2 * ay * az - 2 * 1 * ax
+        this[2][0] = 2 * ax * az - 2 * 1 * ay
+        this[2][1] = 2 * ay * az + 2 * 1 * ax
+        this[2][2] = 1 + (az * az) - (ax * ax) - (ay * ay)
+        transformation2(vertices, this)
+    }
+
+    private fun projection(
+        vertices: Array<Coordinate>, far: Double, near: Double, ar: Double, angle: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = 1.0 / (ar) * tan(angle / 2)
+        this[1][1] = 1.0 / tan(angle / 2)
+        this[2][2] = - (far + near / far - near)
+        this[2][3] = - (2 * far * (near) / far - near)
+        this[3][2] = - 1.0
+        transformation2(vertices, this)
     }
 
     private fun rotateX(
         vertices: Array<Coordinate>, degrees: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[1][1] = cos(Math.toRadians(degrees))
-        this[1][2] = -sin(Math.toRadians(degrees))
-        this[2][1] = sin(Math.toRadians(degrees))
-        this[2][2] = cos(Math.toRadians(degrees))*/
         this[5] = cos(Math.toRadians(degrees))
         this[6] = -sin(Math.toRadians(degrees))
         this[9] = sin(Math.toRadians(degrees))
@@ -414,13 +868,19 @@ class MyView(context: Context) : View(context) {
         transformation(vertices, this)
     }
 
+    private fun rotateX2(
+        vertices: Array<Coordinate>, degrees: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[1][1] = cos(Math.toRadians(degrees))
+        this[1][2] = -sin(Math.toRadians(degrees))
+        this[2][1] = sin(Math.toRadians(degrees))
+        this[2][2] = cos(Math.toRadians(degrees))
+        transformation2(vertices, this)
+    }
+
     private fun rotateY(
         vertices: Array<Coordinate>, degrees: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[0][0] = cos(Math.toRadians(degrees))
-        this[0][2] = sin(Math.toRadians(degrees))
-        this[2][0] = -sin(Math.toRadians(degrees))
-        this[2][2] = cos(Math.toRadians(degrees))*/
         this[0] = cos(Math.toRadians(degrees))
         this[2] = sin(Math.toRadians(degrees))
         this[8] = -sin(Math.toRadians(degrees))
@@ -428,13 +888,19 @@ class MyView(context: Context) : View(context) {
         transformation(vertices, this)
     }
 
+    private fun rotateY2(
+        vertices: Array<Coordinate>, degrees: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = cos(Math.toRadians(degrees))
+        this[0][2] = sin(Math.toRadians(degrees))
+        this[2][0] = -sin(Math.toRadians(degrees))
+        this[2][2] = cos(Math.toRadians(degrees))
+        transformation2(vertices, this)
+    }
+
     private fun rotateZ(
         vertices: Array<Coordinate>, degrees: Double
     ): Array<Coordinate> = with(identityMatrix) {
-        /*this[0][0] = cos(Math.toRadians(degrees))
-        this[0][1] = -sin(Math.toRadians(degrees))
-        this[1][0] = sin(Math.toRadians(degrees))
-        this[1][1] = cos(Math.toRadians(degrees))*/
         this[0] = cos(Math.toRadians(degrees))
         this[1] = -sin(Math.toRadians(degrees))
         this[4] = sin(Math.toRadians(degrees))
@@ -442,16 +908,43 @@ class MyView(context: Context) : View(context) {
         transformation(vertices, this)
     }
 
+    private fun rotateZ2(
+        vertices: Array<Coordinate>, degrees: Double
+    ): Array<Coordinate> = with(identityMatrix2) {
+        this[0][0] = cos(Math.toRadians(degrees))
+        this[0][1] = -sin(Math.toRadians(degrees))
+        this[1][0] = sin(Math.toRadians(degrees))
+        this[1][1] = cos(Math.toRadians(degrees))
+        transformation2(vertices, this)
+    }
+
     private fun drawLinePairs(
         canvas: Canvas, vertices: Array<Coordinate>, start: Int, end: Int, paint: Paint
     ) {
-        canvas.drawLine(
-            vertices[start].x.toFloat(),
-            vertices[start].y.toFloat(),
-            vertices[end].x.toFloat(),
-            vertices[end].y.toFloat(),
-            paint
-        )
+        if (vertices.isNotEmpty()) {
+            canvas.drawLine(
+                vertices[start].x.toFloat(),
+                vertices[start].y.toFloat(),
+                vertices[end].x.toFloat(),
+                vertices[end].y.toFloat(),
+                paint
+            )
+        }
+    }
+
+    private fun drawCube(canvas: Canvas, coordinates: Array<Coordinate>, paint: Paint) {
+        drawLinePairs(canvas, coordinates, 0, 1, paint)
+        drawLinePairs(canvas, coordinates, 1, 3, paint)
+        drawLinePairs(canvas, coordinates, 3, 2, paint)
+        drawLinePairs(canvas, coordinates, 2, 0, paint)
+        drawLinePairs(canvas, coordinates, 4, 5, paint)
+        drawLinePairs(canvas, coordinates, 5, 7, paint)
+        drawLinePairs(canvas, coordinates, 7, 6, paint)
+        drawLinePairs(canvas, coordinates, 6, 4, paint)
+        drawLinePairs(canvas, coordinates, 0, 4, paint)
+        drawLinePairs(canvas, coordinates, 1, 5, paint)
+        drawLinePairs(canvas, coordinates, 2, 6, paint)
+        drawLinePairs(canvas, coordinates, 3, 7, paint)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -471,122 +964,19 @@ class MyView(context: Context) : View(context) {
         canvas?.drawPath(squarePath, paint3)*/
 
         canvas?.let {
-            drawLinePairs(it, drawCubeVertices, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices, 3, 7, paint1)
+            /*drawCube(it, drawCube11Vertices, paint1)
+            drawCube(it, drawCube12Vertices, paint1)
+            drawCube(it, drawCube10Vertices, paint4)
+            drawCube(it, drawCube13Vertices, paint1)
+            drawCube(it, drawCube14Vertices, paint1)
+            drawCube(it, drawCube15Vertices, paint1)
+            drawCube(it, drawCube16Vertices, paint4)*/
 
-            drawLinePairs(it, drawCubeVertices2, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices2, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices2, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices2, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices2, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices2, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices2, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices2, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices2, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices2, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices2, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices2, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices3, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices3, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices3, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices3, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices3, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices3, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices3, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices3, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices3, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices3, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices3, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices3, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices4, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices4, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices4, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices4, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices4, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices4, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices4, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices4, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices4, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices4, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices4, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices4, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices5, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices5, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices5, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices5, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices5, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices5, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices5, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices5, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices5, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices5, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices5, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices5, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices6, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices6, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices6, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices6, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices6, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices6, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices6, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices6, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices6, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices6, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices6, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices6, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices7, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices7, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices7, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices7, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices7, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices7, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices7, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices7, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices7, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices7, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices7, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices7, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices8, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices8, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices8, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices8, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices8, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices8, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices8, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices8, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices8, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices8, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices8, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices8, 3, 7, paint1)
-
-            drawLinePairs(it, drawCubeVertices9, 0, 1, paint1)
-            drawLinePairs(it, drawCubeVertices9, 1, 3, paint1)
-            drawLinePairs(it, drawCubeVertices9, 3, 2, paint1)
-            drawLinePairs(it, drawCubeVertices9, 2, 0, paint1)
-            drawLinePairs(it, drawCubeVertices9, 4, 5, paint1)
-            drawLinePairs(it, drawCubeVertices9, 5, 7, paint1)
-            drawLinePairs(it, drawCubeVertices9, 7, 6, paint1)
-            drawLinePairs(it, drawCubeVertices9, 6, 4, paint1)
-            drawLinePairs(it, drawCubeVertices9, 0, 4, paint1)
-            drawLinePairs(it, drawCubeVertices9, 1, 5, paint1)
-            drawLinePairs(it, drawCubeVertices9, 2, 6, paint1)
-            drawLinePairs(it, drawCubeVertices6, 3, 7, paint1)
+            drawCube(it, drawRobotHeadVertices, paint4)
+            //drawCube(it, drawRobotNeckVertices, paint1)
+            //drawCube(it, drawRobotTorsoVertices, paint4)
+            //drawCube(it, drawRobotLeftLegVertices, paint1)
+            drawCube(it, drawCube13Vertices, paint1)
         }
 
         /*val graph = createLinePath(linePoints, mWidth, mHeight)
